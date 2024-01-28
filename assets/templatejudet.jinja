@@ -1,5 +1,41 @@
-Firma {{ firma_nume }}, activă cu cod CUI: {{ cui }}.
-...
+1. Firma
+Includeți cel puțin următoarele elemente:
+Date de identificare: 
+Denumirea: {{ date_generale['Denumirea firmei'] }}
+
+Forma de organizare:
+Societate cu Răspundere Limitată care se încadrează la categoria IMM, organizată în baza Legii 346/2004 privind stimularea înființării și dezvoltării IMM.
+
+Cod de identificare fiscală/ Cod Unic de Înregistrare:
+{{ date_generale['Codul unic de înregistrare (CUI)'] }}
+
+Număr de înmatriculare la Oficiul Registrului Comerțului:
+{{ date_generale['Numărul de ordine în Registrul Comerțului'] }}
+
+Data înființării:
+{{ date_generale['Data înființării'] }}
+
+Adresa sediului principal și a sediilor secundare, sucursale, filiale:
+{{ date_generale['Adresa sediului social'] }}
+{% for adresa in date_generale['Adresa sediul secundar'] %}
+- {{ adresa }}
+{% endfor %}
+
+Asociați/acționari și cote de participare deținute, reprezentanți legali, administratori, directori generali:
+{% for asociat in date_detaliat['Asociați'] %}
+- {{ asociat }}
+{% endfor %}
+Administratori: {{ date_detaliat['Administratori'] }}
+
+Alte societăți în care reprezentanții legali și/sau asociații mai dețin părți sociale/ acțiuni și/sau funcții de conducere:
+[Detalii despre alte societăți]
+
+Viziunea, misiunea, strategia și obiectivele pe termen scurt, mediu și lung:
+[Descriere generală, adaptabilă în funcție de datele specifice fiecărui SRL]
+
+Obiectivul principal al firmei îl constituie investiția în [Detaliați tipul de investiție], în vederea desfășurării de activități conform codului CAEN {{ date_generale['Activitate principală'].split(' - ')[0] }}, prin asimilarea progresului tehnologic și gestionarea în mod eficient a resurselor, în contextul actual al dezvoltării durabile și în acord cu tendințele europene.
+
+[Restul conținutului, adaptat în funcție de nevoile specifice și datele disponibile]
 
 {% if judet == "Dolj" %}
 Obiectivul general al proiectului „Dezvoltare durabilă la nivelul {{ firma_nume }}” va fi transpus în practică prin:
@@ -14,5 +50,6 @@ Obiectivul general al proiectului „Dezvoltare durabilă la nivelul {{ firma_nu
 • Menținerea standardelor de calitate, conform cu cerințele clienților.
 Obiectivul general al proiectului este în deplină concordanță cu obiectivul general al Programului Tranziție Justă, participând la realizarea tranziției la neutralitate climatică la nivelul județului {{ judet }}.
 {% else %}
-... conținut generic pentru alte județe ...
+... conținut generic pentru alte județe ...   .. conținut generic pentru alte județe ...
+... conținut generic pentru alte județe ...   .. conținut generic pentru alte județe ...
 {% endif %}
