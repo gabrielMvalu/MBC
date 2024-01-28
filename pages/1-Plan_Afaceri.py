@@ -1,6 +1,7 @@
 # pages/Plan_Afaceri.py
 import streamlit as st
 from jinja2 import Environment, BaseLoader
+import os
 
 # Datele de test pentru doi clienți diferiți
 date_client_dolj = {
@@ -27,8 +28,12 @@ if client_selectat == "Dolj":
 else:
     date_selectate = date_client_gorj
 
+# Determină calea absolută către directorul 'assets'
+current_dir = os.path.dirname(os.path.abspath(__file__))
+assets_dir = os.path.join(current_dir, './assets')
+
 # Crearea și popularea template-ului Jinja2
-env = Environment(loader=FileSystemLoader(searchpath='../assets'))
+env = Environment(loader=FileSystemLoader(searchpath=assets_dir))
 template = env.get_template('templatejudet.jinja')
 document_generat = template.render(**date_selectate)
 
