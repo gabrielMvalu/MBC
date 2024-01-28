@@ -5,53 +5,148 @@ import pandas as pd
 
 def extract_data_from_docx(doc):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
-    
-    # Extrage datele generale
-    firma_match = re.search(r"FURNIZARE INFORMAŢII\n\n(.*?)\n", full_text, re.DOTALL)
+    company_pattern = r"FURNIZARE INFORMAŢII\n\n(.*?)\n"
+    firma_match = re.search(company_pattern, full_text, re.DOTALL)
     firma = firma_match.group(1) if firma_match else "N/A"
-    
     nr_ordine_match = re.search(r"Număr de ordine în Registrul Comerţului: (\w+/\d+/\d+)", full_text)
     nr_ordine = nr_ordine_match.group(1) if nr_ordine_match else "N/A"
-    
     cui_match = re.search(r"Cod unic de înregistrare: (\d+)", full_text)
     cui = cui_match.group(1) if cui_match else "N/A"
-    
     data_infiintarii_match = re.search(r"atribuit în data de (\d+\.\d+\.\d+)", full_text)
     data_infiintarii = data_infiintarii_match.group(1) if data_infiintarii_match else "N/A"
-    
-    adresa_match = re.search(r"Adresă sediu social: (.*?)(?=\n)", full_text)
-    adresa = adresa_match.group(1) if adresa_match else "N/A"
-    
-    main_activity_match = re.search(r"Activitatea principală.*?Domeniul de activitate principal:.*?\n(.*?)(?:\n|;)", full_text, re.DOTALL)
+    address_pattern = re.compile(r"Adresă sediu social: (.*?)(?=\n)")
+    address_match = re.search(address_pattern, full_text)
+    adresa = address_match.group(1) if address_match else "N/A"
+    main_activity_pattern = r"Activitatea principală.*?Domeniul de activitate principal:.*?\n(.*?)(?:\n|;)"
+    main_activity_match = re.search(main_activity_pattern, full_text, re.DOTALL)
     main_activity = main_activity_match.group(1).strip() if main_activity_match else "N/A"
-    
-    # Extrage adresele secundare
-    section_match = re.search(r"SEDII SECUNDARE / PUNCTE DE LUCRU(.*?)SEDII SI/SAU ACTIVITATI AUTORIZATE", full_text, re.DOTALL)
+    section_pattern = re.compile(r"SEDII SECUNDARE / PUNCTE DE LUCRU(.*?)SEDII SI/SAU ACTIVITATI AUTORIZATE", re.DOTALL)
+    section_match = re.search(section_pattern, full_text)
     if section_match:
         section_text = section_match.group(1)
-        adrese_secundare = re.findall(r"Adresă: (.*?)(?=\n)", section_text, re.DOTALL)
+        # Extragerea tuturor adreselor din acea secțiune
+        secondary_address_pattern = re.compile(r"Adresă: (.*?)(?=\n)", re.DOTALL)
+        adrese_secundare = re.findall(secondary_address_pattern, section_text)
     else:
         adrese_secundare = ["N/A"]
     
-    # Construiește și returnează un DataFrame cu datele extrase
     data = {
-        "Denumirea firmei": [firma],
-        "Numărul de ordine în Registrul Comerțului": [nr_ordine],
-        "Codul unic de înregistrare (CUI)": [cui],
-        "Data înființării": [data_infiintarii],
-        "Adresa sediului social": [adresa],
-        "Activitate principală": [main_activity],
-        "Adresele sediilor secundare": [', '.join(adrese_secundare)]
+        "Denumirea firmei": firma,
+        "Numărul de ordine în Registrul Comerțului": nr_ordine,
+        "Codul unic de înregistrare (CUI)": cui,
+        "Data înființării": data_infiintarii,
+        "Adresa sediului social": adresa,
+        "Activitate principală": main_activity,
+        # Adding the new field to the dictionary
+        "Adresa sediul secundar": adrese_secundare
     }
-    
-    return pd.DataFrame(data)
 
+    return data
+
+def extract_detailed_info_from_docx(doc):
+    text = [p.text for p in doc.paragraphs]
+    asociati = {}
+    administratori = set()
+    in_asociati_section = False
+    in_persoane_imputernicite_section = False
+
+    for i in range(len(text)):
+        if "ASOCIAŢI PERSOANE FIZICE" in text[i]:
+            in_asociati_section = True
+            continue
+        elif "REPREZENTANT acţionar/asociat/membru" in text[i]:
+            in_asociati_section = False
+
+        if in_asociati_section and "Calitate: " in text[i]:
+            nume = text[i - 1].strip()
+            j = i + 1
+            while "Cota de participare la beneficii şi pierderi: " not in text[j] and j < len(text) - 1:
+                j += 1
+            if j < len(text):
+                cota = text[j].split(":")[1].strip()
+                asociati[nume] = cota
+
+        if "Persoane împuternicite (PERSOANE FIZICE)" in text[i]:
+            in_persoane_imputernicite_section = True
+            continue
+        elif "Persoane împuternicite (PERSOANE JURIDICE)" in text[i]:
+            in_persoane_imputernicite_section = False
+
+        if in_persoane_imputernicite_section and "Calitate: " in text[i]:
+            nume_admin = text[i - 1].strip()
+            administratori.add(nume_admin)
+
+    output_asociati = []
+    for nume, cota in asociati.items():
+        info = f"{nume} – asociat cu cota de participare la beneficii și pierderi {cota}"
+        if nume in administratori:
+            info += " și administrator"
+        output_asociati.append(info)
+
+    nume_administrator = ', '.join(administratori)  # Gestionarea cazului cu mai mulți administratori
+
+    return output_asociati, nume_administrator
+
+def extract_situatie_financiara(doc):
+    full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
+    pattern1 = r"SITUAŢIA FINANCIARĂ PE ANUL (\d+).*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)"
+    matches1 = re.findall(pattern1, full_text, re.DOTALL)
+    pattern2 = r"SITUAŢIA FINANCIARĂ PE ANUL (\d+)\s*Nu există înregistrări."
+    matches2 = [(year, "N/A") for year in re.findall(pattern2, full_text, re.DOTALL)]
+    matches = matches1 + matches2
+    return matches
+
+def extract_caen_codes(full_text):
+    start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
+    end_marker = "CONCORDAT PREVENTIV"
+    caen_section_pattern = re.compile(rf"{start_marker}(.*?){end_marker}", re.DOTALL)
+    caen_section_match = re.search(caen_section_pattern, full_text)
+    
+    if caen_section_match:
+        caen_section_text = caen_section_match.group(1)
+        caen_code_pattern = re.compile(r"(\d{4}) - (.*?)\n")
+        caen_codes = re.findall(caen_code_pattern, caen_section_text)
+        return caen_codes
+    else:
+        return []
+
+# Încărcarea și procesarea documentului în Streamlit
 st.title('Încărcare Document Registrul Comerțului')
 
 uploaded_file = st.file_uploader("Trageți fișierul aici sau faceți clic pentru a încărca un document", type=["docx"])
 
 if uploaded_file is not None:
     doc = Document(uploaded_file)
-    df = extract_data_from_docx(doc)
-    st.write("Date extrase din document:")
-    st.dataframe(df)
+    general_data = extract_data_from_docx(doc)
+    detailed_info, admins = extract_detailed_info_from_docx(doc)
+    financial_data = extract_situatie_financiara(doc)
+    caen_codes = extract_caen_codes("\n".join([p.text for p in doc.paragraphs]))
+
+    # Verificarea anilor specificați
+    ani_doriti = {"2020", "2021", "2022"}
+    ani_extracti = {str(year) for year, _ in financial_data}
+    if not ani_extracti.issubset(ani_doriti):
+        st.warning("Verificați anii extrași. Sunt diferiți de 2020-2022!")
+
+    # Afișarea datelor în format JSON
+    st.json({
+        "Date Generale": general_data,
+        "Informații Detaliate": {"Asociați": detailed_info, "Administratori": admins},
+        "Situație Financiară": financial_data,
+        "Coduri CAEN": caen_codes
+    })
+
+    # Afișarea datelor în DataFrame-uri pentru vizualizare
+    st.write("Date Generale:")
+    st.dataframe(pd.DataFrame([general_data]))
+
+    st.write("Informații Detaliate:")
+    st.dataframe(pd.DataFrame(detailed_info))
+    st.dataframe(pd.DataFrame(admins, columns=["Administratori"]))
+
+    st.write("Situație Financiară:")
+    st.dataframe(pd.DataFrame(financial_data, columns=["An", "Nr mediu angajați"]))
+
+    st.write("Coduri CAEN:")
+    st.dataframe(pd.DataFrame(caen_codes, columns=["Cod CAEN", "Descriere"]))
+
