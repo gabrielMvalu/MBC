@@ -23,6 +23,10 @@ date_client_gorj = {
 # Selectarea clientului pentru testare
 client_selectat = st.radio("Selectează clientul pentru testare:", ("Dolj", "Gorj"))
 
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+assets_dir = os.path.join(current_dir, '../assets')
+
 print("Current dir:", current_dir)
 print("Assets dir:", assets_dir)
 
