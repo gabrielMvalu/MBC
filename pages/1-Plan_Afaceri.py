@@ -28,7 +28,7 @@ else:
     date_selectate = date_client_gorj
 
 # Crearea și popularea template-ului Jinja2
-env = Environment(loader=FileSystemLoader(searchpath='./assets'))
+env = Environment(loader=FileSystemLoader(searchpath='../assets'))
 template = env.get_template('templatejudet.jinja')
 document_generat = template.render(**date_selectate)
 
