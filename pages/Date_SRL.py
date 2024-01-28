@@ -1,5 +1,7 @@
 import streamlit as st
- 
+
+st.title('Încărcare Document Registrul Comertului')
+
 # Creează un widget de încărcare a fișierului
 uploaded_file = st.file_uploader("Trageți fișierul aici sau faceți clic pentru a încărca un document", type=["docx"])
 
