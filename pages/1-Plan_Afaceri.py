@@ -23,6 +23,10 @@ date_client_gorj = {
 # Selectarea clientului pentru testare
 client_selectat = st.radio("Selectează clientul pentru testare:", ("Dolj", "Gorj"))
 
+print("Current dir:", current_dir)
+print("Assets dir:", assets_dir)
+
+
 if client_selectat == "Dolj":
     date_selectate = date_client_dolj
 else:
