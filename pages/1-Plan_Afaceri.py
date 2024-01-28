@@ -12,7 +12,7 @@ template = env.get_template('templatejudet.jinja')
 date_client = {
     "firma_nume": "Exemplu S.R.L.",
     "cui": "123456789",
-    "judet": "Dolj",  # Sau "Gorj" sau altceva, în funcție de client
+    "judet": "Gorj",  # Sau "Gorj" sau altceva, în funcție de client
 }
 
 # Generează documentul completat
