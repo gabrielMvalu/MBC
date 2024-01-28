@@ -30,7 +30,7 @@ else:
 
 # Determină calea absolută către directorul 'assets'
 current_dir = os.path.dirname(os.path.abspath(__file__))
-assets_dir = os.path.join(current_dir, './assets')
+assets_dir = os.path.join(current_dir, '../assets')
 
 # Crearea și popularea template-ului Jinja2
 env = Environment(loader=FileSystemLoader(searchpath=assets_dir))
