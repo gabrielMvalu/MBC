@@ -7,4 +7,4 @@ page = st.sidebar.selectbox("Alegeți o pagină:", ["Plan de Afaceri"])
 
 # Încărcarea paginilor
 if page == "Plan de Afaceri":
-    pages.Plan_afaceri.show_page()
+    pages.Plan_Afaceri.show_page()
