@@ -1,0 +1,18 @@
+Firma {{ firma_nume }}, activă cu cod CUI: {{ cui }}.
+...
+
+{% if judet == "Dolj" %}
+Obiectivul general al proiectului „Dezvoltare durabilă la nivelul {{ firma_nume }}” va fi transpus în practică prin:
+• Creșterea competitivității economice, prin achiziționarea a {{ nr_utilaje }} noi utilaje tehnologice;
+• Sporirea surselor de venit ale societății, prin facilitarea realizării activității propuse prin proiect;
+• Crearea a {{ nr_locuri_munca_noi }} noi locuri de muncă permanente, cu normă întreagă;
+• Menținerea standardelor de calitate, conform cu cerințele clienților.
+Obiectivul general al proiectului este în deplină concordanță cu obiectivul general al Programului Tranziție Justă, participând la realizarea tranziției la neutralitate climatică la nivelul județului {{ judet }}.
+{% elif judet == "Gorj" %}
+Obiectivul general al proiectului „Dezvoltare durabilă la nivelul {{ firma_nume }}” va fi transpus în practică prin:
+• Creșterea competitivității economice, prin achiziționarea a {{ nr_utilaje }} noi utilaje tehnologice;
+• Menținerea standardelor de calitate, conform cu cerințele clienților.
+Obiectivul general al proiectului este în deplină concordanță cu obiectivul general al Programului Tranziție Justă, participând la realizarea tranziției la neutralitate climatică la nivelul județului {{ judet }}.
+{% else %}
+... conținut generic pentru alte județe ...
+{% endif %}
