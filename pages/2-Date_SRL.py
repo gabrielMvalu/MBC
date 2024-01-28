@@ -45,5 +45,4 @@ uploaded_file = st.file_uploader("Trageți fișierul aici sau faceți clic pentr
 if uploaded_file is not None:
     extracted_data = extract_data_from_docx(uploaded_file)
     st.succes("Constatator încărcat cu succes!")
-    st.write("Date extrase din document:")
     st.json(extracted_data)
