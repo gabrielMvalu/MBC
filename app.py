@@ -1,5 +1,5 @@
 import streamlit as st
-import pages.Plan_afaceri
+import pages.Plan_Afaceri
 
 # Sidebar pentru navigație
 st.sidebar.title("Navigație")
