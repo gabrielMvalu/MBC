@@ -140,9 +140,14 @@ if uploaded_file is not None:
     st.write("Date Generale:")
     st.dataframe(pd.DataFrame([general_data]))
 
-    st.write("Informații Detaliate:")
-    st.dataframe(pd.DataFrame(detailed_info))
-    st.dataframe(pd.DataFrame(admins, columns=["Administratori"]))
+    # Convertirea listei de administratori într-o listă de dicționare
+    admins_dict = [{"Administratori": admin} for admin in admins]
+    # Crearea DataFrame-ului din lista de dicționare
+    admins_df = pd.DataFrame(admins_dict)
+    # Afișarea DataFrame-ului în Streamlit
+    st.write("Administratori:")
+    st.dataframe(admins_df)
+
 
     st.write("Situație Financiară:")
     st.dataframe(pd.DataFrame(financial_data, columns=["An", "Nr mediu angajați"]))
