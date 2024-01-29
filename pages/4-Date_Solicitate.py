@@ -1,47 +1,75 @@
+# pages/Date_solicitate.py
+
 import streamlit as st
 import pandas as pd
 
-def load_excel(file):
-    # Function to load the excel file into the session state
-    try:
-        # Use the 'date solicitate' sheet name as default
-        sheet_name = 'date solicitate'
-        
-        # Load the data into a pandas dataframe
-        df = pd.read_excel(file, sheet_name=sheet_name)
-        
-        # Create a dictionary from the third column
-        data_dict = df.iloc[:, 2].to_dict()
-        st.session_state['excel_data'] = data_dict
-        st.success('Data loaded successfully!')
-    except Exception as e:
-        st.error(f'An error occurred: {e}')
+def extract_date_solicitate(df):
+    activitate = df.iloc[7, 3]
+    CAEN = df.iloc[8, 3]
+    nr_locuri_munca_noi = df.iloc[9, 3]
+    Judet = df.iloc[10, 3]
+    utilaj_dizabilitati = df.iloc[11, 3]
+    utilaj_cu_tocator = df.iloc[12, 3]
+    adresa_loc_implementare = df.iloc[13, 3]
+    nr_clasare_notificare = df.iloc[14, 3]
+    clienti_actuali = df.iloc[15, 3]
+    furnizori = df.iloc[16, 3]
+    tip_activitate = df.iloc[17, 3]
+    ISO = df.iloc[18, 3]
+    activitate_curenta = df.iloc[19, 3]
+    dotari_activitate_curenta = df.iloc[20, 3]
+    info_ctr_implementare = df.iloc[21, 3]
+    zonele_vizate_prioritar = df.iloc[22, 3]
+    utilaj_ghidare = df.iloc[23, 3]
+    legaturi = df.iloc[24, 3]
+    rude = df.iloc[25, 3]
+    concluzie_CA = df.iloc[26, 3]
+    caracteristici_tehnice = df.iloc[27, 3]
+    flux_tehnologic = df.iloc[28, 3]
+    utilajeDNSH = df.iloc[29, 3]
 
-# Title of the app
-st.header(':blue[Incarcati Excel -Date Solicitate.xlsx- pt extragerea datelor]', divider='rainbow')
+    data = {
+        "Activitate": activitate,
+        "Cod CAEN": CAEN,
+        "Număr locuri de muncă noi": nr_locuri_munca_noi,
+        "Județ": Judet,
+        "Utilaj pentru persoane cu dizabilități": utilaj_dizabilitati,
+        "Utilaj cu tocător": utilaj_cu_tocator,
+        "Adresa locației de implementare": adresa_loc_implementare,
+        "Număr clasare notificare": nr_clasare_notificare,
+        "Clienți actuali": clienti_actuali,
+        "Furnizori": furnizori,
+        "Tip activitate": tip_activitate,
+        "Certificări ISO": ISO,
+        "Activitate curentă": activitate_curenta,
+        "Dotări pentru activitatea curentă": dotari_activitate_curenta,
+        "Informații despre contractul de implementare": info_ctr_implementare,
+        "Zonele vizate prioritare": zonele_vizate_prioritar,
+        "Utilaj de ghidare": utilaj_ghidare,
+        "Legături": legaturi,
+        "Rude în cadrul firmei": rude,
+        "Concluzii analiza CA": concluzie_CA,
+        "Caracteristici tehnice relevante": caracteristici_tehnice,
+        "Flux tehnologic": flux_tehnologic,
+        "Utilaje DNSH": utilajeDNSH
+    }
 
-# File uploader allows user to add their own excel file
-uploaded_file = st.file_uploader("Upload your input Excel file", type=["xlsx"])
+    return data
 
-# Check if the file has been uploaded and if the 'excel_data' key doesn't exist in session state
-if uploaded_file is not None and 'excel_data' not in st.session_state:
-    load_excel(uploaded_file)
+st.header('Încărcare Date Solicitate')
 
+uploaded_file = st.file_uploader("Trageți fișierul aici sau faceți clic pentru a încărca", type=["xlsx"])
 
-# If the data is loaded, display the data
-if 'excel_data' in st.session_state:
-    # Retrieve the data from the session state
-    excel_data = st.session_state['excel_data']
+if uploaded_file is not None:
+    df = pd.read_excel(uploaded_file)
+    solicitate_data = extract_date_solicitate(df)
 
-    # Display the data as JSON
-    st.json(excel_data)
+    st.json({"Date Solicitate": solicitate_data})
     
-    # Display the data in DataFrame for visualization
-    st.write("Date Solicitate:")
-    
-    # Create a DataFrame from the dictionary for display
-    df_data = pd.DataFrame(list(excel_data.items()), columns=['Row Index', 'Data'])
-    st.dataframe(df_data)
+    st.write("Vizualizare Date Solicitate:")
+    st.dataframe(pd.DataFrame([solicitate_data]))
 
-    # After extraction, save the data in session_state
-    st.session_state['date_solicitate'] = excel_data  
+    st.session_state['date_solicitate'] = solicitate_data
+
+
+
