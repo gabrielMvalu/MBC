@@ -1,34 +1,28 @@
 #pages/Plan_faceri.py
 import streamlit as st
-from jinja2 import Environment, FileSystemLoader
 from docx import Document
 
-def generate_docx(document_content):
-    doc = Document()
-    doc.add_paragraph(document_content)
-    docx_path = 'plan_de_afaceri_completat.docx'
-    doc.save(docx_path)
-    return docx_path
+# Pagina 2 - Încărcare și completare document cu placeholder-uri
+st.title('Completare Document cu Placeholder-uri')
 
-if 'date_generale' in st.session_state:
-    env = Environment(loader=FileSystemLoader(searchpath='./assets'))
-    template = env.get_template('templatejudet.jinja')
-    document_generat = template.render(
-        date_generale=st.session_state['date_generale'],
-        date_detaliat=st.session_state['date_detaliat'],
-    )
+# Încărcarea documentului cu placeholder-uri
+uploaded_template = st.file_uploader("Încărcați documentul cu placeholder-uri", type=["docx"], key="template")
 
-    # Aici generezi și salvezi documentul .docx
-    docx_path = generate_docx(document_generat)
+if uploaded_template is not None:
+    template_doc = Document(uploaded_template)
 
-    # Afișează un link de descărcare pentru documentul .docx
-    with open(docx_path, "rb") as file:
-        btn = st.download_button(
-            label="Descarcă Planul de Afaceri",
-            data=file,
-            file_name="plan_de_afaceri_completat.docx",
-            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        )
+    # Iterează prin fiecare paragraf pentru a căuta și înlocui placeholder-urile
+    for paragraph in template_doc.paragraphs:
+        if "{Nume_Firma}" in paragraph.text:
+            paragraph.text = paragraph.text.replace("{Nume_Firma}", st.session_state['date_generale']['Denumirea firmei'])
+        if "{CUI}" in paragraph.text:
+            paragraph.text = paragraph.text.replace("{CUI}", st.session_state['date_generale']['Codul unic de înregistrare (CUI)'])
+        # Repetă pentru celelalte placeholder-uri
 
-else:
-    st.error("Datele necesare nu sunt disponibile. Vă rugăm să procesați un document în pagina 'Date SRL'.")
+    # Salvarea documentului modificat
+    modified_doc_path = "document_modificat.docx"
+    template_doc.save(modified_doc_path)
+
+    # Oferă utilizatorului posibilitatea de a descărca documentul modificat
+    with open(modified_doc_path, "rb") as file:
+        st.download_button(label="Descarcă Documentul Completat", data=file, file_name="document_modificat.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
