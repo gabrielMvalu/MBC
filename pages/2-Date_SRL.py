@@ -111,7 +111,7 @@ def extract_caen_codes(full_text):
         return []
 
 # Încărcarea și procesarea documentului în Streamlit
-st.title(':blue[Încărcare Document Registrul Comerțului]',divider='rainbow')
+st.header(':blue[Încărcare Document Registrul Comerțului]',divider='rainbow')
 
 uploaded_file = st.file_uploader("Trageți fișierul aici sau faceți clic pentru a încărca un document", type=["docx"])
 
