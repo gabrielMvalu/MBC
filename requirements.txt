@@ -4,3 +4,4 @@ openpyxl
 python-docx
 Jinja2==2.11.3
 pip
+markupsafe==2.0.1
