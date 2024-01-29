@@ -44,4 +44,4 @@ if 'excel_data' in st.session_state:
     st.dataframe(df_data)
 
     # After extraction, save the data in session_state
-    st.session_state['date_solicitate'] = excel_data  # Correct the typo here
+    st.session_state['date_solicitate'] = excel_data  
