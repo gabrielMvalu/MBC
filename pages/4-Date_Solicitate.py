@@ -27,10 +27,10 @@ def extract_date_solicitate(df):
     utilaj_ghidare = df.iloc[22, 2]
     legaturi = df.iloc[23, 2]
     rude = df.iloc[24, 2]
-    concluzie_CA = df.iloc[25, 2]
-    caracteristici_tehnice = df.iloc[26, 2]
-    flux_tehnologic = df.iloc[27, 2]
-    utilajeDNSH = df.iloc[28, 2]
+    concluzie_CA = df.iloc[36, 2]
+    caracteristici_tehnice = df.iloc[37, 2]
+    flux_tehnologic = df.iloc[38, 2]
+    utilajeDNSH = df.iloc[39, 2]
 
     data = {
         "Denumirea firmei SRL": firma, 
