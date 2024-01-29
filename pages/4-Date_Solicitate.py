@@ -9,9 +9,9 @@ def extract_date_solicitate(df):
     firme_legate = df.iloc[4, 2]
     tip_investitie = df.iloc[5, 2]
     activitate = df.iloc[6, 2]
-    CAEN = df.iloc[7, 2]
+    caen = df.iloc[7, 2]
     nr_locuri_munca_noi = df.iloc[8, 2]
-    Judet = df.iloc[9, 2]
+    judet = df.iloc[9, 2]
     utilaj_dizabilitati = df.iloc[10, 2]
     utilaj_cu_tocator = df.iloc[11, 2]
     adresa_loc_implementare = df.iloc[12, 2]
@@ -19,7 +19,7 @@ def extract_date_solicitate(df):
     clienti_actuali = df.iloc[14, 2]
     furnizori = df.iloc[15, 2]
     tip_activitate = df.iloc[16, 2]
-    ISO = df.iloc[17, 2]
+    iso = df.iloc[17, 2]
     activitate_curenta = df.iloc[18, 2]
     dotari_activitate_curenta = df.iloc[19, 2]
     info_ctr_implementare = df.iloc[20, 2]
@@ -38,9 +38,9 @@ def extract_date_solicitate(df):
         "Firme legate": firme_legate,  
         "Tipul investiției": tip_investitie,  
         "Activitate": activitate,
-        "Cod CAEN": CAEN,
+        "Cod CAEN": caen,
         "Număr locuri de muncă noi": nr_locuri_munca_noi,
-        "Județ": Judet,
+        "Județ": judet,
         "Utilaj pentru persoane cu dizabilități": utilaj_dizabilitati,
         "Utilaj cu tocător": utilaj_cu_tocator,
         "Adresa locației de implementare": adresa_loc_implementare,
@@ -48,7 +48,7 @@ def extract_date_solicitate(df):
         "Clienți actuali": clienti_actuali,
         "Furnizori": furnizori,
         "Tip activitate": tip_activitate,
-        "Certificări ISO": ISO,
+        "Certificări ISO": iso,
         "Activitate curentă": activitate_curenta,
         "Dotări pentru activitatea curentă": dotari_activitate_curenta,
         "Informații despre contractul de implementare": info_ctr_implementare,
