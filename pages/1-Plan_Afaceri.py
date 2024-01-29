@@ -13,11 +13,25 @@ if uploaded_template is not None:
 
     # Iterează prin fiecare paragraf pentru a căuta și înlocui placeholder-urile
     for paragraph in template_doc.paragraphs:
-        if "{Nume_Firma}" in paragraph.text:
-            paragraph.text = paragraph.text.replace("{Nume_Firma}", st.session_state['date_generale']['Denumirea firmei'])
-        if "{CUI}" in paragraph.text:
-            paragraph.text = paragraph.text.replace("{CUI}", st.session_state['date_generale']['Codul unic de înregistrare (CUI)'])
-        # Repetă pentru celelalte placeholder-uri
+        if "#SRL" in paragraph.text:
+            paragraph.text = paragraph.text.replace("#SRL", st.session_state['date_generale']['Denumirea firmei'])
+        
+        if "#CUI#" in paragraph.text:
+            paragraph.text = paragraph.text.replace("#CUI", st.session_state['date_generale']['Codul unic de înregistrare (CUI)'])
+        
+        if "#Nr_recom" in paragraph.text:
+            paragraph.text = paragraph.text.replace("#Nr_recom", st.session_state['date_generale']['Numărul de ordine în Registrul Comerțului'])
+        
+        if "#Data_infiintare" in paragraph.text:
+            paragraph.text = paragraph.text.replace("#data_infiintare", st.session_state['date_generale']['Data înființării'])
+        
+        if "#Adresa_sediu" in paragraph.text:
+            paragraph.text = paragraph.text.replace("#Adresa_sediu", st.session_state['date_generale']['Adresa sediului social'])
+        
+        if "#Adresa_pct_lucru" in paragraph.text:
+            paragraph.text = paragraph.text.replace("#Adresa_pct_lucru", ', '.join(st.session_state['date_generale']['Adresa sediul secundar']))
+        
+  
 
     # Salvarea documentului modificat
     modified_doc_path = "document_modificat.docx"
