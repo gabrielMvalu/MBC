@@ -3,13 +3,10 @@ from PIL import Image
 import pandas as pd
 from io import BytesIO
 
+st.header(':blue[Pregatirea datelor din P. FINANCIAR pentru completare tabel subcap 2.4]', divider='rainbow')
+
 def main():
-    
-    st.header(':blue[Pregatirea datelor din P. FINANCIAR pentru completare tabel subcap 2.4]', devider='rainbow')
-    
-    # Sidebar pentru încărcarea și afișarea logo-ului și textului
-    st.sidebar.title("Prelucrare Tabelara")
-    st.sidebar.markdown("<small>© Castemill S.R.L.</small>", unsafe_allow_html=True)
+       
     # Încărcarea fișierului în sidebar
     uploaded_file = st.sidebar.file_uploader("Încarcă documentul '*.xlsx' aici", type="xlsx", accept_multiple_files=False)
 
