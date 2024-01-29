@@ -88,7 +88,7 @@ if uploaded_file is not None:
     st.session_state['date_solicitate'] = solicitate_data
 
     # Actualizează progresul
-    st.session_state.progress = max(st.session_state.progress, 25)  # completare si aactualizare progres bar // se completează 25%
+    st.session_state.progress += 25  
     st.sidebar.progress(st.session_state.progress)
     
 
