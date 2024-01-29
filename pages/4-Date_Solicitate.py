@@ -27,15 +27,21 @@ uploaded_file = st.file_uploader("Upload your input Excel file", type=["xlsx"])
 if uploaded_file is not None and 'excel_data' not in st.session_state:
     load_excel(uploaded_file)
 
+
 # If the data is loaded, display the data
 if 'excel_data' in st.session_state:
-    st.write(st.session_state['excel_data'])
+    # Retrieve the data from the session state
+    excel_data = st.session_state['excel_data']
 
-
-   
-    # Afișarea datelor în DataFrame-uri pentru vizualizare
+    # Display the data as JSON
+    st.json(excel_data)
+    
+    # Display the data in DataFrame for visualization
     st.write("Date Solicitate:")
-    st.dataframe(pd.DataFrame([excel_data]))
+    
+    # Create a DataFrame from the dictionary for display
+    df_data = pd.DataFrame(list(excel_data.items()), columns=['Row Index', 'Data'])
+    st.dataframe(df_data)
 
-    # După extragere, salvează datele în session_state
-    st.session_state['date_solicitate'] = excel_data
+    # After extraction, save the data in session_state
+    st.session_state['date_solicitate'] = excel_data  # Correct the typo here
