@@ -29,7 +29,7 @@ if uploaded_template is not None:
             paragraph.text = paragraph.text.replace("#Adresa_sediu", st.session_state['date_generale']['Adresa sediului social'])
         
         if "#Adresa_pct_lucru" in paragraph.text:
-            adrese_formate = '\n Adresa punct de lucru:'.join(st.session_state['date_generale']['Adresa sediul secundar'])
+            adrese_formate = '\n'.join(st.session_state['date_generale']['Adresa sediul secundar'])
             paragraph.text = paragraph.text.replace("#Adresa_pct_lucru", adrese_formate)
 
 
