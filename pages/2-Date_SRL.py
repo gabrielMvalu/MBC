@@ -3,6 +3,15 @@ from docx import Document
 import re
 import pandas as pd
 
+# Inițializarea progresului dacă nu există
+if 'progress' not in st.session_state:
+    st.session_state.progress = 0
+
+# Afișează progress bar-ul în sidebar
+st.sidebar.write("Progresul tău:")
+st.sidebar.progress(st.session_state.progress)
+
+
 def extract_data_from_docx(doc):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
     company_pattern = r"FURNIZARE INFORMAŢII\n\n(.*?)\n"
@@ -160,3 +169,7 @@ if uploaded_file is not None:
     st.session_state['date_detaliat'] = {"Asociați": detailed_info, "Administratori": admins}
     st.session_state['situatie_financiara'] = financial_data
     st.session_state['coduri_caen'] = caen_codes
+
+    # Actualizează progresul
+    st.session_state.progress = max(st.session_state.progress, 25)  # dupa completarea pasului se completează 25%
+    st.sidebar.progress(st.session_state.progress)
