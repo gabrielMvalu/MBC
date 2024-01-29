@@ -4,13 +4,13 @@ import streamlit as st
 import pandas as pd
 
 def extract_date_solicitate(df):
-    activitate = df.iloc[7, 3]
-    CAEN = df.iloc[8, 3]
-    nr_locuri_munca_noi = df.iloc[9, 3]
-    Judet = df.iloc[10, 3]
-    utilaj_dizabilitati = df.iloc[11, 3]
-    utilaj_cu_tocator = df.iloc[12, 3]
-    adresa_loc_implementare = df.iloc[13, 3]
+    activitate = df.iloc[3, 2]
+    CAEN = df.iloc[4, 2]
+    nr_locuri_munca_noi = df.iloc[5, 2]
+    Judet = df.iloc[6, 2]
+    utilaj_dizabilitati = df.iloc[7, 2]
+    utilaj_cu_tocator = df.iloc[8, 2]
+    adresa_loc_implementare = df.iloc[9, 2]
     nr_clasare_notificare = df.iloc[14, 3]
     clienti_actuali = df.iloc[15, 3]
     furnizori = df.iloc[16, 3]
