@@ -3,8 +3,8 @@ import streamlit as st
 from docx import Document
 
 # Pagina 2 - Încărcare și completare document cu placeholder-uri
-st.title(':blue[Completare Document cu Placeholder-uri]')
-st.divider('rainbow')
+st.header(':blue[Completare Document cu Placeholder-uri]', divider='rainbow')
+
 
 # Încărcarea documentului cu placeholder-uri
 uploaded_template = st.file_uploader("Încărcați documentul cu placeholder-uri", type=["docx"], key="template")
