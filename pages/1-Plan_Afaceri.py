@@ -1,33 +1,42 @@
+#pages/Plan_faceri.py
 import streamlit as st
-from jinja2 import Environment, FileSystemLoader
 from docx import Document
+from docxcompose.composer import Composer
+from io import BytesIO
 
-def generate_docx(document_content):
-    doc = Document()
-    doc.add_paragraph(document_content)
-    docx_path = 'plan_de_afaceri_completat.docx'
-    doc.save(docx_path)
-    return docx_path
+# Funcție pentru procesarea și descărcarea documentului Word
+def process_and_download_docx(uploaded_file, data):
+    # Încărcați documentul
+    doc = Document(uploaded_file)
+    composer = Composer(doc)
+    
+    # Înlocuiți textul folosind datele
+    for paragraph in doc.paragraphs:
+        for key, value in data.items():
+            if key in paragraph.text:
+                paragraph.text = paragraph.text.replace(key, value)
 
-if 'date_generale' in st.session_state:
-    env = Environment(loader=FileSystemLoader(searchpath='./assets'))
-    template = env.get_template('templatejudet.jinja')
-    document_generat = template.render(
-        date_generale=st.session_state['date_generale'],
-        date_detaliat=st.session_state['date_detaliat'],
+    # Salvați documentul modificat într-un buffer
+    buffer = BytesIO()
+    composer.save(buffer)
+    buffer.seek(0)
+
+    # Returnați buffer-ul pentru descărcare
+    return buffer
+
+# Încărcarea documentului Word
+uploaded_file = st.file_uploader("Încărcați Planul de Afaceri", type=["docx"])
+
+if uploaded_file is not None and 'date_generale' in st.session_state:
+    # Generați buffer-ul pentru documentul modificat
+    buffer = process_and_download_docx(uploaded_file, st.session_state['date_generale'])
+
+    # Buton de descărcare pentru documentul modificat
+    st.download_button(
+        label="Descarcă Planul de Afaceri completat",
+        data=buffer,
+        file_name="plan_de_afaceri_completat.docx",
+        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     )
-
-    # Aici generezi și salvezi documentul .docx
-    docx_path = generate_docx(document_generat)
-
-    # Afișează un link de descărcare pentru documentul .docx
-    with open(docx_path, "rb") as file:
-        btn = st.download_button(
-            label="Descarcă Planul de Afaceri",
-            data=file,
-            file_name="plan_de_afaceri_completat.docx",
-            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        )
-
 else:
-    st.error("Datele necesare nu sunt disponibile. Vă rugăm să procesați un document în pagina 'Date SRL'.")
+    st.error("Încărcați un document și asigurați-vă că datele necesare sunt disponibile.")
