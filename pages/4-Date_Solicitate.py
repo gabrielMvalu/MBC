@@ -39,4 +39,4 @@ if 'excel_data' in st.session_state:
     st.dataframe(pd.DataFrame([excel_data]))
 
     # După extragere, salvează datele în session_state
-    st.session_state['date_solicitate'] = exel_data
+    st.session_state['date_solicitate'] = excel_data
