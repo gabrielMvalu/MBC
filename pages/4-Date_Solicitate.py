@@ -64,7 +64,7 @@ def extract_date_solicitate(df):
 
     return data
 
-st.header('Încărcare Date Solicitate')
+st.header(':blue[Încărcare Date Solicitate]', divider='rainbow')
 
 uploaded_file = st.file_uploader("Trageți fișierul aici sau faceți clic pentru a încărca", type=["xlsx"])
 
