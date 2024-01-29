@@ -13,25 +13,25 @@ if uploaded_template is not None:
 
     # Iterează prin fiecare paragraf pentru a căuta și înlocui placeholder-urile
     for paragraph in template_doc.paragraphs:
-        if "#SRL" in paragraph.text:
-            paragraph.text = paragraph.text.replace("#SRL", st.session_state['date_generale']['Denumirea firmei'])
-        
-        if "#CUI" in paragraph.text:
-            paragraph.text = paragraph.text.replace("#CUI", st.session_state['date_generale']['Codul unic de înregistrare (CUI)'])
-        
-        if "#Nr_recom" in paragraph.text:
-            paragraph.text = paragraph.text.replace("#Nr_recom", st.session_state['date_generale']['Numărul de ordine în Registrul Comerțului'])
-        
-        if "#Data_infiintare" in paragraph.text:
-            paragraph.text = paragraph.text.replace("#data_infiintare", st.session_state['date_generale']['Data înființării'])
-        
-        if "#Adresa_sediu" in paragraph.text:
-            paragraph.text = paragraph.text.replace("#Adresa_sediu", st.session_state['date_generale']['Adresa sediului social'])
-        
-        if "#Adresa_pct_lucru" in paragraph.text:
-            adrese_formate = '\n'.join(st.session_state['date_generale']['Adresa sediul secundar'])
-            paragraph.text = paragraph.text.replace("#Adresa_pct_lucru", adrese_formate)
-
+        for run in paragraph.runs:
+            if "#SRL" in run.text:
+                run.text = run.text.replace("#SRL", st.session_state['date_generale']['Denumirea firmei'])
+            
+            if "#CUI" in run.text:
+                run.text = run.text.replace("#CUI", st.session_state['date_generale']['Codul unic de înregistrare (CUI)'])
+            
+            if "#Nr_recom" in run.text:
+                run.text = run.text.replace("#Nr_recom", st.session_state['date_generale']['Numărul de ordine în Registrul Comerțului'])
+            
+            if "#Data_infiintare" in run.text:
+                run.text = run.text.replace("#Data_infiintare", st.session_state['date_generale']['Data înființării'])
+            
+            if "#Adresa_sediu" in run.text:
+                run.text = run.text.replace("#Adresa_sediu", st.session_state['date_generale']['Adresa sediului social'])
+            
+            if "#Adresa_pct_lucru" in run.text:
+                adrese_formate = '\n'.join(st.session_state['date_generale']['Adresa sediul secundar'])
+                run.text = run.text.replace("#Adresa_pct_lucru", adrese_formate)
 
     # Salvarea documentului modificat
     modified_doc_path = "document_modificat.docx"
