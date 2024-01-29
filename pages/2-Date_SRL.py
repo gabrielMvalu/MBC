@@ -170,6 +170,6 @@ if uploaded_file is not None:
     st.session_state['situatie_financiara'] = financial_data
     st.session_state['coduri_caen'] = caen_codes
 
-    # Actualizează progresul
-    st.session_state.progress = max(st.session_state.progress, 25)  # dupa completarea pasului se completează 25%
+
+    st.session_state.progress += 25  # Sau orice altă valoare specifică paginii
     st.sidebar.progress(st.session_state.progress)
