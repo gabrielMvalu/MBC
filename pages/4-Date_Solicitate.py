@@ -32,8 +32,7 @@ if 'excel_data' in st.session_state:
     st.write(st.session_state['excel_data'])
 
 
-    st.json(data_dict)
-    
+   
     # Afișarea datelor în DataFrame-uri pentru vizualizare
     st.write("Date Solicitate:")
     st.dataframe(pd.DataFrame([data_dict]))
