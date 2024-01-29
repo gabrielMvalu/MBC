@@ -5,21 +5,7 @@ from io import BytesIO
 
 def main():
     
-    st.markdown("""
-        <style>
-        @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
-        .title {
-            color: #7FBBE9; /* A modern shade of blue */
-            font-family: 'Comic Sans MS', cursive, sans-serif; /* Comic Sans MS with fallbacks */
-            font-size: 30px; /* Adjust the size as needed */
-            font-weight: 700; /* 700 is for bold text */
-            text-align: center; /* Center align for modern aesthetics */
-            margin-bottom: 20px; /* Add some space below the title */
-        }
-        </style>
-    
-        <h1 class='title'>Pregatirea datelor din P. FINANCIAR pentru completare tabel subcap 2.4</h1>
-        """, unsafe_allow_html=True)
+    st.header(':blue[Pregatirea datelor din P. FINANCIAR pentru completare tabel subcap 2.4]', devider='rainbow')
     
     # Sidebar pentru încărcarea și afișarea logo-ului și textului
     st.sidebar.title("Prelucrare Tabelara")
