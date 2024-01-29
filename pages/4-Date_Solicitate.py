@@ -4,31 +4,39 @@ import streamlit as st
 import pandas as pd
 
 def extract_date_solicitate(df):
-    activitate = df.iloc[3, 2]
-    CAEN = df.iloc[4, 2]
-    nr_locuri_munca_noi = df.iloc[5, 2]
-    Judet = df.iloc[6, 2]
-    utilaj_dizabilitati = df.iloc[7, 2]
-    utilaj_cu_tocator = df.iloc[8, 2]
-    adresa_loc_implementare = df.iloc[9, 2]
-    nr_clasare_notificare = df.iloc[14, 3]
-    clienti_actuali = df.iloc[15, 3]
-    furnizori = df.iloc[16, 3]
-    tip_activitate = df.iloc[17, 3]
-    ISO = df.iloc[18, 3]
-    activitate_curenta = df.iloc[19, 3]
-    dotari_activitate_curenta = df.iloc[20, 3]
-    info_ctr_implementare = df.iloc[21, 3]
-    zonele_vizate_prioritar = df.iloc[22, 3]
-    utilaj_ghidare = df.iloc[23, 3]
-    legaturi = df.iloc[24, 3]
-    rude = df.iloc[25, 3]
-    concluzie_CA = df.iloc[26, 3]
-    caracteristici_tehnice = df.iloc[27, 3]
-    flux_tehnologic = df.iloc[28, 3]
-    utilajeDNSH = df.iloc[29, 3]
+    firma = df.iloc[2, 2]
+    categ_intreprindere = df.iloc[3, 2]
+    firme_legate = df.iloc[4, 2]
+    tip_investitie = df.iloc[5, 2]
+    activitate = df.iloc[6, 2]
+    CAEN = df.iloc[7, 2]
+    nr_locuri_munca_noi = df.iloc[8, 2]
+    Judet = df.iloc[9, 2]
+    utilaj_dizabilitati = df.iloc[10, 2]
+    utilaj_cu_tocator = df.iloc[11, 2]
+    adresa_loc_implementare = df.iloc[12, 2]
+    nr_clasare_notificare = df.iloc[13, 2]
+    clienti_actuali = df.iloc[14, 2]
+    furnizori = df.iloc[15, 2]
+    tip_activitate = df.iloc[16, 2]
+    ISO = df.iloc[17, 2]
+    activitate_curenta = df.iloc[18, 2]
+    dotari_activitate_curenta = df.iloc[19, 2]
+    info_ctr_implementare = df.iloc[20, 2]
+    zonele_vizate_prioritar = df.iloc[21, 2]
+    utilaj_ghidare = df.iloc[22, 2]
+    legaturi = df.iloc[23, 2]
+    rude = df.iloc[24, 2]
+    concluzie_CA = df.iloc[25, 2]
+    caracteristici_tehnice = df.iloc[26, 2]
+    flux_tehnologic = df.iloc[27, 2]
+    utilajeDNSH = df.iloc[28, 2]
 
     data = {
+        "Denumirea firmei SRL": firma, 
+        "Categorie întreprindere": categ_intreprindere, 
+        "Firme legate": firme_legate,  
+        "Tipul investiției": tip_investitie,  
         "Activitate": activitate,
         "Cod CAEN": CAEN,
         "Număr locuri de muncă noi": nr_locuri_munca_noi,
@@ -48,7 +56,7 @@ def extract_date_solicitate(df):
         "Utilaj de ghidare": utilaj_ghidare,
         "Legături": legaturi,
         "Rude în cadrul firmei": rude,
-        "Concluzii analiza CA": concluzie_CA,
+        "Concluzie_CA": concluzie_CA, 
         "Caracteristici tehnice relevante": caracteristici_tehnice,
         "Flux tehnologic": flux_tehnologic,
         "Utilaje DNSH": utilajeDNSH
