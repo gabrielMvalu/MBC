@@ -3,6 +3,14 @@
 import streamlit as st
 import pandas as pd
 
+# Inițializarea progresului dacă nu există
+if 'progress' not in st.session_state:
+    st.session_state.progress = 0
+
+# Afișează progress bar-ul în sidebar
+st.sidebar.write("Progresul tău:")
+st.sidebar.progress(st.session_state.progress)
+
 def extract_date_solicitate(df):
     firma = df.iloc[2, 2]
     categ_intreprindere = df.iloc[3, 2]
@@ -80,7 +88,7 @@ if uploaded_file is not None:
     st.session_state['date_solicitate'] = solicitate_data
 
     # Actualizează progresul
-    st.session_state.progress = max(st.session_state.progress, 25)  # Presupunem că aceasta este pagina 1 și completează 25%
+    st.session_state.progress = max(st.session_state.progress, 25)  # completare si aactualizare progres bar // se completează 25%
     st.sidebar.progress(st.session_state.progress)
     
 
