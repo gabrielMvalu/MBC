@@ -35,7 +35,7 @@ if 'excel_data' in st.session_state:
    
     # Afișarea datelor în DataFrame-uri pentru vizualizare
     st.write("Date Solicitate:")
-    st.dataframe(pd.DataFrame([data_dict]))
+    st.dataframe(pd.DataFrame([excel_data]))
 
     # După extragere, salvează datele în session_state
-    st.session_state['date_solicitate'] = data_dict
+    st.session_state['date_solicitate'] = excel_data
