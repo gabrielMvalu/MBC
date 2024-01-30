@@ -20,7 +20,7 @@ def extrage_date_bilant(df):
     }
     return data
 
-def extrage_date_bilant(df1):
+def extrage_date_contpp(df1):
     cpa20 = df1.iloc[4, 1]
     cpa21 = df1.iloc[4, 2]
     cpa22 = df1.iloc[4, 3]
@@ -52,7 +52,7 @@ if uploaded_file is not None:
     df = pd.read_excel(uploaded_file, sheet_name='1-Bilant')
     df1 = pd.read_excel(uploaded_file, sheet_name='2-ContPP')
     data_bilant = extrage_date_bilant(df)
-    data_contpp = extrage_date_bilant(df1)
+    data_contpp = extrage_date_contpp(df1)
     
     st.json({"Datele din bilant sunt:": data_bilant})
     st.json({"Datele din bilant sunt:": data_contpp})    
