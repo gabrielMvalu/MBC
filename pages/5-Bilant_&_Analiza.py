@@ -67,7 +67,7 @@ def extrage_indicatori_financiari(df2):
     roe21 = f"{df.iloc[47, 1]:.2f}"
     roe22 = f"{df.iloc[47, 1]:.2f}"
 
-    data_fin = {
+    data = {
         "Rata solvabilitatii generale 2020": rs20, 
         "Rata solvabilitatii generale 2021": rs21,
         "Rata solvabilitatii generale 2022": rs22,
@@ -82,7 +82,7 @@ def extrage_indicatori_financiari(df2):
         "Rentabilitatea capitalului propriu (ROE) 2022": roe22,
     }
 
-    return data_fin
+    return data
 
 st.header(':blue[Adaugati Analiză, Bilanț, Cont de Profit și Pierdere]', divider='rainbow')
 
