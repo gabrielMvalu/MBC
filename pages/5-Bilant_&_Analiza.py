@@ -47,6 +47,7 @@ if uploaded_file is not None:
 
 
    
-    st.write("Vizualizare Bilant & Analiza:")
+    st.write("Vizualizare Bilant:")
     st.dataframe(pd.DataFrame([data_bilant]))
-    st.dataframe(pd.DataFrame([data_contpp])
+    st.write("Vizualizare Analiza:")
+    st.dataframe(pd.DataFrame([data_contpp]))
