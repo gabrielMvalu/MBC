@@ -9,9 +9,9 @@ st.sidebar.write("Progresul tău:")
 st.sidebar.progress(st.session_state.progress)
 
 def extrage_date_bilant(df):
-    cpa20 = "{:.2f}".format(df.iloc[76, 1])
-    cpa21 = "{:.2f}".format(df.iloc[76, 2])
-    cpa22 = "{:.2f}".format(df.iloc[76, 3])
+    cpa20 = f"{df.iloc[76, 1]:.2f}"
+    cpa21 = f"{df.iloc[76, 2]:.2f}"
+    cpa22 = f"{df.iloc[76, 3]:.2f}"
 
     data = {
         "Capitalul propriu al actionarilor 2020": cpa20, 
@@ -21,15 +21,16 @@ def extrage_date_bilant(df):
     return data
 
 def extrage_date_contpp(df1):
-    cpa20 = round(df1.iloc[4, 1], 2)
-    cpa21 = round(df1.iloc[4, 2], 2)
-    cpa22 = round(df1.iloc[4, 3], 2)
-    vt20 = round(df1.iloc[55, 1], 2)
-    vt21 = round(df1.iloc[55, 2], 2)
-    vt22 = round(df1.iloc[55, 3], 2)
-    re20 = round(df1.iloc[66, 1], 2) if df1.iloc[66, 1] > 0 else round(df1.iloc[67, 1], 2)
-    re21 = round(df1.iloc[66, 2], 2) if df1.iloc[66, 2] > 0 else round(df1.iloc[67, 2], 2)
-    re22 = round(df1.iloc[66, 3], 2) if df1.iloc[66, 3] > 0 else round(df1.iloc[67, 3], 2)
+    cpa20 = f"{df1.iloc[4, 1]:.2f}"
+    cpa21 = f"{df1.iloc[4, 2]:.2f}"
+    cpa22 = f"{df1.iloc[4, 3]:.2f}"
+    vt20 = f"{df1.iloc[55, 1]:.2f}"
+    vt21 = f"{df1.iloc[55, 2]:.2f}"
+    vt22 = f"{df1.iloc[55, 3]:.2f}"
+
+    re20 = f"{df1.iloc[66, 1]:.2f}" if df1.iloc[66, 1] > 0 else f"{df1.iloc[67, 1]:.2f}"
+    re21 = f"{df1.iloc[66, 2]:.2f}" if df1.iloc[66, 2] > 0 else f"{df1.iloc[67, 2]:.2f}"
+    re22 = f"{df1.iloc[66, 3]:.2f}" if df1.iloc[66, 3] > 0 else f"{df1.iloc[67, 3]:.2f}"
     
     data = {
         "Cifra de afaceri 2020": cpa20, 
@@ -43,6 +44,7 @@ def extrage_date_contpp(df1):
         "Rezultat al exercitiului 2022": re22,        
     }
     return data
+
 
 
 st.header(':blue[Adaugati Analiză, Bilanț, Cont de Profit și Pierdere]', divider='rainbow')
