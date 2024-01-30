@@ -20,15 +20,42 @@ def extrage_date_bilant(df):
     }
     return data
 
+def extrage_date_bilant(df1):
+    cpa20 = df1.iloc[6, 1]
+    cpa21 = df1.iloc[6, 2]
+    cpa22 = df1.iloc[6, 3]
+    vt20 = df1.iloc[55, 1]
+    vt21 = df1.iloc[56, 2]
+    vt22 = df1.iloc[57, 3]
+    re20 = df1.iloc[64, 1] if df1.iloc[64, 1] > 0 else df1.iloc[65, 1]
+    re21 = df1.iloc[65, 2] if df1.iloc[65, 2] > 0 else df1.iloc[66, 2]
+    re22 = df1.iloc[66, 3] if df1.iloc[66, 3] > 0 else df1.iloc[67, 3]
+    
+    data = {
+        "Cifra de afaceri 2020": cpa20, 
+        "Cifra de afaceri 2021": cpa21,
+        "Cifra de afaceri 2022": cpa22,
+        "Venituri totale 2020": vt20, 
+        "Venituri totale 2021": vt21,
+        "Venituri totale 2022": vt22,
+        "Rezultat al exercitiului 2020": re20, 
+        "Rezultat al exercitiului 2021": re21,
+        "Rezultat al exercitiului 2022": re22,        
+    }
+    return data
+
 st.header(':blue[Adaugati Analiză, Bilanț, Cont de Profit și Pierdere]', divider='rainbow')
 
 uploaded_file = st.file_uploader("Adăugați fișierul aici sau faceți click pentru a încărca", type=["xlsx"])
 
 if uploaded_file is not None:
     df = pd.read_excel(uploaded_file, sheet_name='1-Bilant')
+    df1 = pd.read_excel(uploaded_file, sheet_name='2-ContPP')
     data_bilant = extrage_date_bilant(df)
-
+    data_contpp = extrage_date_bilant(df1)
+    
     st.json({"Datele din bilant sunt:": data_bilant})
+    st.json({"Datele din bilant sunt:": data_contpp})    
     
     st.write("Vizualizare Bilant:")
     st.dataframe(pd.DataFrame([data_bilant]))
