@@ -11,8 +11,9 @@ st.sidebar.write("Progresul tău:")
 st.sidebar.progress(st.session_state.progress)
 
 def extrage_date_foaie(df):
-    valoare1 = df.iloc[9, 1]  # Presupunem că aceasta este poziția dorită
-    valoare2 = df.iloc[10, 1]  # Presupunem că aceasta este poziția dorită
+    # Presupunem că valorile sunt deja în format float în DataFrame
+    valoare1 = Decimal(df.iloc[9, 1]).quantize(Decimal('0.00'))
+    valoare2 = Decimal(df.iloc[10, 1]).quantize(Decimal('0.00'))
 
     data = {
         "Valoare1": valoare1, 
