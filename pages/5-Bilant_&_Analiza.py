@@ -54,21 +54,21 @@ def extrage_date_contpp(df1):
     return data
 
 def extrage_indicatori_financiari(df2):
-    rs20 = f"{df.iloc[90, 1]:.2f}"
-    rs21 = f"{df.iloc[90, 2]:.2f}"
-    rs22 = f"{df.iloc[90, 3]:.2f}"
+    rs20 = f"{df.iloc[89, 1]:.2f}"
+    rs21 = f"{df.iloc[89, 2]:.2f}"
+    rs22 = f"{df.iloc[89, 3]:.2f}"
 
-    gdi20 = f"{df.iloc[96, 1]:.2f}"
-    gdi21 = f"{df.iloc[96, 2]:.2f}"
-    gdi22 = f"{df.iloc[96, 3]:.2f}"
+    gdi20 = f"{df.iloc[95, 1]:.2f}"
+    gdi21 = f"{df.iloc[95, 2]:.2f}"
+    gdi22 = f"{df.iloc[95, 3]:.2f}"
 
-    roa20 = f"{df.iloc[44, 1]:.2f}"
-    roa21 = f"{df.iloc[44, 2]:.2f}"
-    roa22 = f"{df.iloc[44, 3]:.2f}"
+    roa20 = f"{df.iloc[43, 1]:.2f}"
+    roa21 = f"{df.iloc[43, 2]:.2f}"
+    roa22 = f"{df.iloc[43, 3]:.2f}"
 
-    roe20 = f"{df.iloc[48, 1]:.2f}"
-    roe21 = f"{df.iloc[48, 2]:.2f}"
-    roe22 = f"{df.iloc[48, 3]:.2f}"
+    roe20 = f"{df.iloc[47, 1]:.2f}"
+    roe21 = f"{df.iloc[47, 2]:.2f}"
+    roe22 = f"{df.iloc[47, 3]:.2f}"
 
     data = {
         "Rata solvabilitatii generale 2020": rs20, 
