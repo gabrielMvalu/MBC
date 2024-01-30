@@ -9,9 +9,9 @@ st.sidebar.write("Progresul tău:")
 st.sidebar.progress(st.session_state.progress)
 
 def extrage_date_bilant(df):
-    cpa20 = round(df.iloc[76, 1], 2)
-    cpa21 = round(df.iloc[76, 2], 2)
-    cpa22 = round(df.iloc[76, 3], 2)
+    cpa20 = "{:.2f}".format(df.iloc[76, 1])
+    cpa21 = "{:.2f}".format(df.iloc[76, 2])
+    cpa22 = "{:.2f}".format(df.iloc[76, 3])
 
     data = {
         "Capitalul propriu al actionarilor 2020": cpa20, 
