@@ -95,30 +95,22 @@ def extract_detailed_info_from_docx(doc):
 
     return output_asociati, nume_administrator
 
-def extract_situatie_financiara(doc):
+def extract_situatie_angajati(doc):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
-
-    # Pattern pentru anul 2020
     angajati_pattern_2020 = r"SITUAŢIA FINANCIARĂ PE ANUL 2020.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)"
     angajati_match_2020 = re.search(angajati_pattern_2020, full_text, re.DOTALL)
     nrang20 = angajati_match_2020.group(1) if angajati_match_2020 else "N/A"
-
-    # Pattern pentru anul 2021
     angajati_pattern_2021 = r"SITUAŢIA FINANCIARĂ PE ANUL 2021.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)"
     angajati_match_2021 = re.search(angajati_pattern_2021, full_text, re.DOTALL)
     nrang21 = angajati_match_2021.group(1) if angajati_match_2021 else "N/A"
-
-    # Pattern pentru anul 2022
     angajati_pattern_2022 = r"SITUAŢIA FINANCIARĂ PE ANUL 2022.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)"
     angajati_match_2022 = re.search(angajati_pattern_2022, full_text, re.DOTALL)
     nrang22 = angajati_match_2022.group(1) if angajati_match_2022 else "N/A"
-
     data_angajati = {
         "Numar mediu angajati 2020": nrang20,
         "Numar mediu angajati 2021": nrang21,
         "Numar mediu angajati 2022": nrang22,
     }
-
     return data_angajati
 
 
@@ -145,7 +137,7 @@ if uploaded_file is not None:
     doc = Document(uploaded_file)
     general_data = extract_data_from_docx(doc)
     detailed_info, admins = extract_detailed_info_from_docx(doc)
-    financial_data = extract_situatie_financiara(doc)
+    angajati_data = extract_situatie_angajatia(doc)
     caen_codes = extract_caen_codes("\n".join([p.text for p in doc.paragraphs]))
 
 
@@ -172,7 +164,7 @@ if uploaded_file is not None:
 
 
     st.write("Situație Financiară:")
-    st.dataframe(pd.DataFrame(financial_data, columns=["An", "Nr mediu angajați"]))
+    st.dataframe(pd.DataFrame([angajati_data]))
 
     st.write("Coduri CAEN:")
     st.dataframe(pd.DataFrame(caen_codes, columns=["Cod CAEN", "Descriere"]))
