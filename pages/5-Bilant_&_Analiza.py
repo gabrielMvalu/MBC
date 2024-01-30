@@ -13,7 +13,7 @@ def extrage_date_bilant(df):
     cpa21 = df.iloc[78, 2]
     cpa22 = df.iloc[79, 1]
 
-    data_bilant = {
+    data = {
         "Capitalul propriu al actionarilor 2020": cpa20, 
         "Capitalul propriu al actionarilor 2021": cpa21,
         "Capitalul propriu al actionarilor 2022": cpa22
