@@ -18,9 +18,9 @@ def extrage_date_bilant(df):
         "Capitalul propriu al actionarilor 2021": cpa21,
         "Capitalul propriu al actionarilor 2022": cpa22
     }
-    return data
+    return data_bilant
 
-st.header(':blue[Adaugati Analiză, Bilanț, Cont de Profit și Pierdere]')
+st.header(':blue[Adaugati Analiză, Bilanț, Cont de Profit și Pierdere]', divider='rainbow')
 
 uploaded_file = st.file_uploader("Adăugați fișierul aici sau faceți click pentru a încărca", type=["xlsx"])
 
@@ -34,6 +34,7 @@ if uploaded_file is not None:
     st.dataframe(pd.DataFrame([data_bilant]))
     
     st.session_state['data_bilant'] = data_bilant
+    
     st.session_state.progress += 25  
     st.sidebar.progress(st.session_state.progress)
 
