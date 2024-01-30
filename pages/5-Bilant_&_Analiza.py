@@ -22,6 +22,7 @@ def extrage_date_bilant(df_bilant):
 
 def incarca_si_extrage_date(uploaded_file):
     df_bilant = pd.read_excel(uploaded_file, sheet_name='1-Bilant')
+    st.write(df_bilant.head())
     data_bilant = extrage_date_bilant(df_bilant)
     return data_bilant
 
