@@ -25,7 +25,7 @@ st.header(':blue[Adaugati Analiză, Bilanț, Cont de Profit și Pierdere]', divi
 uploaded_file = st.file_uploader("Adăugați fișierul aici sau faceți click pentru a încărca", type=["xlsx"])
 
 if uploaded_file is not None:
-    df = pd.read_excel(uploaded_file, sheet_name='!-Bilant')
+    df = pd.read_excel(uploaded_file, sheet_name='1-Bilant')
     data_bilant = extrage_date_bilant(df)
 
     st.json({"Datele din bilant sunt:": data_bilant})
