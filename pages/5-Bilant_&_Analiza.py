@@ -50,8 +50,3 @@ if uploaded_file is not None:
     st.write("Vizualizare Bilant & Analiza:")
     st.dataframe(pd.DataFrame([data_bilant]))
     st.dataframe(pd.DataFrame([data_contpp])
-
-    
-
-
-    
