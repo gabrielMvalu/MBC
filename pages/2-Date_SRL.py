@@ -172,7 +172,7 @@ if uploaded_file is not None:
     # După extragere, salvează datele în session_state
     st.session_state['date_generale'] = general_data
     st.session_state['date_detaliat'] = {"Asociați": detailed_info, "Administratori": admins}
-    st.session_state['situatie_financiara'] = financial_data
+    st.session_state['situatie_angajati'] = angajati_data
     st.session_state['coduri_caen'] = caen_codes
 
 
