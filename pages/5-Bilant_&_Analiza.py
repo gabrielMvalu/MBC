@@ -53,7 +53,39 @@ def extrage_date_contpp(df1):
     }
     return data
 
+def extrage_indicatori_financiari(df2):
+    rs20 = f"{df.iloc[90, 1]:.2f}"
+    rs21 = f"{df.iloc[90, 2]:.2f}"
+    rs22 = f"{df.iloc[90, 3]:.2f}"
 
+    gdi20 = f"{df.iloc[96, 1]:.2f}"
+    gdi21 = f"{df.iloc[96, 2]:.2f}"
+    gdi22 = f"{df.iloc[96, 3]:.2f}"
+
+    roa20 = f"{df.iloc[44, 1]:.2f}"
+    roa21 = f"{df.iloc[44, 2]:.2f}"
+    roa22 = f"{df.iloc[44, 3]:.2f}"
+
+    roe20 = f"{df.iloc[48, 1]:.2f}"
+    roe21 = f"{df.iloc[48, 2]:.2f}"
+    roe22 = f"{df.iloc[48, 3]:.2f}"
+
+    data = {
+        "Rata solvabilitatii generale 2020": rs20, 
+        "Rata solvabilitatii generale 2021": rs21,
+        "Rata solvabilitatii generale 2022": rs22,
+        "Gradul de indatorare pe termen scurt 2020": gdi20, 
+        "Gradul de indatorare pe termen scurt 2021": gdi21,
+        "Gradul de indatorare pe termen scurt 2022": gdi22,
+        "Rentabilitatea activelor (ROA) 2020": roa20, 
+        "Rentabilitatea activelor (ROA) 2021": roa21,
+        "Rentabilitatea activelor (ROA) 2022": roa22,
+        "Rentabilitatea capitalului propriu (ROE) 2020": roe20, 
+        "Rentabilitatea capitalului propriu (ROE) 2021": roe21,
+        "Rentabilitatea capitalului propriu (ROE) 2022": roe22,
+    }
+
+    return data
 
 st.header(':blue[Adaugati Analiză, Bilanț, Cont de Profit și Pierdere]', divider='rainbow')
 
@@ -62,15 +94,20 @@ uploaded_file = st.file_uploader("Adăugați fișierul aici sau faceți click pe
 if uploaded_file is not None:
     df = pd.read_excel(uploaded_file, sheet_name='1-Bilant')
     df1 = pd.read_excel(uploaded_file, sheet_name='2-ContPP')
+    df2 = pd.read_excel(uploaded_file, sheet_name='1D-Analiza_fin_indicatori')    
     data_bilant = extrage_date_bilant(df)
     data_contpp = extrage_date_contpp(df1)
+    data_analiza = extrage_indicatori_financiari(df2) 
     
     st.json({"Datele din bilant sunt:": data_bilant})
     st.json({"Datele din bilant sunt:": data_contpp})    
+    st.json({"Datele din bilant sunt:": data_analiza})
     
     st.write("Vizualizare Bilant:")
     st.dataframe(pd.DataFrame([data_bilant]))
-    st.dataframe(pd.DataFrame([data_contpp]))    
+    st.dataframe(pd.DataFrame([data_contpp])) 
+    st.dataframe(pd.DataFrame([data_analiza])) 
+
     
     st.session_state['data_bilant'] = data_bilant
     
