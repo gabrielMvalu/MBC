@@ -142,11 +142,7 @@ if uploaded_file is not None:
     financial_data = extract_situatie_financiara(doc)
     caen_codes = extract_caen_codes("\n".join([p.text for p in doc.paragraphs]))
 
-    # Verificarea anilor specificați
-    ani_doriti = {"2020", "2021", "2022"}
-    ani_extracti = {str(year) for year, _ in financial_data}
-    if not ani_extracti.issubset(ani_doriti):
-        st.warning("Verificați anii extrași. Sunt diferiți de 2020-2022!")
+
 
     # Afișarea datelor în format JSON
     st.json({
