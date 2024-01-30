@@ -1,8 +1,8 @@
 # app.py
 import streamlit as st
 
-st.title("Pagina Principală")
-st.write("Bine ați venit la aplicația multipagină!")
+st.header(':blue[Pagina Principală]', divider='rainbow')
+st.write(':violet[Bine ați venit la aplicația pentru completarea - Planului de Afaceri! -]')
 
 # Inițializarea progresului dacă nu există
 if 'progress' not in st.session_state:
