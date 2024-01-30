@@ -54,7 +54,7 @@ def extrage_date_contpp(df1):
     return data
 
 def extrage_indicatori_financiari(df2):
-    rs20 = df.iloc[5, 1]
+    rs20 = df.iloc[4, 0]
     rs21 = f"{df.iloc[6, 1]:.2f}"
     rs22 = f"{df.iloc[7, 1]:.2f}"
     gdi20 = f"{df.iloc[8, 1]:.2f}"
@@ -67,7 +67,7 @@ def extrage_indicatori_financiari(df2):
     roe21 = f"{df.iloc[47, 1]:.2f}"
     roe22 = f"{df.iloc[47, 1]:.2f}"
 
-    data = {
+    data_fin = {
         "Rata solvabilitatii generale 2020": rs20, 
         "Rata solvabilitatii generale 2021": rs21,
         "Rata solvabilitatii generale 2022": rs22,
@@ -82,7 +82,7 @@ def extrage_indicatori_financiari(df2):
         "Rentabilitatea capitalului propriu (ROE) 2022": roe22,
     }
 
-    return data
+    return data_fin
 
 st.header(':blue[Adaugati Analiză, Bilanț, Cont de Profit și Pierdere]', divider='rainbow')
 
@@ -97,8 +97,8 @@ if uploaded_file is not None:
     data_analiza = extrage_indicatori_financiari(df2) 
     
     st.json({"Datele din bilant sunt:": data_bilant})
-    st.json({"Datele din bilant sunt:": data_contpp})    
-    st.json({"Datele din bilant sunt:": data_analiza})
+    st.json({"Datele din contPP sunt:": data_contpp})    
+    st.json({"Datele din analiza sunt:": data_analiza})
     
     st.write("Vizualizare Bilant:")
     st.dataframe(pd.DataFrame([data_bilant]))
@@ -106,8 +106,7 @@ if uploaded_file is not None:
     st.dataframe(pd.DataFrame([data_analiza])) 
 
     
-    st.session_state['data_bilant'] = data_bilant
-    
+       
     st.session_state.progress += 25  
     st.sidebar.progress(st.session_state.progress)
 
