@@ -1,5 +1,4 @@
 # pages/Bilant & Analiza.py
-
 import streamlit as st
 import pandas as pd
 
@@ -11,35 +10,46 @@ if 'progress' not in st.session_state:
 st.sidebar.write("Progresul tău:")
 st.sidebar.progress(st.session_state.progress)
 
-def extract_date_bilant(df):
-    firma = df.iloc[2, 2]
-    categ_intreprindere = df.iloc[3, 2]
-    
+def extrage_date_foaie(df):
+    valoare1 = df.iloc[10, 1]  # Presupunem că aceasta este poziția dorită
+    valoare2 = df.iloc[11, 1]  # Presupunem că aceasta este poziția dorită
 
     data = {
-        "Denumirea firmei SRL": firma, 
-        "Categorie întreprindere": categ_intreprindere, 
-       
+        "Valoare1": valoare1, 
+        "Valoare2": valoare2,
     }
 
     return data
 
-st.header(':blue[Încărcare 1-Bilant - 2 Cont PP - Analiza financiara]', divider='rainbow')
+def incarca_si_extrage_date(uploaded_file):
+    df_bilant = pd.read_excel(uploaded_file, sheet_name='1-Bilant')
+    data_bilant = extrage_date_foaie(df_bilant)
 
-uploaded_file = st.file_uploader("Trageți fișierul aici sau faceți click pentru a încărca", type=["xlsx"])
+    df_contpp = pd.read_excel(uploaded_file, sheet_name='1-ContPP')
+    data_contpp = extrage_date_foaie(df_contpp)
+
+    return data_bilant, data_contpp
+
+st.header('Încărcare și Analiză Bilanț și Cont de Profit și Pierdere')
+
+uploaded_file = st.file_uploader("Adăugați fișierul aici sau faceți click pentru a încărca", type=["xlsx"])
 
 if uploaded_file is not None:
-    df = pd.read_excel(uploaded_file)
-    bilant_data = extract_date_bilant(df)
+    data_bilant, data_contpp = incarca_si_extrage_date(uploaded_file)
 
-    st.json({"Date Binat & Analiza": bilant_data})
-    
-    st.write("Vizualizare Bilant & Analiza:")
-    st.dataframe(pd.DataFrame([bilant_data]))
-
-    st.session_state['date_bilant'] = bilant_data
+    # Stocarea datelor în st.session_state pentru utilizare ulterioară în aplicație
+    st.session_state['data_bilant'] = data_bilant
+    st.session_state['data_contpp'] = data_contpp
 
     # Actualizează progresul
     st.session_state.progress += 25  
     st.sidebar.progress(st.session_state.progress)
+
+    
+    st.write("Vizualizare Bilant & Analiza:")
+    st.dataframe(pd.DataFrame([data_bilant]))
+
+    
+
+
     
