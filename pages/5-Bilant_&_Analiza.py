@@ -9,9 +9,9 @@ st.sidebar.write("Progresul tău:")
 st.sidebar.progress(st.session_state.progress)
 
 def extrage_date_bilant(df):
-    cpa20 = df.iloc[0, 0]
-    cpa21 = df.iloc[78, 0]
-    cpa22 = df.iloc[78, 1]
+    cpa20 = df.iloc[76, 1]
+    cpa21 = df.iloc[76, 2]
+    cpa22 = df.iloc[78, 3]
 
     data = {
         "Capitalul propriu al actionarilor 2020": cpa20, 
@@ -25,7 +25,7 @@ st.header(':blue[Adaugati Analiză, Bilanț, Cont de Profit și Pierdere]', divi
 uploaded_file = st.file_uploader("Adăugați fișierul aici sau faceți click pentru a încărca", type=["xlsx"])
 
 if uploaded_file is not None:
-    df = pd.read_excel(uploaded_file)
+    df = pd.read_excel(uploaded_file, sheet_name='!-Bilant')
     data_bilant = extrage_date_bilant(df)
 
     st.json({"Datele din bilant sunt:": data_bilant})
