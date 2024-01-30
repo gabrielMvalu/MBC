@@ -61,6 +61,9 @@ if uploaded_template is not None:
         st.download_button(label="Descarcă Documentul Completat", data=file, file_name="document_modificat.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
 
+# Afișează progress bar-ul în sidebar
+st.sidebar.write("Progresul tău:")
+st.sidebar.progress(st.session_state.progress)
 
 # Verifică dacă progresul este complet
 if st.session_state.progress >= 100:
