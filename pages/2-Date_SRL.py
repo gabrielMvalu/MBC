@@ -137,7 +137,7 @@ if uploaded_file is not None:
     doc = Document(uploaded_file)
     general_data = extract_data_from_docx(doc)
     detailed_info, admins = extract_detailed_info_from_docx(doc)
-    angajati_data = extract_situatie_angajatia(doc)
+    angajati_data = extract_situatie_angajati(doc)
     caen_codes = extract_caen_codes("\n".join([p.text for p in doc.paragraphs]))
 
 
