@@ -97,21 +97,27 @@ def extract_detailed_info_from_docx(doc):
 
 def extract_situatie_financiara(doc):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
-    
-    # Definirea pattern-urilor pentru fiecare an
-    patterns = {
-        "2020": r"SITUAŢIA FINANCIARĂ PE ANUL 2020.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)",
-        "2021": r"SITUAŢIA FINANCIARĂ PE ANUL 2021.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)",
-        "2022": r"SITUAŢIA FINANCIARĂ PE ANUL 2022.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)"
+
+    # Pattern pentru anul 2020
+    angajati_pattern_2020 = r"SITUAŢIA FINANCIARĂ PE ANUL 2020.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)"
+    angajati_match_2020 = re.search(angajati_pattern_2020, full_text, re.DOTALL)
+    nrang20 = angajati_match_2020.group(1) if angajati_match_2020 else "N/A"
+
+    # Pattern pentru anul 2021
+    angajati_pattern_2021 = r"SITUAŢIA FINANCIARĂ PE ANUL 2021.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)"
+    angajati_match_2021 = re.search(angajati_pattern_2021, full_text, re.DOTALL)
+    nrang21 = angajati_match_2021.group(1) if angajati_match_2021 else "N/A"
+
+    # Pattern pentru anul 2022
+    angajati_pattern_2022 = r"SITUAŢIA FINANCIARĂ PE ANUL 2022.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)"
+    angajati_match_2022 = re.search(angajati_pattern_2022, full_text, re.DOTALL)
+    nrang22 = angajati_match_2022.group(1) if angajati_match_2022 else "N/A"
+
+    data_angajati = {
+        "Numar mediu angajati 2020": nrang20,
+        "Numar mediu angajati 2021": nrang21,
+        "Numar mediu angajati 2022": nrang22,
     }
-
-    data_angajati = {}
-
-    # Căutarea numărului mediu de angajați pentru fiecare an și adăugarea în dicționar
-    for an, pattern in patterns.items():
-        match = re.search(pattern, full_text, re.DOTALL)
-        nr_angajati = match.group(1) if match else "N/A"
-        data_angajati[f"Numar mediu angajati {an}"] = nr_angajati
 
     return data_angajati
 
