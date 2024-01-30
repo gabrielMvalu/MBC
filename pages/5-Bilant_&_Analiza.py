@@ -1,4 +1,4 @@
-# pages/Date_solicitate.py
+# pages/Bilant & Analiza.py
 
 import streamlit as st
 import pandas as pd
