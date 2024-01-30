@@ -21,27 +21,35 @@ def extrage_date_bilant(df):
     return data
 
 def extrage_date_contpp(df1):
-    cpa20 = f"{df1.iloc[4, 1]:.2f}"
-    cpa21 = f"{df1.iloc[4, 2]:.2f}"
-    cpa22 = f"{df1.iloc[4, 3]:.2f}"
+    ca20 = f"{df1.iloc[4, 1]:.2f}"
+    ca21 = f"{df1.iloc[4, 2]:.2f}"
+    ca22 = f"{df1.iloc[4, 3]:.2f}"
     vt20 = f"{df1.iloc[55, 1]:.2f}"
     vt21 = f"{df1.iloc[55, 2]:.2f}"
     vt22 = f"{df1.iloc[55, 3]:.2f}"
 
+    if df1.iloc[4, 1] > df1.iloc[4, 2] and df1.iloc[4, 1] > df1.iloc[4, 3]:
+        camax = 2020
+    elif df1.iloc[4, 2] > df1.iloc[4, 1] and df1.iloc[4, 2] > df1.iloc[4, 3]:
+        camax = 2021
+    else:
+        camax = 2022
+    
     re20 = f"{df1.iloc[66, 1]:.2f}" if df1.iloc[66, 1] > 0 else f"{df1.iloc[67, 1]:.2f}"
     re21 = f"{df1.iloc[66, 2]:.2f}" if df1.iloc[66, 2] > 0 else f"{df1.iloc[67, 2]:.2f}"
     re22 = f"{df1.iloc[66, 3]:.2f}" if df1.iloc[66, 3] > 0 else f"{df1.iloc[67, 3]:.2f}"
     
     data = {
-        "Cifra de afaceri 2020": cpa20, 
-        "Cifra de afaceri 2021": cpa21,
-        "Cifra de afaceri 2022": cpa22,
+        "Cifra de afaceri 2020": ca20, 
+        "Cifra de afaceri 2021": ca21,
+        "Cifra de afaceri 2022": ca22,
         "Venituri totale 2020": vt20, 
         "Venituri totale 2021": vt21,
         "Venituri totale 2022": vt22,
         "Rezultat al exercitiului 2020": re20, 
         "Rezultat al exercitiului 2021": re21,
-        "Rezultat al exercitiului 2022": re22,        
+        "Rezultat al exercitiului 2022": re22,  
+        "Anul cu cea mai mare cifra de afaceri": camax,      
     }
     return data
 
