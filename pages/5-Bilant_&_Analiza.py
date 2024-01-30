@@ -54,7 +54,7 @@ def extrage_date_contpp(df1):
     return data
 
 def extrage_indicatori_financiari(df2):
-    rs20 = f"{df.iloc[5, 1]:.2f}"
+    rs20 = df.iloc[5, 1]
     rs21 = f"{df.iloc[6, 1]:.2f}"
     rs22 = f"{df.iloc[7, 1]:.2f}"
     gdi20 = f"{df.iloc[8, 1]:.2f}"
