@@ -146,7 +146,7 @@ if uploaded_file is not None:
     st.json({
         "Date Generale": general_data,
         "Informații Detaliate": {"Asociați": detailed_info, "Administratori": admins},
-        "Situație Financiară": financial_data,
+        "Situație Angajati": angajati_data,
         "Coduri CAEN": caen_codes
     })
 
