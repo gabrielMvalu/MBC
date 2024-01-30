@@ -45,9 +45,11 @@ if uploaded_file is not None:
     st.session_state.progress += 25  
     st.sidebar.progress(st.session_state.progress)
 
-    
+
+   
     st.write("Vizualizare Bilant & Analiza:")
     st.dataframe(pd.DataFrame([data_bilant]))
+    st.dataframe(pd.DataFrame([data_contpp])
 
     
 
