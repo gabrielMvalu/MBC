@@ -11,16 +11,15 @@ st.sidebar.write("Progresul tău:")
 st.sidebar.progress(st.session_state.progress)
 
 def extrage_date_foaie(df):
-    # Presupunem că valorile sunt deja în format float în DataFrame
-    valoare1 = Decimal(df.iloc[9, 1]).quantize(Decimal('0.00'))
-    valoare2 = Decimal(df.iloc[10, 1]).quantize(Decimal('0.00'))
+    valoare1 = "{:.2f}".format(df.iloc[9, 1])
+    valoare2 = "{:.2f}".format(df.iloc[10, 1])
 
     data = {
         "Valoare1": valoare1, 
         "Valoare2": valoare2,
     }
-
     return data
+
 
 def incarca_si_extrage_date(uploaded_file):
     df_bilant = pd.read_excel(uploaded_file, sheet_name='1-Bilant')
