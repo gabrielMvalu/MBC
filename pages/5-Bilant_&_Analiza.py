@@ -10,7 +10,7 @@ st.sidebar.progress(st.session_state.progress)
 
 def extrage_date_bilant(df_bilant):
     cpa20 = df_bilant.iloc[1, 1]
-    cpa21 = df_bilant.iloc[2, 78]
+    cpa21 = df_bilant.iloc[78, 1]
     cpa22 = df_bilant.iloc[79, 2]
 
     data_bilant = {
