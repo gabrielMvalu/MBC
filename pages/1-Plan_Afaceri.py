@@ -67,10 +67,10 @@ st.sidebar.progress(st.session_state.progress)
 
 # Verifică dacă progresul este complet
 if st.session_state.progress >= 100:
-    st.success("Felicitări! Ai completat toate pașii necesari.")
+    st.success("Felicitări! Ai completat toți pașii necesari.")
     # Aici poți adăuga orice altă logică necesară pentru a finaliza procesul
     # De exemplu, salvarea datelor, trimiterea unui e-mail de confirmare etc.
 else:
-    st.error("Atenție: Nu ai completat toate pașii necesari. Te rugăm să te întorci și să finalizezi toate secțiunile.")
+    st.error("Atenție: Nu ai completat toți pașii necesari. Te rugăm să te întorci și să finalizezi toate secțiunile.")
     # Oferă utilizatorului opțiuni pentru a reveni la pașii anteriori sau instrucțiuni despre cum să completeze procesul
     # De exemplu, poți oferi linkuri către paginile anterioare sau instrucțiuni specifice
