@@ -33,7 +33,7 @@ def extract_data_from_docx(doc):
     section_match = re.search(section_pattern, full_text)
     if section_match:
         section_text = section_match.group(1)
-        # Extragerea tuturor adreselor din acea secțiune
+        # Extragerea tuturor adreselor din secțiune
         secondary_address_pattern = re.compile(r"Adresă: (.*?)(?=\n)", re.DOTALL)
         adrese_secundare = re.findall(secondary_address_pattern, section_text)
     else:
@@ -46,7 +46,6 @@ def extract_data_from_docx(doc):
         "Data înființării": data_infiintarii,
         "Adresa sediului social": adresa,
         "Activitate principală": main_activity,
-        # Adding the new field to the dictionary
         "Adresa sediul secundar": adrese_secundare
     }
 
@@ -98,12 +97,20 @@ def extract_detailed_info_from_docx(doc):
 
 def extract_situatie_financiara(doc):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
-    pattern1 = r"SITUAŢIA FINANCIARĂ PE ANUL (\d+).*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)"
-    matches1 = re.findall(pattern1, full_text, re.DOTALL)
-    pattern2 = r"SITUAŢIA FINANCIARĂ PE ANUL (\d+)\s*Nu există înregistrări."
-    matches2 = [(year, "N/A") for year in re.findall(pattern2, full_text, re.DOTALL)]
-    matches = matches1 + matches2
-    return matches
+    data_angajati = {
+        "Numar mediu angajati 2020": "N/A",
+        "Numar mediu angajati 2021": "N/A",
+        "Numar mediu angajati 2022": "N/A"
+    }
+
+    for an in data_angajati.keys():
+        pattern = rf"SITUAŢIA FINANCIARĂ PE ANUL {an[-4:]}.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)"
+        match = re.search(pattern, full_text, re.DOTALL)
+        if match:
+            data_angajati[an] = match.group(1)
+
+    return data_angajati
+
 
 def extract_caen_codes(full_text):
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
