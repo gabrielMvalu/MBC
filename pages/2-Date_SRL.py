@@ -97,17 +97,21 @@ def extract_detailed_info_from_docx(doc):
 
 def extract_situatie_financiara(doc):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
-    data_angajati = {
-        "Numar mediu angajati 2020": "N/A",
-        "Numar mediu angajati 2021": "N/A",
-        "Numar mediu angajati 2022": "N/A"
+    
+    # Definirea pattern-urilor pentru fiecare an
+    patterns = {
+        "2020": r"SITUAŢIA FINANCIARĂ PE ANUL 2020.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)",
+        "2021": r"SITUAŢIA FINANCIARĂ PE ANUL 2021.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)",
+        "2022": r"SITUAŢIA FINANCIARĂ PE ANUL 2022.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)"
     }
 
-    for an in data_angajati.keys():
-        pattern = rf"SITUAŢIA FINANCIARĂ PE ANUL {an[-4:]}.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)"
+    data_angajati = {}
+
+    # Căutarea numărului mediu de angajați pentru fiecare an și adăugarea în dicționar
+    for an, pattern in patterns.items():
         match = re.search(pattern, full_text, re.DOTALL)
-        if match:
-            data_angajati[an] = match.group(1)
+        nr_angajati = match.group(1) if match else "N/A"
+        data_angajati[f"Numar mediu angajati {an}"] = nr_angajati
 
     return data_angajati
 
