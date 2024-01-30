@@ -54,18 +54,20 @@ def extrage_date_contpp(df1):
     return data
 
 def extrage_indicatori_financiari(df2):
-    rs20 = f"{df2.iloc[90, 1]:.2f}"
-    rs21 = f"{df2.iloc[90, 1]:.2f}"
-    rs22 = f"{df2.iloc[90, 1]:.2f}"
-    gdi20 = f"{df2.iloc[95, 1]:.2f}"
-    gdi21 = f"{df2.iloc[95, 1]:.2f}"
-    gdi22 = f"{df2.iloc[95, 1]:.2f}"
-    roa20 = f"{df2.iloc[44, 1]:.2f}"
-    roa21 = f"{df2.iloc[44, 1]:.2f}"
-    roa22 = f"{df2.iloc[44, 1]:.2f}"
-    roe20 = f"{df2.iloc[48, 1]:.2f}"
-    roe21 = f"{df2.iloc[48, 1]:.2f}"
-    roe22 = f"{df2.iloc[48, 1]:.2f}"
+    # Asumăm că indexarea pentru anii N-2, N-1, N este corectă
+    # și că valorile sunt procentuale stocate ca numerice (de exemplu, 0.43 pentru 43%)
+    rs20 = f"{df2.iloc[90, 1]:.2%}"  # Utilizăm .2% pentru a formata ca procentaj
+    rs21 = f"{df2.iloc[90, 2]:.2%}"
+    rs22 = f"{df2.iloc[90, 3]:.2%}"
+    gdi20 = f"{df2.iloc[95, 1]:.2%}"
+    gdi21 = f"{df2.iloc[95, 2]:.2%}"
+    gdi22 = f"{df2.iloc[95, 3]:.2%}"
+    roa20 = f"{df2.iloc[43, 1]:.2%}"
+    roa21 = f"{df2.iloc[43, 2]:.2%}"
+    roa22 = f"{df2.iloc[43, 3]:.2%}"
+    roe20 = f"{df2.iloc[48, 1]:.2%}"
+    roe21 = f"{df2.iloc[48, 2]:.2%}"
+    roe22 = f"{df2.iloc[48, 3]:.2%}"
 
     data = {
         "Rata solvabilitatii generale 2020": rs20, 
@@ -83,7 +85,6 @@ def extrage_indicatori_financiari(df2):
     }
 
     return data
-
 st.header(':blue[Adaugati Analiză, Bilanț, Cont de Profit și Pierdere]', divider='rainbow')
 
 uploaded_file = st.file_uploader("Adăugați fișierul aici sau faceți click pentru a încărca", type=["xlsx"])
