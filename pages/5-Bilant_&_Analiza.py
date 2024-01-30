@@ -28,7 +28,7 @@ if uploaded_file is not None:
     df = pd.read_excel(uploaded_file, sheet_name='1-Bilant')
     data_bilant = extrage_data_bilant(df)
 
-    st.json({"Datele din bilant sunt:" data_bilant})
+    st.json({"Datele din bilant sunt:": data_bilant})
     
     st.write("Vizualizare Bilant:")
     st.dataframe(pd.DataFrame([data_bilant]))
