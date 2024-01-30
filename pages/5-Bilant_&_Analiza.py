@@ -21,14 +21,14 @@ def extrage_date_bilant(df):
     return data
 
 def extrage_date_bilant(df1):
-    cpa20 = df1.iloc[6, 1]
-    cpa21 = df1.iloc[6, 2]
-    cpa22 = df1.iloc[6, 3]
+    cpa20 = df1.iloc[4, 1]
+    cpa21 = df1.iloc[4, 2]
+    cpa22 = df1.iloc[4, 3]
     vt20 = df1.iloc[55, 1]
-    vt21 = df1.iloc[56, 2]
-    vt22 = df1.iloc[57, 3]
-    re20 = df1.iloc[64, 1] if df1.iloc[64, 1] > 0 else df1.iloc[65, 1]
-    re21 = df1.iloc[65, 2] if df1.iloc[65, 2] > 0 else df1.iloc[66, 2]
+    vt21 = df1.iloc[55, 2]
+    vt22 = df1.iloc[55, 3]
+    re20 = df1.iloc[66, 1] if df1.iloc[66, 1] > 0 else df1.iloc[67, 1]
+    re21 = df1.iloc[66, 2] if df1.iloc[66, 2] > 0 else df1.iloc[67, 2]
     re22 = df1.iloc[66, 3] if df1.iloc[66, 3] > 0 else df1.iloc[67, 3]
     
     data = {
@@ -59,6 +59,7 @@ if uploaded_file is not None:
     
     st.write("Vizualizare Bilant:")
     st.dataframe(pd.DataFrame([data_bilant]))
+    st.dataframe(pd.DataFrame([data_contpp]))    
     
     st.session_state['data_bilant'] = data_bilant
     
