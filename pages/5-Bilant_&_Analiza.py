@@ -59,9 +59,9 @@ def extrage_indicatori_financiari(df2):
     rs20 = f"{df2.iloc[90, 1]:.2%}"  # Utilizăm .2% pentru a formata ca procentaj
     rs21 = f"{df2.iloc[90, 2]:.2%}"
     rs22 = f"{df2.iloc[90, 3]:.2%}"
-    gdi20 = f"{round(df2.iloc[95, 1]):.0f}%"
-    gdi21 = f"{round(df2.iloc[95, 2]):.0f}%"
-    gdi22 = f"{round(df2.iloc[95, 3]):.0f}%"
+    gdi20 = f"{df2.iloc[95, 1]:.0%}"
+    gdi21 = f"{df2.iloc[95, 2]:.0%}"
+    gdi22 = f"{df2.iloc[95, 3]:.0%}"
     roa20 = f"{df2.iloc[43, 1]:.2%}"
     roa21 = f"{df2.iloc[43, 2]:.2%}"
     roa22 = f"{df2.iloc[43, 3]:.2%}"
