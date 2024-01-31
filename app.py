@@ -12,15 +12,16 @@ if 'progress' not in st.session_state:
 st.sidebar.write("Progresul tău:")
 st.sidebar.progress(st.session_state.progress)
 
+# Crează un câmp de input pentru adresa de email
+user_email = st.text_input('Introduceți adresa de email pentru acces special:')
 
-# Verifică dacă există informații despre utilizator
-if st.experimental_user:
-    user_email = st.experimental_user.email  # Obține adresa de email a utilizatorului
-    
-    # Verifică dacă adresa de email a utilizatorului corespunde
+# Verifică dacă adresa de email a fost introdusă și corespunde
+if user_email:
     if user_email == 'marian@castemill.com':
         # Afișează un buton dacă condiția este îndeplinită
         if st.button('Buton Special pentru Marian'):
             st.write('Bine ai venit, Marian!')
+    else:
+        st.write("Nu ai acces la butonul special.")
 else:
-    st.write("Informații despre utilizator nu sunt disponibile.")
+    st.write("Vă rugăm să introduceți adresa de email pentru a verifica accesul special.")
