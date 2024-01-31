@@ -33,7 +33,6 @@ def extrage_date_contpp(df1):
     else:
         pc = "N/A" 
     
-    
     if df1.iloc[4, 1] > df1.iloc[4, 2] and df1.iloc[4, 1] > df1.iloc[4, 3]:
         camax = 2020
     elif df1.iloc[4, 2] > df1.iloc[4, 1] and df1.iloc[4, 2] > df1.iloc[4, 3]:
@@ -56,7 +55,7 @@ def extrage_date_contpp(df1):
         "Rezultat al exercitiului 2021": re21,
         "Rezultat al exercitiului 2022": re22,  
         "Anul cu cea mai mare cifra de afaceri": camax, 
-        "Procent Crestere": pc,
+        "Procent crestere": pc,
     }
     return data
 
