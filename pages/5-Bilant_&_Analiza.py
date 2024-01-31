@@ -102,9 +102,14 @@ if uploaded_file is not None:
     data_contpp = extrage_date_contpp(df1)
     data_analiza = extrage_indicatori_financiari(df2) 
 
-    st.metric(label=":violet[Procentul crestere CA, indicator la proiect]", value=ca22, delta=pc,
-    help='Salutare natiune', delta_color="inverse", label_visibility="visible")
-    
+
+
+    # Accesează valorile din dicționarul 'data_contpp'
+    ca22 = data_contpp["Cifra de afaceri 2022"]
+    pc = data_contpp["Procent crestere"]
+    # Utilizează valorile în 'st.metric'
+    st.metric(label="Procentul de creștere CA, indicator la proiect", value=ca22, delta=pc, delta_color="inverse", help='Salutare natiune', label_visibility="visible")
+     
     st.json({"Datele din bilant sunt:": data_bilant})
     st.json({"Datele din contPP sunt:": data_contpp})    
     st.json({"Datele din analiza sunt:": data_analiza})
