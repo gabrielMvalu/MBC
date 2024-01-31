@@ -28,7 +28,7 @@ def extrage_date_contpp(df1):
     vt21 = f"{df1.iloc[55, 2]:.2f}"
     vt22 = f"{df1.iloc[55, 3]:.2f}"
 
-    if ca26 != 0:
+    if df1.iloc[4, 6] != 0:
         pc = f"{(df1.iloc[4, 6] / df1.iloc[4, 3] * 100) - 100:.2f}%"
     else:
         pc = "N/A" 
