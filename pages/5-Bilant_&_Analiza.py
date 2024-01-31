@@ -124,13 +124,13 @@ if uploaded_file is not None:
     st.sidebar.progress(st.session_state.progress)
 
 
-    on = st.toggle('Activate feature')
+on = st.toggle('Activate feature')
 
-    if on:
-         # Utilizează valorile în 'st.metric'
-        st.metric(label="Procentul de creștere CA", value=pc, delta=ca22, 
-        delta_color="off", help='Procentul trebuie sa fie cat mai mic, deoarece este indicator la proiect si trebuie sa il respecte')
-         
+if on:
+    # Utilizează valorile în 'st.metric'
+    st.metric(label="Procentul de creștere CA", value=pc, delta=ca22, 
+    delta_color="off", help='Procentul trebuie sa fie cat mai mic, deoarece este indicator la proiect si trebuie sa il respecte')
+             
     
 
 
