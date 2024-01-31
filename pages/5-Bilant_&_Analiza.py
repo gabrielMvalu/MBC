@@ -24,13 +24,13 @@ def extrage_date_contpp(df1):
     ca20 = f"{df1.iloc[4, 1]:.2f}"
     ca21 = f"{df1.iloc[4, 2]:.2f}"
     ca22 = df1.iloc[4, 3]
-    ca26 = df1.iloc[4, 5]
+    ca26 = df1.iloc[4, 6]
     vt20 = f"{df1.iloc[55, 1]:.2f}"
     vt21 = f"{df1.iloc[55, 2]:.2f}"
     vt22 = f"{df1.iloc[55, 3]:.2f}"
 
     if ca26 != 0:
-        pc = ca26#f"{(ca26 / ca22 * 100) - 100:.2%}"
+        pc = f"{(ca26 / ca22 * 100) - 100:.2%}"
     else:
         pc = "N/A" 
     
