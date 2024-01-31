@@ -1,6 +1,9 @@
 # app.py
 import streamlit as st
 
+ADMIN_EMAIL = st.secrets["ADMIN_EMAIL"]
+
+
 st.header(':blue[Pagina Principală]', divider='rainbow')
 st.write(':violet[Bine ați venit la aplicația pentru completarea - Planului de Afaceri! -]')
 
