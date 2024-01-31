@@ -107,10 +107,7 @@ if uploaded_file is not None:
     # Accesează valorile din dicționarul 'data_contpp'
     ca22 = data_contpp["Cifra de afaceri 2022"]
     pc = data_contpp["Procent crestere"]
-    # Utilizează valorile în 'st.metric'
-    st.metric(label="Procentul de creștere CA", value=pc, delta=ca22, 
-    delta_color="off", help='Procentul trebuie sa fie cat mai mic, deoarece este indicator la proiect si trebuie sa il respecte')
-     
+   
     st.json({"Datele din bilant sunt:": data_bilant})
     st.json({"Datele din contPP sunt:": data_contpp})    
     st.json({"Datele din analiza sunt:": data_analiza})
@@ -126,6 +123,14 @@ if uploaded_file is not None:
     st.session_state.progress += 25  
     st.sidebar.progress(st.session_state.progress)
 
+
+    on = st.toggle('Activate feature')
+
+    if on:
+         # Utilizează valorile în 'st.metric'
+        st.metric(label="Procentul de creștere CA", value=pc, delta=ca22, 
+        delta_color="off", help='Procentul trebuie sa fie cat mai mic, deoarece este indicator la proiect si trebuie sa il respecte')
+         
     
 
 
