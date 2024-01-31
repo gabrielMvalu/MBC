@@ -12,7 +12,7 @@ def extrage_date_bilant(df):
     cpa20 = f"{df.iloc[76, 1]:.2f}"
     cpa21 = f"{df.iloc[76, 2]:.2f}"
     cpa22 = f"{df.iloc[76, 3]:.2f}"
-
+    
     data = {
         "Capitalul propriu al actionarilor 2020": cpa20, 
         "Capitalul propriu al actionarilor 2021": cpa21,
@@ -23,11 +23,18 @@ def extrage_date_bilant(df):
 def extrage_date_contpp(df1):
     ca20 = f"{df1.iloc[4, 1]:.2f}"
     ca21 = f"{df1.iloc[4, 2]:.2f}"
-    ca22 = f"{df1.iloc[4, 3]:.2f}"
+    ca22 = df1.iloc[4, 3]
+    ca26 = df1.iloc[4, 5]
     vt20 = f"{df1.iloc[55, 1]:.2f}"
     vt21 = f"{df1.iloc[55, 2]:.2f}"
     vt22 = f"{df1.iloc[55, 3]:.2f}"
 
+    if ca26 != 0:
+        pc = f"{(ca22 / ca26 * 100) - 100:.2%}"
+    else:
+        pc = "N/A" 
+    
+    
     if df1.iloc[4, 1] > df1.iloc[4, 2] and df1.iloc[4, 1] > df1.iloc[4, 3]:
         camax = 2020
     elif df1.iloc[4, 2] > df1.iloc[4, 1] and df1.iloc[4, 2] > df1.iloc[4, 3]:
@@ -49,7 +56,8 @@ def extrage_date_contpp(df1):
         "Rezultat al exercitiului 2020": re20, 
         "Rezultat al exercitiului 2021": re21,
         "Rezultat al exercitiului 2022": re22,  
-        "Anul cu cea mai mare cifra de afaceri": camax,      
+        "Anul cu cea mai mare cifra de afaceri": camax, 
+        "Procent Crestere": pc,
     }
     return data
 
