@@ -108,7 +108,8 @@ if uploaded_file is not None:
     ca22 = data_contpp["Cifra de afaceri 2022"]
     pc = data_contpp["Procent crestere"]
     # Utilizează valorile în 'st.metric'
-    st.metric(label="Procentul de creștere CA, indicator la proiect", value=ca22, delta=pc, delta_color="inverse", help='Salutare natiune', label_visibility="visible")
+    st.metric(label="Procentul de creștere CA", value=pc, delta=ca22, 
+    delta_color="off", help='Procentul trebuie sa fie cat mai mic, deoarece este indicator la proiect si trebuie sa il respecte')
      
     st.json({"Datele din bilant sunt:": data_bilant})
     st.json({"Datele din contPP sunt:": data_contpp})    
