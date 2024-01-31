@@ -94,6 +94,8 @@ st.header(':blue[Adaugati Analiză, Bilanț, Cont de Profit și Pierdere]', divi
 
 uploaded_file = st.file_uploader("Adăugați fișierul aici sau faceți click pentru a încărca", type=["xlsx"])
 
+on = st.toggle('Activate feature')
+
 if uploaded_file is not None:
     df = pd.read_excel(uploaded_file, sheet_name='1-Bilant')
     df1 = pd.read_excel(uploaded_file, sheet_name='2-ContPP')
@@ -123,14 +125,13 @@ if uploaded_file is not None:
     st.session_state.progress += 25  
     st.sidebar.progress(st.session_state.progress)
 
-
-on = st.toggle('Activate feature')
-
-if on:
-    # Utilizează valorile în 'st.metric'
-    st.metric(label="Procentul de creștere CA", value=pc, delta=ca22, 
-    delta_color="off", help='Procentul trebuie sa fie cat mai mic, deoarece este indicator la proiect si trebuie sa il respecte')
-             
+    if on:
+        # Utilizează valorile în 'st.metric'
+        st.metric(label="Procentul de creștere CA", value=pc, delta=ca22, 
+        delta_color="off", help='Procentul trebuie sa fie cat mai mic, deoarece este indicator la proiect si trebuie sa il respecte')
+                 
     
+
+
 
 
