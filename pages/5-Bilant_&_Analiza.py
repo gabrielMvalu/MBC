@@ -8,6 +8,7 @@ if 'progress' not in st.session_state:
 st.sidebar.write("Progresul tău:")
 st.sidebar.progress(st.session_state.progress)
 
+
 def extrage_date_bilant(df):
     cpa20 = f"{df.iloc[76, 1]:.2f}"
     cpa21 = f"{df.iloc[76, 2]:.2f}"
@@ -100,10 +101,14 @@ if uploaded_file is not None:
     data_bilant = extrage_date_bilant(df)
     data_contpp = extrage_date_contpp(df1)
     data_analiza = extrage_indicatori_financiari(df2) 
+
+    st.metric(label=":violet[Procentul crestere CA, indicator la proiect]", value=ca22, delta=pc,
+    delta_color"yellow", help='Salutare natiune', delta_color="inverse", label_visibility="visible")
     
     st.json({"Datele din bilant sunt:": data_bilant})
     st.json({"Datele din contPP sunt:": data_contpp})    
     st.json({"Datele din analiza sunt:": data_analiza})
+
     
     st.write("Vizualizare Bilant:")
     st.dataframe(pd.DataFrame([data_bilant]))
