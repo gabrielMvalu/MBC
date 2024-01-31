@@ -94,7 +94,7 @@ st.header(':blue[Adaugati Analiză, Bilanț, Cont de Profit și Pierdere]', divi
 
 uploaded_file = st.file_uploader("Adăugați fișierul aici sau faceți click pentru a încărca", type=["xlsx"])
 
-on = st.toggle('Activate feature')
+#on = st.toggle('Activate feature')
 
 if uploaded_file is not None:
     df = pd.read_excel(uploaded_file, sheet_name='1-Bilant')
@@ -104,23 +104,18 @@ if uploaded_file is not None:
     data_contpp = extrage_date_contpp(df1)
     data_analiza = extrage_indicatori_financiari(df2) 
 
-
-
     # Accesează valorile din dicționarul 'data_contpp'
-    ca22 = data_contpp["Cifra de afaceri 2022"]
-    pc = data_contpp["Procent crestere"]
+   # ca22 = data_contpp["Cifra de afaceri 2022"]
+   # pc = data_contpp["Procent crestere"]
 
-    if on:
+    # if on:
        # Utilizează valorile în 'st.metric'
-       st.metric(label="Procentul de creștere CA", value=pc, delta=ca22, 
-       delta_color="off", help='Procentul trebuie sa fie cat mai mic, deoarece este indicator la proiect si trebuie sa il respecte')
-                 
-    
-    
+    #   st.metric(label="Procentul de creștere CA", value=pc, delta=ca22, 
+    #   delta_color="off", help='Procentul trebuie sa fie cat mai mic, deoarece este indicator la proiect si trebuie sa il respecte')
+        
     st.json({"Datele din bilant sunt:": data_bilant})
     st.json({"Datele din contPP sunt:": data_contpp})    
     st.json({"Datele din analiza sunt:": data_analiza})
-
     
     st.write("Vizualizare Bilant:")
     st.dataframe(pd.DataFrame([data_bilant]))
