@@ -103,7 +103,7 @@ if uploaded_file is not None:
     data_analiza = extrage_indicatori_financiari(df2) 
 
     st.metric(label=":violet[Procentul crestere CA, indicator la proiect]", value=ca22, delta=pc,
-    delta_color"yellow", help='Salutare natiune', delta_color="inverse", label_visibility="visible")
+    help='Salutare natiune', delta_color="inverse", label_visibility="visible")
     
     st.json({"Datele din bilant sunt:": data_bilant})
     st.json({"Datele din contPP sunt:": data_contpp})    
