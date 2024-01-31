@@ -85,7 +85,7 @@ if uploaded_file is not None:
     st.write("Vizualizare Date Solicitate:")
     st.dataframe(pd.DataFrame([solicitate_data]))
 
-    st.toast('Datele sunt retinute pentru procesare', icon=':star:') 
+    st.toast('Datele sunt retinute pentru procesare', icon='⭐') 
     
     st.session_state['date_solicitate'] = solicitate_data
 
