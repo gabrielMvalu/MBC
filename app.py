@@ -20,7 +20,7 @@ user_email = st.text_input('Introduceți adresa de email pentru acces special:')
 
 # Verifică dacă adresa de email a fost introdusă și corespunde
 if user_email:
-    if user_email == 'marian@castemill.com':
+    if user_email == ADMIN_EMAIL:
         # Afișează un buton dacă condiția este îndeplinită
         if st.button('Buton Special pentru Marian'):
             st.write('Bine ai venit, Marian!')
