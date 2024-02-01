@@ -138,7 +138,7 @@ df_solvabilitate = pd.DataFrame({
 
 col1, col2 = st.columns(2)
 
-with col1:
+with col2:
     # Crearea și afișarea primului grafic în col1
     st.write("## Evoluția Cifrei de Afaceri și a Veniturilor Totale")
     grafic_cifra_afaceri = alt.Chart(df_cifra_afaceri.melt('An', var_name='Categorie', value_name='Valoare')).mark_line(point=True).encode(
@@ -149,7 +149,7 @@ with col1:
     ).interactive()
     st.altair_chart(grafic_cifra_afaceri, use_container_width=True)
 
-with col2:
+with col1:
     # Crearea și afișarea celui de-al doilea grafic în col2
     st.write("## Rata Solvabilității Generale pe Ani")
     grafic_solvabilitate = alt.Chart(df_solvabilitate).mark_bar().encode(
