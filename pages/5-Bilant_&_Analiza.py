@@ -139,7 +139,6 @@ df_solvabilitate = pd.DataFrame({
 col1, col2 = st.columns(2)
 with col1:
     # Crearea unui grafic liniar pentru Cifra de afaceri și Venituri totale
-    st.write("## Evoluția Cifrei de Afaceri și a Veniturilor Totale")
     grafic_cifra_afaceri = alt.Chart(df_cifra_afaceri.melt('An', var_name='Categorie', value_name='Valoare')).mark_line(point=True).encode(
         x='An:N',
         y='Valoare:Q',
