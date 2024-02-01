@@ -135,6 +135,8 @@ df_solvabilitate = pd.DataFrame({
     'Rata solvabilității generale': [float(data_analiza["Rata solvabilitatii generale 2020"]), float(data_analiza["Rata solvabilitatii generale 2021"]), float(data_analiza["Rata solvabilitatii generale 2022"])]
 })
 
+culori_customizate = Scale(domain=['2020', '2021', '2022'], 
+                           range=['#33de61', '#de6c33', '#db2a9a'])
 
 col1, col2 = st.columns(2)
 
@@ -151,8 +153,7 @@ with col2:
 
 
 
-culori_customizate = Scale(domain=['2020', '2021', '2022'], 
-                           range=['#33de61', '#de6c33', '#db2a9a'])
+
 
 
 with col1:
