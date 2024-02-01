@@ -1,6 +1,9 @@
 # pages/Bilant & Analiza.py
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+import altair as alt
+
 
 if 'progress' not in st.session_state:
     st.session_state.progress = 0
@@ -129,5 +132,39 @@ if uploaded_file is not None:
 
    
 
+
+# Pregătirea datelor pentru grafice
+df_cifra_afaceri = pd.DataFrame({
+    'An': ['2020', '2021', '2022'],
+    'Cifra de afaceri': [float(data_contpp["Cifra de afaceri 2020"]), float(data_contpp["Cifra de afaceri 2021"]), float(data_contpp["Cifra de afaceri 2022"])],
+    'Venituri totale': [float(data_contpp["Venituri totale 2020"]), float(data_contpp["Venituri totale 2021"]), float(data_contpp["Venituri totale 2022"])]
+})
+
+df_solvabilitate = pd.DataFrame({
+    'An': ['2020', '2021', '2022'],
+    'Rata solvabilității generale': [float(data_analiza["Rata solvabilitatii generale 2020"]), float(data_analiza["Rata solvabilitatii generale 2021"]), float(data_analiza["Rata solvabilitatii generale 2022"])]
+})
+
+# Crearea unui grafic liniar pentru Cifra de afaceri și Venituri totale
+st.write("## Evoluția Cifrei de Afaceri și a Veniturilor Totale")
+grafic_cifra_afaceri = alt.Chart(df_cifra_afaceri.melt('An', var_name='Categorie', value_name='Valoare')).mark_line(point=True).encode(
+    x='An:N',
+    y='Valoare:Q',
+    color='Categorie:N',
+    tooltip=['An', 'Categorie', 'Valoare']
+).interactive()
+
+st.altair_chart(grafic_cifra_afaceri, use_container_width=True)
+
+# Crearea unui grafic bar pentru Rata solvabilității generale
+st.write("## Rata Solvabilității Generale pe Ani")
+grafic_solvabilitate = alt.Chart(df_solvabilitate).mark_bar().encode(
+    x='An:N',
+    y='Rata solvabilității generale:Q',
+    color='An:N',
+    tooltip=['An', 'Rata solvabilității generale']
+).interactive()
+
+st.altair_chart(grafic_solvabilitate, use_container_width=True)
 
 
