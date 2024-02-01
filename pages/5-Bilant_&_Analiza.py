@@ -116,16 +116,7 @@ if uploaded_file is not None:
     #   st.metric(label="Procentul de creștere CA", value=pc, delta=ca22, 
     #   delta_color="off", help='Procentul trebuie sa fie cat mai mic, deoarece este indicator la proiect si trebuie sa il respecte')
         
-    st.json({"Datele din bilant sunt:": data_bilant})
-    st.json({"Datele din contPP sunt:": data_contpp})    
-    st.json({"Datele din analiza sunt:": data_analiza})
-    
-    st.write("Vizualizare Bilant:")
-    st.dataframe(pd.DataFrame([data_bilant]))
-    st.dataframe(pd.DataFrame([data_contpp])) 
-    st.dataframe(pd.DataFrame([data_analiza])) 
-
-    
+      
        
     st.session_state.progress += 25  
     st.sidebar.progress(st.session_state.progress)
@@ -144,27 +135,39 @@ df_solvabilitate = pd.DataFrame({
     'Rata solvabilității generale': [float(data_analiza["Rata solvabilitatii generale 2020"]), float(data_analiza["Rata solvabilitatii generale 2021"]), float(data_analiza["Rata solvabilitatii generale 2022"])]
 })
 
-# Crearea unui grafic liniar pentru Cifra de afaceri și Venituri totale
-st.write("## Evoluția Cifrei de Afaceri și a Veniturilor Totale")
-grafic_cifra_afaceri = alt.Chart(df_cifra_afaceri.melt('An', var_name='Categorie', value_name='Valoare')).mark_line(point=True).encode(
-    x='An:N',
-    y='Valoare:Q',
-    color='Categorie:N',
-    tooltip=['An', 'Categorie', 'Valoare']
-).interactive()
 
-st.altair_chart(grafic_cifra_afaceri, use_container_width=True)
+col1, col2 = st.columns(2)
+with col1:
+    # Crearea unui grafic liniar pentru Cifra de afaceri și Venituri totale
+    st.write("## Evoluția Cifrei de Afaceri și a Veniturilor Totale")
+    grafic_cifra_afaceri = alt.Chart(df_cifra_afaceri.melt('An', var_name='Categorie', value_name='Valoare')).mark_line(point=True).encode(
+        x='An:N',
+        y='Valoare:Q',
+        color='Categorie:N',
+        tooltip=['An', 'Categorie', 'Valoare']
+    ).interactive()
+with col2:
+    st.altair_chart(grafic_cifra_afaceri, use_container_width=True)
+    
+    # Crearea unui grafic bar pentru Rata solvabilității generale
+    st.write("## Rata Solvabilității Generale pe Ani")
+    grafic_solvabilitate = alt.Chart(df_solvabilitate).mark_bar().encode(
+        x='An:N',
+        y='Rata solvabilității generale:Q',
+        color='An:N',
+        tooltip=['An', 'Rata solvabilității generale']
+    ).interactive()
+    
+    st.altair_chart(grafic_solvabilitate, use_container_width=True)
 
-# Crearea unui grafic bar pentru Rata solvabilității generale
-st.write("## Rata Solvabilității Generale pe Ani")
-grafic_solvabilitate = alt.Chart(df_solvabilitate).mark_bar().encode(
-    x='An:N',
-    y='Rata solvabilității generale:Q',
-    color='An:N',
-    tooltip=['An', 'Rata solvabilității generale']
-).interactive()
-
-st.altair_chart(grafic_solvabilitate, use_container_width=True)
-
-
-
+col3, col4 = st.columns(2)
+with col3:
+     st.json({"Datele din bilant sunt:": data_bilant})
+     st.json({"Datele din contPP sunt:": data_contpp})    
+     st.json({"Datele din analiza sunt:": data_analiza})
+      
+with col4:
+    st.write("Vizualizare Bilant:")
+    st.dataframe(pd.DataFrame([data_bilant]))
+    st.dataframe(pd.DataFrame([data_contpp])) 
+    st.dataframe(pd.DataFrame([data_analiza])) 
