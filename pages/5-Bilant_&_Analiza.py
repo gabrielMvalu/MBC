@@ -144,7 +144,7 @@ col1, col2 = st.columns(2)
 
 with col2:
     # Crearea și afișarea primului grafic în col1
-    st.write("## Evoluția Cifrei de Afaceri și a Veniturilor Totale")
+    st.write(':violet[Evoluția Cifrei de Afaceri și a Veniturilor Totale]')
     grafic_cifra_afaceri = alt.Chart(df_cifra_afaceri.melt('An', var_name='Categorie', value_name='Valoare')).mark_line(point=True).encode(
         x='An:N',
         y='Valoare:Q',
@@ -152,10 +152,6 @@ with col2:
         tooltip=['An', 'Categorie', 'Valoare']
     ).interactive()
     st.altair_chart(grafic_cifra_afaceri, use_container_width=True)
-
-
-
-
 
 
 with col1:
