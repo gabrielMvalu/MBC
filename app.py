@@ -26,8 +26,8 @@ if user_email:
     # Verifică dacă adresa de email introdusă corespunde cu ADMIN_EMAIL
     if user_email == ADMIN_EMAIL:
         # Afișează un buton dacă condiția este îndeplinită
-        if st.button('Buton Special pentru Marian'):
-            st.write('Bine ai venit, Marian!')
+        if st.button('Buton Special pentru Robert'):
+            st.write('Bine ai venit, Robert!')
     else:
         st.write("Nu ai acces la butonul special.")
 else:
