@@ -16,6 +16,9 @@ st.sidebar.progress(st.session_state.progress)
 # Crează un câmp de input pentru adresa de email
 user_email = st.text_input('Introduceți adresa de email pentru acces special:')
 # Verifică dacă adresa de email a fost introdusă
+st.write("Secrete încărcate:", st.secrets)
+
+
 if user_email:
     # Accesează ADMIN_EMAIL aici, după ce adresa de email a fost introdusă
     ADMIN_EMAIL = st.secrets["ADMIN_EMAIL"]
