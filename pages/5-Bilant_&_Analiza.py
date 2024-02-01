@@ -138,26 +138,27 @@ df_solvabilitate = pd.DataFrame({
 
 col1, col2 = st.columns(2)
 with col1:
-    # Crearea unui grafic liniar pentru Cifra de afaceri și Venituri totale
-    grafic_cifra_afaceri = alt.Chart(df_cifra_afaceri.melt('An', var_name='Categorie', value_name='Valoare')).mark_line(point=True).encode(
-        x='An:N',
-        y='Valoare:Q',
-        color='Categorie:N',
-        tooltip=['An', 'Categorie', 'Valoare']
-    ).interactive()
+   # Crearea unui grafic liniar pentru Cifra de afaceri și Venituri totale
+     grafic_cifra_afaceri = alt.Chart(df_cifra_afaceri.melt('An', var_name='Categorie', value_name='Valoare')).mark_line(point=True).encode(
+         x='An:N',
+         y='Valoare:Q',
+         color='Categorie:N',
+         tooltip=['An', 'Categorie', 'Valoare']
+     ).interactive()
+
 with col2:
-    st.altair_chart(grafic_cifra_afaceri, use_container_width=True)
-    
-    # Crearea unui grafic bar pentru Rata solvabilității generale
-    st.write("## Rata Solvabilității Generale pe Ani")
-    grafic_solvabilitate = alt.Chart(df_solvabilitate).mark_bar().encode(
-        x='An:N',
-        y='Rata solvabilității generale:Q',
-        color='An:N',
-        tooltip=['An', 'Rata solvabilității generale']
-    ).interactive()
-    
-    st.altair_chart(grafic_solvabilitate, use_container_width=True)
+     st.altair_chart(grafic_cifra_afaceri, use_container_width=True)
+            # Crearea unui grafic bar pentru Rata solvabilității generale
+            st.write("## Rata Solvabilității Generale pe Ani")
+            grafic_solvabilitate = alt.Chart(df_solvabilitate).mark_bar().encode(
+                x='An:N',
+                y='Rata solvabilității generale:Q',
+                color='An:N',
+                tooltip=['An', 'Rata solvabilității generale']
+            ).interactive()
+            
+            st.altair_chart(grafic_solvabilitate, use_container_width=True)
+
 
 col3, col4 = st.columns(2)
 with col3:
