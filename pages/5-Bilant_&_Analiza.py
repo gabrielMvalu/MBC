@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import altair as alt
 from altair import Scale, Color
 
-st.set_page_config(layout="wide", menu_items={'Get Help': 'https://www.castemill.com'})
+st.set_page_config(layout="wide")
 
 if 'progress' not in st.session_state:
     st.session_state.progress = 0
