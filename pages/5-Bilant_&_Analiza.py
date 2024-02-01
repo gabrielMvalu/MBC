@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import altair as alt
-
+from altair import Scale, Color
 
 if 'progress' not in st.session_state:
     st.session_state.progress = 0
@@ -149,13 +149,19 @@ with col2:
     ).interactive()
     st.altair_chart(grafic_cifra_afaceri, use_container_width=True)
 
+
+
+culori_customizate = Scale(domain=['2020', '2021', '2022'], 
+                           range=['#33de61', '#de6c33', '#db2a9a'])
+
+
 with col1:
     # Crearea și afișarea celui de-al doilea grafic în col2
     st.write("## Rata Solvabilității Generale pe Ani")
     grafic_solvabilitate = alt.Chart(df_solvabilitate).mark_bar().encode(
         x='An:N',
         y='Rata solvabilității generale:Q',
-        color='An:N',
+        color=Color('An:N', scale=culori_customizate),
         tooltip=['An', 'Rata solvabilității generale']
     ).interactive()
     st.altair_chart(grafic_solvabilitate, use_container_width=True)
