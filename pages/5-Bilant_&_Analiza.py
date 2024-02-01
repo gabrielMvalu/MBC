@@ -132,7 +132,6 @@ if uploaded_file is not None:
 
    
 
-
 # Pregătirea datelor pentru grafice
 df_cifra_afaceri = pd.DataFrame({
     'An': ['2020', '2021', '2022'],
@@ -166,5 +165,6 @@ grafic_solvabilitate = alt.Chart(df_solvabilitate).mark_bar().encode(
 ).interactive()
 
 st.altair_chart(grafic_solvabilitate, use_container_width=True)
+
 
 
