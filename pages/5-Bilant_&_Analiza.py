@@ -136,7 +136,7 @@ df_solvabilitate = pd.DataFrame({
 })
 
 culori_customizate = Scale(domain=['2020', '2021', '2022'], 
-                           range=['#33de61', '#de6c33', '#db2a9a'])
+                           range=['#33de61', '#de6c33', '#db2a53'])
 
 col1, col2 = st.columns(2)
 
