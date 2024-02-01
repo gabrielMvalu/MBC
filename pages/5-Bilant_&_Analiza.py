@@ -152,7 +152,7 @@ with col2:
 with col1:
     # Crearea și afișarea celui de-al doilea grafic în col2
     st.write("## Rata Solvabilității Generale pe Ani")
-    grafic_solvabilitate = alt.Chart(df_solvabilitate).mark_bar().encode(
+    grafic_solvabilitate = alt.Chart(df_solvabilitate, theme="streamlit").mark_bar().encode(
         x='An:N',
         y='Rata solvabilității generale:Q',
         color='An:N',
