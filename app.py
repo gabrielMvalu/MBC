@@ -16,7 +16,7 @@ st.sidebar.progress(st.session_state.progress)
 
 user_email = st.text_input('Introduceți adresa de email pentru acces special:')
 if user_email:
-   ADMIN_EMAIL = st.secrets["ADMIN_EMAIL"]
+    ADMIN_EMAIL = st.secrets["ADMIN_EMAIL"]
     if user_email == ADMIN_EMAIL:
         if st.button('Buton Special pentru Robert'):
             st.write('Bine ai venit, Robert!')
