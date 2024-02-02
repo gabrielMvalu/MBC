@@ -43,7 +43,7 @@ def coreleaza_date_financiar_amortizare_ajustat(date_financiar):
 # Logica de încărcare și prelucrare a fișierului XLSX, și apoi aplicarea funcțiilor definite
 if uploaded_file is not None:
     try:
-        df_financiar = pd.read_excel(uploaded_file, sheet_name='P.FINANCIAR')
+        df_financiar = pd.read_excel(uploaded_file, sheet_name='P. FINANCIAR')
         date_financiare = extrage_date_financiar(df_financiar)
         rezultate_corelate = coreleaza_date_financiar_amortizare_ajustat(date_financiare)
         
