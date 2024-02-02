@@ -34,7 +34,7 @@ if uploaded_template is not None:
             # Condiționarea pentru adresa sediului
             if "#Adresa_sediu" in run.text:
                 # Verifică dacă data înființării este egală cu "10.08.2012"
-                if if 'numar_total_utilaje' in st.session_state:
+                if 'numar_total_utilaje' in st.session_state:
                     adresa_sediu_text = f"Număr total de utilaje din sesiune: {st.session_state['numar_total_utilaje']}"
                 else:
                     adresa_sediu_text = f"Adresa sediu: {st.session_state['date_generale']['Adresa sediului social']}\n"
