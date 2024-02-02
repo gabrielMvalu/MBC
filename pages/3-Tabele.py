@@ -6,7 +6,7 @@ from docx.shared import Pt
 
 st.header('Pregătirea datelor din P. FINANCIAR pentru completare tabel subcap 2.4', anchor=None)
 
-uploaded_file = st.sidebar.file_uploader("Încarcă documentul '*.xlsx' aici", type="xlsx", accept_multiple_files=False)
+uploaded_file = st.file_uploader("Încarcă documentul '*.xlsx' aici", type="xlsx", accept_multiple_files=False)
 stop_text = "Total proiect"
 
 def transforma_date(df):
