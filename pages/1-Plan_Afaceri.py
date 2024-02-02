@@ -2,13 +2,8 @@
 import streamlit as st
 from docx import Document
 
-# Inițializarea progresului dacă nu există
-if 'progress' not in st.session_state:
-    st.session_state.progress = 0
-
-# Pagina 2 - Încărcare și completare document cu placeholder-uri
 st.header(':blue[Completare Document cu Placeholder-uri]', divider='rainbow')
-# Încărcarea documentului cu placeholder-uri
+
 uploaded_template = st.file_uploader("Încărcați documentul cu placeholder-uri", type=["docx"], key="template")
 
 if uploaded_template is not None:
@@ -51,21 +46,7 @@ if uploaded_template is not None:
     modified_doc_path = "document_modificat.docx"
     template_doc.save(modified_doc_path)
 
-    # Oferă utilizatorului posibilitatea de a descărca documentul modificat
+    # Oferă posibilitatea de a descărca documentul modificat
     with open(modified_doc_path, "rb") as file:
         st.download_button(label="Descarcă Documentul Completat", data=file, file_name="document_modificat.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
-
-# Afișează progress bar-ul în sidebar
-st.sidebar.write("Progresul tău:")
-st.sidebar.progress(st.session_state.progress)
-
-# Verifică dacă progresul este complet
-if st.session_state.progress >= 100:
-    st.success("Felicitări! Ai completat toți pașii necesari.")
-    # Aici poți adăuga orice altă logică necesară pentru a finaliza procesul
-    # De exemplu, salvarea datelor, trimiterea unui e-mail de confirmare etc.
-else:
-    st.info("Nu ai completat toate secțiunile necesare. Verifică și completează toți pașii pentru a încheia procesul.")
-    # Oferă utilizatorului opțiuni pentru a reveni la pașii anteriori sau instrucțiuni despre cum să completeze procesul
-    # De exemplu, poți oferi linkuri către paginile anterioare sau instrucțiuni specifice
