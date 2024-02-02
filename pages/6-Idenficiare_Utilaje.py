@@ -40,6 +40,9 @@ def coreleaza_date_financiar_amortizare_ajustat(date_financiar):
     
     return rezultate_corelate
 
+
+
+
 # Logica de încărcare și prelucrare a fișierului XLSX, și apoi aplicarea funcțiilor definite
 if uploaded_file is not None:
     try:
@@ -47,8 +50,12 @@ if uploaded_file is not None:
         date_financiare = extrage_date_financiar(df_financiar)
         rezultate_corelate = coreleaza_date_financiar_amortizare_ajustat(date_financiare)
         
+        # Calculăm numărul total de utilaje sumând cantitățile
+        numar_total_utilaje = sum(cantitate for _, cantitate in date_financiare)
+        
         # Crează un DataFrame pentru a afișa rezultatele corelate
         df_rezultate = pd.DataFrame(rezultate_corelate, columns=['Nume', 'Cantitate', 'Rezultat'])
         st.write(df_rezultate)
+        st.write(f"Număr total de utilaje: {numar_total_utilaje}")
     except ValueError:
         st.error('Foaia "P.FINANCIAR" nu există în fișierul încărcat. Te rog să încarci un fișier care conține foaia necesară.')
