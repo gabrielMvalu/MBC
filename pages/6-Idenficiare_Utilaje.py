@@ -1,11 +1,13 @@
 import streamlit as st
 import pandas as pd
 import re
+
 # Creează o pagină nouă pe Streamlit
-st.header(':blue[Prelucrare XLSX]', divider='rainbow')
+st.header(':blue_book: Prelucrare XLSX', divider='rainbow')
 
 # Adaugă un widget de încărcare fișier pentru a permite utilizatorului să încarce un fișier XLSX
 uploaded_file = st.file_uploader("Încarcă un fișier XLSX", type=['xlsx'])
+
 
 def extrage_date_financiar(df_financiar):
     values_col2_and_col12 = []
@@ -14,7 +16,7 @@ def extrage_date_financiar(df_financiar):
         value_col12 = row.iloc[11]  # Presupunând că coloana 12 este a 12-a coloană în DataFrame
         if value_col2 == "Total proiect":
             break
-        if value_col2 and value_col12 != 0:
+        if value_col2 and value_col12 and value_col12 != 0:
             values_col2_and_col12.append((value_col2, value_col12))
     return values_col2_and_col12
 
@@ -40,20 +42,20 @@ def coreleaza_date_financiar_amortizare_ajustat(date_financiar):
     
     return rezultate_corelate
 
-
-
-
+# Logica de încărcare și prelucrare a fișierului XLSX, și apoi aplicarea funcțiilor definite
 if uploaded_file is not None:
     try:
         df_financiar = pd.read_excel(uploaded_file, sheet_name='P. FINANCIAR')
         date_financiare = extrage_date_financiar(df_financiar)
         if date_financiare:  # Verifică dacă lista nu este goală
-            # Transformă valorile NaN în 0 în lista date_financiare
-            date_financiare_curate = [(nume, 0 if pd.isna(cantitate) else cantitate) for nume, cantitate in date_financiare] 
+            # Convertim toate valorile la numeric, înlocuind valorile care nu sunt convertibile cu NaN, apoi înlocuim NaN cu 0
+            date_financiare_curate = [(nume, pd.to_numeric(cantitate, errors='coerce')) for nume, cantitate in date_financiare]
+            date_financiare_curate = [(nume, 0 if pd.isna(cantitate) else cantitate) for nume, cantitate in date_financiare_curate]
+
             # Calculează suma cantităților curățate
             numar_total_utilaje = sum(cantitate for _, cantitate in date_financiare_curate)
 
-            rezultate_corelate = coreleaza_date_financiar_amortizare_ajustat(date_financiare)
+            rezultate_corelate = coreleaza_date_financiar_amortizare_ajustat(date_financiare_curate)  # Aici am modificat să folosim date_financiare_curate
             # Crează un DataFrame pentru a afișa rezultatele corelate
             df_rezultate = pd.DataFrame(rezultate_corelate, columns=['Nume', 'Cantitate', 'Rezultat'])
             st.write(df_rezultate)
