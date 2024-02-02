@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from pandas import isna
 import io
 from docx import Document
 
@@ -81,25 +82,20 @@ def transforma_date(df):
     
     
     return df_nou
-# Funcție pentru adăugarea unui DataFrame într-un document Word
+
 def df_to_word(document, df, index=False):
     table = document.add_table(rows=(df.shape[0] + 1), cols=df.shape[1])
-
-
-    
-    
-    # Adăugarea antetului tabelului
     for j in range(df.shape[-1]):
         table.cell(0,j).text = df.columns[j]
-
-    # Adăugarea rândurilor din DataFrame în tabel
     for i in range(df.shape[0]):
         for j in range(df.shape[-1]):
-            table.cell(i+1,j).text = str(df.values[i,j])
+            val = df.values[i,j]
+            if isna(val) or val is None:
+                text = ""
+            else:
+                text = str(val)
+            table.cell(i+1,j).text = text
     return document
-
-# Crearea unui nou document Word
-doc = Document()
 
 if st.button("Generează Tabel 1"):
     if uploaded_file is not None:
