@@ -83,19 +83,24 @@ def transforma_date(df):
     
     return df_nou
 
+
 def df_to_word(document, df, index=False):
     table = document.add_table(rows=(df.shape[0] + 1), cols=df.shape[1])
-    for j in range(df.shape[-1]):
-        table.cell(0,j).text = df.columns[j]
+
+    # Adăugarea antetului tabelului
+    for j in range(df.shape[1]):  # Folosim shape[1] pentru a fi consistenți
+        table.cell(0, j).text = df.columns[j]
+
+    # Adăugarea rândurilor din DataFrame în tabel
     for i in range(df.shape[0]):
-        for j in range(df.shape[-1]):
-            val = df.values[i,j]
-            if isna(val) or val is None:
-                text = ""
-            else:
-                text = str(val)
-            table.cell(i+1,j).text = text
+        for j in range(df.shape[1]):  # Din nou, folosim shape[1] pentru consistență
+            val = df.iloc[i, j]  # Folosim iloc pentru a accesa valoarea
+            # Verificăm dacă valoarea este NaN sau None și înlocuim cu un șir gol
+            text = "" if pd.isna(val) else str(val)
+            table.cell(i + 1, j).text = text
+
     return document
+
 
 if st.button("Generează Tabel 1"):
     if uploaded_file is not None:
