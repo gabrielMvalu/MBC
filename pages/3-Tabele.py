@@ -4,18 +4,12 @@ import io
 from docx import Document
 from docx.shared import Pt
 
-st.header('Pregătirea datelor din P. FINANCIAR pentru completare tabel subcap 2.4', anchor=None)
+st.header('Pregătirea datelor din P. FINANCIAR pentru completare tabel subcap 2.4')
 
-uploaded_file = st.file_uploader("Încarcă documentul '*.xlsx' aici", type="xlsx", accept_multiple_files=False)
-stop_text = "Total proiect"
-
-
-if uploaded_file is not None:
-    df = pd.read_excel(uploaded_file)
-    df_transformed = transforma_date(df)
-    genereaza_docx(df_transformed)
+uploaded_file = st.sidebar.file_uploader("Încarcă documentul '*.xlsx' aici", type="xlsx", accept_multiple_files=False)
 
 def transforma_date(df):
+    stop_text = "Total proiect"
     stop_index = df.index[df.iloc[:, 1].eq(stop_text)].tolist()
     if stop_index:
         df = df.iloc[3:stop_index[0]]
@@ -99,3 +93,9 @@ def genereaza_docx(df_nou, nume_fisier="Tabel_Prelucrat.docx"):
                        data=docx_io,
                        file_name=nume_fisier,
                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+
+if uploaded_file is not None:
+    df = pd.read_excel(uploaded_file)
+    df_transformed = transforma_date(df)
+    genereaza_docx(df_transformed)
+
