@@ -3,7 +3,7 @@ import pandas as pd
 import io
 from docx import Document
 from docx.shared import Pt
-import io
+from io import BytesIO
 
 st.header('Pregătirea datelor din P. FINANCIAR pentru completare tabel subcap 2.4')
 
