@@ -33,11 +33,19 @@ def transforma_date(df):
             valoare_totala_list.append(None)
             linie_bugetara_list.append(None)
         else:
-            nr_crt.append(counter)
+            nr_crt.append(int(counter))  # Asigurăm că 'counter' este întreg, deși este deja de acest tip
             um_list.append("buc")
-            cantitate_list.append(row[11])
+            
+            # Convertim valoarea la întreg înainte de a o adăuga în listă
+            # Folosim int() pentru a converti și gestionăm cazurile în care valoarea nu poate fi convertită la int
+            try:
+                cantitate = int(row[11])
+            except ValueError:
+                cantitate = None  # Sau o altă valoare de fallback, dacă este necesar
+            cantitate_list.append(cantitate)
+            
             pret_unitar_list.append(row[3])
-            valoare_totala_list.append(row[3] * row[11])
+            valoare_totala_list.append(row[3] * cantitate if cantitate is not None else None)
             linie_bugetara_list.append(row[14])
             counter += 1
     for index, row in df.iterrows():
@@ -68,11 +76,18 @@ def transforma_date(df):
         "Eligibil/ neeligibil": eligibil_neeligibil,
         "Contribuie la criteriile de evaluare a,b,c,d": df.iloc[:, 15]
     })
+
+
+    
+    
     return df_nou
 # Funcție pentru adăugarea unui DataFrame într-un document Word
 def df_to_word(document, df, index=False):
     table = document.add_table(rows=(df.shape[0] + 1), cols=df.shape[1])
 
+
+    
+    
     # Adăugarea antetului tabelului
     for j in range(df.shape[-1]):
         table.cell(0,j).text = df.columns[j]
