@@ -12,7 +12,7 @@ if uploaded_file is not None:
     # Încearcă să citești foaia 'P.FINANCIAR' din fișierul XLSX
     try:
         # Citeste foaia specifică 'P.FINANCIAR'
-        df_financiar = pd.read_excel(uploaded_file, sheet_name='P.FINANCIAR')
+        df_financiar = pd.read_excel(uploaded_file, sheet_name='P. FINANCIAR')
         
         # Afișează un mesaj de confirmare și datele din foaia 'P.FINANCIAR'
         st.success('Foaia "P.FINANCIAR" a fost găsită și citită cu succes!')
