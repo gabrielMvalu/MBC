@@ -61,6 +61,12 @@ if uploaded_file is not None:
             # Calculează suma cantităților corelate
             numar_total_utilaje = sum(cantitati_corelate)
             st.write(f"Număr total de utilaje corelate: {numar_total_utilaje}")
+
+            # Salvează numărul total de utilaje și rezultatele corelate în st.session_state
+            st.session_state['numar_total_utilaje'] = numar_total_utilaje
+            st.session_state['rezultate_corelate'] = df_rezultate['Rezultat'].tolist()
+
+        
         else:
             st.error("Nu s-au găsit date valide în foaia 'P. FINANCIAR' pentru calculul numărului de utilaje.")
     except ValueError as e:
