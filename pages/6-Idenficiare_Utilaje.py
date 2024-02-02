@@ -47,20 +47,21 @@ if uploaded_file is not None:
     try:
         df_financiar = pd.read_excel(uploaded_file, sheet_name='P. FINANCIAR')
         date_financiare = extrage_date_financiar(df_financiar)
-        if date_financiare:  # Verifică dacă lista nu este goală
-            # Convertim toate valorile la numeric, înlocuind valorile care nu sunt convertibile cu NaN, apoi înlocuim NaN cu 0
-            date_financiare_curate = [(nume, pd.to_numeric(cantitate, errors='coerce')) for nume, cantitate in date_financiare]
-            date_financiare_curate = [(nume, 0 if pd.isna(cantitate) else cantitate) for nume, cantitate in date_financiare_curate]
-
-            # Calculează suma cantităților curățate
-            numar_total_utilaje = sum(cantitate for _, cantitate in date_financiare_curate)
-
-            rezultate_corelate = coreleaza_date_financiar_amortizare_ajustat(date_financiare_curate)  # Aici am modificat să folosim date_financiare_curate
+        if date_financiare:
+            rezultate_corelate = coreleaza_date_financiar_amortizare_ajustat(date_financiare)
+            
             # Crează un DataFrame pentru a afișa rezultatele corelate
             df_rezultate = pd.DataFrame(rezultate_corelate, columns=['Nume', 'Cantitate', 'Rezultat'])
             st.write(df_rezultate)
-            st.write(f"Număr total de utilaje: {numar_total_utilaje}")
+
+            # Extrage cantitățile din rezultatele corelate și le transformă în numerice, înlocuind NaN cu 0
+            cantitati_corelate = [pd.to_numeric(item[1], errors='coerce') for item in rezultate_corelate]
+            cantitati_corelate = [0 if pd.isna(x) else x for x in cantitati_corelate]
+            
+            # Calculează suma cantităților corelate
+            numar_total_utilaje = sum(cantitati_corelate)
+            st.write(f"Număr total de utilaje corelate: {numar_total_utilaje}")
         else:
             st.error("Nu s-au găsit date valide în foaia 'P. FINANCIAR' pentru calculul numărului de utilaje.")
-    except ValueError:
-        st.error('Foaia "P. FINANCIAR" nu există în fișierul încărcat. Te rog să încarci un fișier care conține foaia necesară.')
+    except ValueError as e:
+        st.error(f'Foaia "P. FINANCIAR" nu există în fișierul încărcat. Eroare: {e}')
