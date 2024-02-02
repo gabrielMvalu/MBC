@@ -71,6 +71,6 @@ if st.session_state.progress >= 100:
     # Aici poți adăuga orice altă logică necesară pentru a finaliza procesul
     # De exemplu, salvarea datelor, trimiterea unui e-mail de confirmare etc.
 else:
-    st.info("Te rugăm să reții că nu ai completat toate secțiunile necesare pentru finalizare. Verifică și completează toți pașii pentru a încheia procesul.")
+    st.info("Nu ai completat toate secțiunile necesare. Verifică și completează toți pașii pentru a încheia procesul.")
     # Oferă utilizatorului opțiuni pentru a reveni la pașii anteriori sau instrucțiuni despre cum să completeze procesul
     # De exemplu, poți oferi linkuri către paginile anterioare sau instrucțiuni specifice
