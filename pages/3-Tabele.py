@@ -155,7 +155,7 @@ def main():
                 um.append("buc")
                 cantitate.append(df_filtrat.iloc[i-1, 11])  # Adjust the index as necessary
                 pret_unitar.append(df_filtrat.iloc[i-1, 3])
-                valoare_totala.append(df_filtrat.iloc[i-1, 6])
+                valoare_totala.append(df_filtrat.iloc[i-1, 4])
                 nr_crt_counter += 1
             # Add other specific entries after processing all items
             nr_crt.extend(["Subtotal 2", None, "Pondere", "Pondere"])
