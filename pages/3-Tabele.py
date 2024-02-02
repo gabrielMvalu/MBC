@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import io
 from docx import Document
+from docx.shared import Pt 
+
 
 st.header('Pregătirea datelor din P. FINANCIAR pentru completare tabel subcap 2.4')
 
@@ -65,15 +67,25 @@ def transforma_date(df):
 
     return df_nou
 
+
 def df_to_word(document, df):
     table = document.add_table(rows=(df.shape[0] + 1), cols=df.shape[1])
     for j in range(df.shape[1]):
-        table.cell(0, j).text = df.columns[j]
+        cell = table.cell(0, j)
+        cell.text = df.columns[j]
+        for paragraph in cell.paragraphs:
+            for run in paragraph.runs:
+                run.font.size = Pt(8)  
+
     for i in range(df.shape[0]):
         for j in range(df.shape[1]):
+            cell = table.cell(i + 1, j)
             val = df.iloc[i, j]
-            text = "" if pd.isna(val) else str(val)
-            table.cell(i + 1, j).text = text
+            cell.text = "" if pd.isna(val) else str(val)
+            for paragraph in cell.paragraphs:
+                for run in paragraph.runs:
+                    run.font.size = Pt(8) 
+
     return document
 
 if st.button("Generează Tabel 1"):
