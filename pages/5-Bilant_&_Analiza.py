@@ -104,22 +104,29 @@ uploaded_file = st.file_uploader("Adăugați fișierul aici sau faceți click pe
 #on = st.toggle('Activate feature')
 
 
+
+
 def create_word_document(data_bilant, data_contpp, data_analiza):
     doc = Document()
     doc.add_heading('Raport Analiza', 0)
 
     for data, title in zip([data_bilant, data_contpp, data_analiza], ['Bilanț', 'Cont de Profit și Pierdere', 'Analiză']):
         doc.add_heading(title, level=1)
-        table = doc.add_table(rows=1, cols=len(data))
+        table = doc.add_table(rows=len(data) + 1, cols=2)  # 2 coloane: Numele indicatorului și Valoarea
         hdr_cells = table.rows[0].cells
-        for i, key in enumerate(data.keys()):
-            hdr_cells[i].text = key
-        row_cells = table.add_row().cells
-        for i, value in enumerate(data.values()):
-            row_cells[i].text = str(value)
+        hdr_cells[0].text = 'Indicator'
+        hdr_cells[1].text = 'Valoare'
+        
+        for i, (key, value) in enumerate(data.items(), start=1):
+            row_cells = table.rows[i].cells
+            row_cells[0].text = key
+            row_cells[1].text = str(value)
+
         doc.add_paragraph()
 
     return doc
+
+
 
 
 if uploaded_file is not None:
