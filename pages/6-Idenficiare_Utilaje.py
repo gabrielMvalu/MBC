@@ -2,18 +2,16 @@ import streamlit as st
 import pandas as pd
 import re
 
-# Creează o pagină nouă pe Streamlit
 st.header(':blue[Prelucrare XLSX]', divider='rainbow')
 
-# Adaugă un widget de încărcare fișier pentru a permite utilizatorului să încarce un fișier XLSX
 uploaded_file = st.file_uploader("Încarcă un fișier XLSX", type=['xlsx'])
 
 
 def extrage_date_financiar(df_financiar):
     values_col2_and_col12 = []
     for index, row in df_financiar.iterrows():
-        value_col2 = row.iloc[1]  # Presupunând că coloana 2 este a doua coloană în DataFrame
-        value_col12 = row.iloc[11]  # Presupunând că coloana 12 este a 12-a coloană în DataFrame
+        value_col2 = row.iloc[1] 
+        value_col12 = row.iloc[11]  
         if value_col2 == "Total proiect":
             break
         if value_col2 and value_col12 and value_col12 != 0:
@@ -42,7 +40,6 @@ def coreleaza_date_financiar_amortizare_ajustat(date_financiar):
     
     return rezultate_corelate
 
-# Logica de încărcare și prelucrare a fișierului XLSX, și apoi aplicarea funcțiilor definite
 if uploaded_file is not None:
     try:
         df_financiar = pd.read_excel(uploaded_file, sheet_name='P. FINANCIAR')
@@ -65,7 +62,6 @@ if uploaded_file is not None:
             # Salvează numărul total de utilaje și rezultatele corelate în st.session_state
             st.session_state['numar_total_utilaje'] = numar_total_utilaje
             st.session_state['rezultate_corelate'] = df_rezultate['Rezultat'].tolist()
-
         
         else:
             st.error("Nu s-au găsit date valide în foaia 'P. FINANCIAR' pentru calculul numărului de utilaje.")
