@@ -4,6 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import altair as alt
 from altair import Scale, Color
+import io
+from docx import Document
 
 st.set_page_config(layout="wide")
 
@@ -101,6 +103,25 @@ uploaded_file = st.file_uploader("Adăugați fișierul aici sau faceți click pe
 
 #on = st.toggle('Activate feature')
 
+
+def create_word_document(data_bilant, data_contpp, data_analiza):
+    doc = Document()
+    doc.add_heading('Raport Analiza', 0)
+
+    for data, title in zip([data_bilant, data_contpp, data_analiza], ['Bilanț', 'Cont de Profit și Pierdere', 'Analiză']):
+        doc.add_heading(title, level=1)
+        table = doc.add_table(rows=1, cols=len(data))
+        hdr_cells = table.rows[0].cells
+        for i, key in enumerate(data.keys()):
+            hdr_cells[i].text = key
+        row_cells = table.add_row().cells
+        for i, value in enumerate(data.values()):
+            row_cells[i].text = str(value)
+        doc.add_paragraph()
+
+    return doc
+
+
 if uploaded_file is not None:
     df = pd.read_excel(uploaded_file, sheet_name='1-Bilant')
     df1 = pd.read_excel(uploaded_file, sheet_name='2-ContPP')
@@ -117,8 +138,19 @@ if uploaded_file is not None:
        # Utilizează valorile în 'st.metric'
     #   st.metric(label="Procentul de creștere CA", value=pc, delta=ca22, 
     #   delta_color="off", help='Procentul trebuie sa fie cat mai mic, deoarece este indicator la proiect si trebuie sa il respecte')
-        
-      
+
+
+    if st.button('Descărcați Raportul'):
+        doc = create_word_document(data_bilant, data_contpp, data_analiza)
+        buffer = io.BytesIO()
+        doc.save(buffer)
+        buffer.seek(0)
+        st.download_button(label="Descărcați Raportul Word",
+                           data=buffer,
+                           file_name="Raport_Financiar.docx",
+                           mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+
+    
        
     st.session_state.progress += 25  
     st.sidebar.progress(st.session_state.progress)
@@ -177,3 +209,7 @@ if uploaded_file is not None:
         st.dataframe(pd.DataFrame([data_bilant]))
         st.dataframe(pd.DataFrame([data_contpp])) 
         st.dataframe(pd.DataFrame([data_analiza])) 
+
+
+
+
