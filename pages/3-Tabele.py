@@ -107,6 +107,11 @@ def main():
             if stop_in:
                 # Extrage valoarea din coloana 5 (index 4) pentru rândul găsit
                 val_total_proiect = df.iloc[stop_in[0], 4]
+
+         # Afișează indexul și valoarea pentru a verifica
+                st.write("Indexul 'Total proiect' este:", stop_in[0])  # Sau folosește st.write dacă ești în Streamlit
+                st.write("Valoarea de pe rândul", stop_in[0], "din coloana 5 este:", df.iloc[stop_in[0], 4])  # Idem pentru st.write
+                
             else:
                 # Dacă nu s-a găsit textul, poți seta val_total_proiect la un anumit valor default sau arunca o excepție, depinde de cazul tău.
                 val_total_proiect = None  # Sau poți seta la altă valoare default    
