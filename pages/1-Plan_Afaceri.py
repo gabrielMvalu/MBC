@@ -43,11 +43,11 @@ if uploaded_template is not None:
                 run.text = run.text.replace("#Adresa_sediu", adresa_sediu_text)
 
 
-            
             if "#Adresa_pct_lucru" in run.text:
                 adrese_secundare_formate = '\n'.join(st.session_state['date_generale']['Adresa sediul secundar'])
                 adrese_secundare_text = f"Adresa secundara:\n{adrese_secundare_formate}"
-                run.text = run.text.replace("#Adresa_pct_lucru", adrese_secundare_text)
+                run.text = run.text.replace("#Adresa_pct_lucru", adrese_secundare_text)            
+
                 
     # Salvarea documentului modificat
     modified_doc_path = "document_modificat.docx"
