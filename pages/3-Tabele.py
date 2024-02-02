@@ -44,7 +44,7 @@ def main():
                 um_list.append("buc")
                 cantitate_list.append(row[11])
                 pret_unitar_list.append(row[3])
-                valoare_totala_list.append(row[2]*row[11])
+                valoare_totala_list.append(row[3]*row[11])
                 linie_bugetara_list.append(row[14])
                 counter += 1  # Increment the counter only if the condition is not met
         for index, row in df.iterrows():
