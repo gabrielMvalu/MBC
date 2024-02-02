@@ -112,7 +112,7 @@ def main():
                 val_total_proiect = None  # Sau poți seta la altă valoare default    
             valori_de_eliminat = [
                 "Servicii de adaptare a utilajelor pentru operarea acestora de persoanele cu dizabilitati",
-                "Rampa mobila", "Total active corporale", "Total active necorporale", 
+                "Total active corporale", "Total active necorporale", 
                 "Publicitate", "Consultanta management", "Consultanta achizitii", "Consultanta scriere"
             ]
             df_filtrat = df_filtrat[~df_filtrat.iloc[:, 1].isin(valori_de_eliminat)]
