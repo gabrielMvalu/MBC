@@ -23,8 +23,8 @@ if uploaded_template is not None:
             if "#CUI" in run.text:
                 run.text = run.text.replace("#CUI", st.session_state['date_generale']['Codul unic de înregistrare (CUI)'])
             
-            if "#Nr_recom" in run.text:
-                run.text = run.text.replace("#Nr_recom", st.session_state['date_generale']['Numărul de ordine în Registrul Comerțului'])
+            if "#Nr_inmatriculare" in run.text:
+                run.text = run.text.replace("#Nr_inmatriculare", st.session_state['date_generale']['Numărul de ordine în Registrul Comerțului'])
             
             if "#data_infiintare" in run.text:
                 run.text = run.text.replace("#data_infiintare", st.session_state['date_generale']['Data înființării'])
