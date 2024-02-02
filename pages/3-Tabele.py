@@ -9,6 +9,12 @@ st.header('Pregătirea datelor din P. FINANCIAR pentru completare tabel subcap 2
 uploaded_file = st.file_uploader("Încarcă documentul '*.xlsx' aici", type="xlsx", accept_multiple_files=False)
 stop_text = "Total proiect"
 
+
+if uploaded_file is not None:
+    df = pd.read_excel(uploaded_file)
+    df_transformed = transforma_date(df)
+    genereaza_docx(df_transformed)
+
 def transforma_date(df):
     stop_index = df.index[df.iloc[:, 1].eq(stop_text)].tolist()
     if stop_index:
