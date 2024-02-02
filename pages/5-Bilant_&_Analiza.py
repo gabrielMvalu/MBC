@@ -125,55 +125,55 @@ if uploaded_file is not None:
 
    
 
-# Pregătirea datelor pentru grafice
-df_cifra_afaceri = pd.DataFrame({
-    'An': ['2020', '2021', '2022'],
-    'Cifra de afaceri': [float(data_contpp["Cifra de afaceri 2020"]), float(data_contpp["Cifra de afaceri 2021"]), float(data_contpp["Cifra de afaceri 2022"])],
-    'Venituri totale': [float(data_contpp["Venituri totale 2020"]), float(data_contpp["Venituri totale 2021"]), float(data_contpp["Venituri totale 2022"])]
-})
-
-df_solvabilitate = pd.DataFrame({
-    'An': ['2020', '2021', '2022'],
-    'Rata solvabilității generale': [float(data_analiza["Rata solvabilitatii generale 2020"]), float(data_analiza["Rata solvabilitatii generale 2021"]), float(data_analiza["Rata solvabilitatii generale 2022"])]
-})
-
-culori_customizate = Scale(domain=['2020', '2021', '2022'], 
-                           range=['#f7e928', '#28f7e9', '#fa1b1b'])
-
-col1, col2 = st.columns(2)
-
-with col2:
-    # Crearea și afișarea primului grafic în col1
-    st.write('## Evoluția Cifrei de Afaceri și a Veniturilor Totale')
-    grafic_cifra_afaceri = alt.Chart(df_cifra_afaceri.melt('An', var_name='Categorie', value_name='Valoare')).mark_line(point=True).encode(
-        x='An:N',
-        y='Valoare:Q',
-        color='Categorie:N',
-        tooltip=['An', 'Categorie', 'Valoare']
-    ).interactive()
-    st.altair_chart(grafic_cifra_afaceri, use_container_width=True)
-
-
-with col1:
-    # Crearea și afișarea celui de-al doilea grafic în col2
-    st.write("## Rata Solvabilității Generale pe Ani")
-    grafic_solvabilitate = alt.Chart(df_solvabilitate).mark_bar().encode(
-        x='An:N',
-        y='Rata solvabilității generale:Q',
-        color=Color('An:N', scale=culori_customizate),
-        tooltip=['An', 'Rata solvabilității generale']
-    ).interactive()
-    st.altair_chart(grafic_solvabilitate, use_container_width=True)
-
-
-col3, col4 = st.columns(2)
-with col3:
-     st.json({"Datele din bilant sunt:": data_bilant})
-     st.json({"Datele din contPP sunt:": data_contpp})    
-     st.json({"Datele din analiza sunt:": data_analiza})
-      
-with col4:
-    st.write("Vizualizare Bilant:")
-    st.dataframe(pd.DataFrame([data_bilant]))
-    st.dataframe(pd.DataFrame([data_contpp])) 
-    st.dataframe(pd.DataFrame([data_analiza])) 
+    # Pregătirea datelor pentru grafice
+    df_cifra_afaceri = pd.DataFrame({
+        'An': ['2020', '2021', '2022'],
+        'Cifra de afaceri': [float(data_contpp["Cifra de afaceri 2020"]), float(data_contpp["Cifra de afaceri 2021"]), float(data_contpp["Cifra de afaceri 2022"])],
+        'Venituri totale': [float(data_contpp["Venituri totale 2020"]), float(data_contpp["Venituri totale 2021"]), float(data_contpp["Venituri totale 2022"])]
+    })
+    
+    df_solvabilitate = pd.DataFrame({
+        'An': ['2020', '2021', '2022'],
+        'Rata solvabilității generale': [float(data_analiza["Rata solvabilitatii generale 2020"]), float(data_analiza["Rata solvabilitatii generale 2021"]), float(data_analiza["Rata solvabilitatii generale 2022"])]
+    })
+    
+    culori_customizate = Scale(domain=['2020', '2021', '2022'], 
+                               range=['#f7e928', '#28f7e9', '#fa1b1b'])
+    
+    col1, col2 = st.columns(2)
+    
+    with col2:
+        # Crearea și afișarea primului grafic în col1
+        st.write('## Evoluția Cifrei de Afaceri și a Veniturilor Totale')
+        grafic_cifra_afaceri = alt.Chart(df_cifra_afaceri.melt('An', var_name='Categorie', value_name='Valoare')).mark_line(point=True).encode(
+            x='An:N',
+            y='Valoare:Q',
+            color='Categorie:N',
+            tooltip=['An', 'Categorie', 'Valoare']
+        ).interactive()
+        st.altair_chart(grafic_cifra_afaceri, use_container_width=True)
+    
+    
+    with col1:
+        # Crearea și afișarea celui de-al doilea grafic în col2
+        st.write("## Rata Solvabilității Generale pe Ani")
+        grafic_solvabilitate = alt.Chart(df_solvabilitate).mark_bar().encode(
+            x='An:N',
+            y='Rata solvabilității generale:Q',
+            color=Color('An:N', scale=culori_customizate),
+            tooltip=['An', 'Rata solvabilității generale']
+        ).interactive()
+        st.altair_chart(grafic_solvabilitate, use_container_width=True)
+    
+    
+    col3, col4 = st.columns(2)
+    with col3:
+         st.json({"Datele din bilant sunt:": data_bilant})
+         st.json({"Datele din contPP sunt:": data_contpp})    
+         st.json({"Datele din analiza sunt:": data_analiza})
+          
+    with col4:
+        st.write("Vizualizare Bilant:")
+        st.dataframe(pd.DataFrame([data_bilant]))
+        st.dataframe(pd.DataFrame([data_contpp])) 
+        st.dataframe(pd.DataFrame([data_analiza])) 
