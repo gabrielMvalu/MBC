@@ -14,7 +14,7 @@ def extrage_date_financiar(df_financiar):
         value_col12 = row.iloc[11]  # Presupunând că coloana 12 este a 12-a coloană în DataFrame
         if value_col2 == "Total proiect":
             break
-        if value_col2 and value_col12 and value_col12 != 0:
+        if value_col2 and pd.notnull(value_col12) and value_col12 != 0:
             values_col2_and_col12.append((value_col2, value_col12))
     return values_col2_and_col12
 
@@ -49,7 +49,7 @@ if uploaded_file is not None:
         date_financiare = extrage_date_financiar(df_financiar)
         if date_financiare:  # Verifică dacă lista nu este goală
             # Calculăm numărul total de utilaje sumând cantitățile
-            numar_total_utilaje = sum(cantitate for _, cantitate in date_financiare if isinstance(cantitate, (int, float)))
+            numar_total_utilaje = sum(cantitate for _, cantitate in date_financiare if pd.notnull(cantitate))
 
             rezultate_corelate = coreleaza_date_financiar_amortizare_ajustat(date_financiare)
             # Crează un DataFrame pentru a afișa rezultatele corelate
