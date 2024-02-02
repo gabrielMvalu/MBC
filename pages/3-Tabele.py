@@ -71,31 +71,21 @@ def transforma_date(df):
     })
     return df_nou
 
-
-def genereaza_docx(df_nou, nume_fisier="Tabel_Prelucrat.docx"):
-    document = Document()
-    document.add_heading('Tabel Prelucrat', 0)
-    tabel = document.add_table(rows=1, cols=len(df_nou.columns))
-    hdr_cells = tabel.rows[0].cells
-    for i, col_name in enumerate(df_nou.columns):
-        hdr_cells[i].text = col_name
-        hdr_cells[i].paragraphs[0].runs[0].font.bold = True
-        hdr_cells[i].paragraphs[0].runs[0].font.size = Pt(10)
-    for index, row in df_nou.iterrows():
-        row_cells = tabel.add_row().cells
-        for i, value in enumerate(row):
-            row_cells[i].text = str(value)
-            row_cells[i].paragraphs[0].runs[0].font.size = Pt(10)
-    docx_io = io.BytesIO()
-    document.save(docx_io)
-    docx_io.seek(0)
-    st.download_button(label="Descarcă Tabelul Prelucrat ca DOCX",
-                       data=docx_io,
-                       file_name=nume_fisier,
-                       mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-
-if uploaded_file is not None:
-    df = pd.read_excel(uploaded_file)
-    df_transformed = transforma_date(df)
-    genereaza_docx(df_transformed)
-
+if st.sidebar.button("Generează Tabel 1"):
+        if uploaded_file is not None:
+            try:
+                df = pd.read_excel(uploaded_file, sheet_name="P. FINANCIAR")
+                tabel_1 = transforma_date(df)
+                st.dataframe(tabel_1)  # Afișăm tabelul transformat
+                # Conversia DataFrame-ului într-un obiect Excel și crearea unui buton de descărcare
+                towrite = BytesIO()
+                tabel_1.to_excel(towrite, index=False, engine='openpyxl')
+                towrite.seek(0)  # Merem la începutul stream-ului
+                st.download_button(label="Descarcă Tabelul 1 ca Excel",
+                                   data=towrite,
+                                   file_name="tabel_prelucrat.xlsx",
+                                   mime="application/vnd.ms-excel")
+            except ValueError as e:
+               st.error(f"Eroare la procesarea datelor: {e}")
+        else:
+               st.error("Te rog să încarci un fișier.")
