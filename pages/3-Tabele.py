@@ -9,7 +9,6 @@ st.header('Pregătirea datelor din P. FINANCIAR pentru completare tabel subcap 2
 uploaded_file = st.sidebar.file_uploader("Încarcă documentul '*.xlsx' aici", type="xlsx", accept_multiple_files=False)
 
 def transforma_date(df):
-    stop_text = "Total proiect"
     stop_index = df.index[df.iloc[:, 1].eq(stop_text)].tolist()
     if stop_index:
         df = df.iloc[3:stop_index[0]]
@@ -28,7 +27,7 @@ def transforma_date(df):
     for index, row in df.iterrows():
         item = row[1].strip().lower()
         if item in ["total active corporale", "total active necorporale"]:
-            nr_crt.append(None)  
+            nr_crt.append(None)
             um_list.append(None)
             cantitate_list.append(None)
             pret_unitar_list.append(None)
@@ -37,21 +36,9 @@ def transforma_date(df):
         else:
             nr_crt.append(counter)
             um_list.append("buc")
-            # Conversie în numerice și verificare NaN
-            try:
-                cantitate = pd.to_numeric(row[11], errors='coerce')
-                pret_unitar = pd.to_numeric(row[3], errors='coerce')
-                if pd.notna(cantitate) and pd.notna(pret_unitar):
-                    valoare_totala = cantitate * pret_unitar
-                else:
-                    valoare_totala = None  # Sau altă valoare implicită, cum ar fi 0
-            except Exception as e:
-                valoare_totala = None  # Sau gestionează eroarea după caz
-                st.error(f"Eroare la convertirea sau calculul valorilor: {e}")
-
-            cantitate_list.append(cantitate)
-            pret_unitar_list.append(pret_unitar)
-            valoare_totala_list.append(valoare_totala)
+            cantitate_list.append(row[11])
+            pret_unitar_list.append(row[3])
+            valoare_totala_list.append(row[3] * row[11])
             linie_bugetara_list.append(row[14])
             counter += 1
     for index, row in df.iterrows():
@@ -64,13 +51,13 @@ def transforma_date(df):
         if pd.isna(val_6) or pd.isna(val_4):
             eligibil_neeligibil.append("Data Missing")
         elif val_6 == 0 and val_4 != 0:
-            eligibil_neeligibil.append("0 // " + str(round(val_4,2)))
+            eligibil_neeligibil.append("0 // " + str(round(val_4, 2)))
         elif val_6 == 0 and val_4 == 0:
             eligibil_neeligibil.append("0 // 0")
         elif val_6 < val_4:
-            eligibil_neeligibil.append(str(round(val_6,2)) + " // " + str(round(val_4 - val_6,2)))
+            eligibil_neeligibil.append(str(round(val_6, 2)) + " // " + str(round(val_4 - val_6, 2)))
         else:
-            eligibil_neeligibil.append(str(round(val_6,2)) + " // " + str(round(val_6 - val_4,2)))      
+            eligibil_neeligibil.append(str(round(val_6, 2)) + " // " + str(round(val_6 - val_4, 2)))      
     df_nou = pd.DataFrame({
         "Nr. crt.": nr_crt,
         "Denumirea lucrărilor / bunurilor/ serviciilor": df.iloc[:, 1],
@@ -83,6 +70,7 @@ def transforma_date(df):
         "Contribuie la criteriile de evaluare a,b,c,d": df.iloc[:, 15]
     })
     return df_nou
+
 
 def genereaza_docx(df_nou, nume_fisier="Tabel_Prelucrat.docx"):
     document = Document()
