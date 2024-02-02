@@ -4,17 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import altair as alt
 from altair import Scale, Color
-import io
-from docx import Document
 
 st.set_page_config(layout="wide")
-
-if 'progress' not in st.session_state:
-    st.session_state.progress = 0
-
-st.sidebar.write("Progresul tău:")
-st.sidebar.progress(st.session_state.progress)
-
 
 def extrage_date_bilant(df):
     cpa20 = f"{df.iloc[76, 1]:.2f}"
@@ -97,37 +88,10 @@ def extrage_indicatori_financiari(df2):
     }
 
     return data
+    
 st.header(':blue[Adaugati Analiză, Bilanț, Cont de Profit și Pierdere]', divider='rainbow')
 
 uploaded_file = st.file_uploader("Adăugați fișierul aici sau faceți click pentru a încărca", type=["xlsx"])
-
-#on = st.toggle('Activate feature')
-
-
-
-
-def create_word_document(data_bilant, data_contpp, data_analiza):
-    doc = Document()
-    doc.add_heading('Raport Analiza', 0)
-
-    for data, title in zip([data_bilant, data_contpp, data_analiza], ['Bilanț', 'Cont de Profit și Pierdere', 'Analiză']):
-        doc.add_heading(title, level=1)
-        table = doc.add_table(rows=len(data) + 1, cols=2)  # 2 coloane: Numele indicatorului și Valoarea
-        hdr_cells = table.rows[0].cells
-        hdr_cells[0].text = 'Indicator'
-        hdr_cells[1].text = 'Valoare'
-        
-        for i, (key, value) in enumerate(data.items(), start=1):
-            row_cells = table.rows[i].cells
-            row_cells[0].text = key
-            row_cells[1].text = str(value)
-
-        doc.add_paragraph()
-
-    return doc
-
-
-
 
 if uploaded_file is not None:
     df = pd.read_excel(uploaded_file, sheet_name='1-Bilant')
@@ -136,86 +100,6 @@ if uploaded_file is not None:
     data_bilant = extrage_date_bilant(df)
     data_contpp = extrage_date_contpp(df1)
     data_analiza = extrage_indicatori_financiari(df2) 
-
-    # Accesează valorile din dicționarul 'data_contpp'
-   # ca22 = data_contpp["Cifra de afaceri 2022"]
-   # pc = data_contpp["Procent crestere"]
-
-    # if on:
-       # Utilizează valorile în 'st.metric'
-    #   st.metric(label="Procentul de creștere CA", value=pc, delta=ca22, 
-    #   delta_color="off", help='Procentul trebuie sa fie cat mai mic, deoarece este indicator la proiect si trebuie sa il respecte')
-
-
-    if st.button('Descărcați Raportul'):
-        doc = create_word_document(data_bilant, data_contpp, data_analiza)
-        buffer = io.BytesIO()
-        doc.save(buffer)
-        buffer.seek(0)
-        st.download_button(label="Descărcați Raportul Word",
-                           data=buffer,
-                           file_name="Raport_Financiar.docx",
-                           mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-
-    
-       
-    st.session_state.progress += 25  
-    st.sidebar.progress(st.session_state.progress)
-
-   
-
-    # Pregătirea datelor pentru grafice
-    df_cifra_afaceri = pd.DataFrame({
-        'An': ['2020', '2021', '2022'],
-        'Cifra de afaceri': [float(data_contpp["Cifra de afaceri 2020"]), float(data_contpp["Cifra de afaceri 2021"]), float(data_contpp["Cifra de afaceri 2022"])],
-        'Venituri totale': [float(data_contpp["Venituri totale 2020"]), float(data_contpp["Venituri totale 2021"]), float(data_contpp["Venituri totale 2022"])]
-    })
-    
-    df_solvabilitate = pd.DataFrame({
-        'An': ['2020', '2021', '2022'],
-        'Rata solvabilității generale': [float(data_analiza["Rata solvabilitatii generale 2020"]), float(data_analiza["Rata solvabilitatii generale 2021"]), float(data_analiza["Rata solvabilitatii generale 2022"])]
-    })
-    
-    culori_customizate = Scale(domain=['2020', '2021', '2022'], 
-                               range=['#f7e928', '#28f7e9', '#fa1b1b'])
-    
-    col1, col2 = st.columns(2)
-    
-    with col2:
-        # Crearea și afișarea primului grafic în col1
-        st.write('## Evoluția Cifrei de Afaceri și a Veniturilor Totale')
-        grafic_cifra_afaceri = alt.Chart(df_cifra_afaceri.melt('An', var_name='Categorie', value_name='Valoare')).mark_line(point=True).encode(
-            x='An:N',
-            y='Valoare:Q',
-            color='Categorie:N',
-            tooltip=['An', 'Categorie', 'Valoare']
-        ).interactive()
-        st.altair_chart(grafic_cifra_afaceri, use_container_width=True)
-    
-    
-    with col1:
-        # Crearea și afișarea celui de-al doilea grafic în col2
-        st.write("## Rata Solvabilității Generale pe Ani")
-        grafic_solvabilitate = alt.Chart(df_solvabilitate).mark_bar().encode(
-            x='An:N',
-            y='Rata solvabilității generale:Q',
-            color=Color('An:N', scale=culori_customizate),
-            tooltip=['An', 'Rata solvabilității generale']
-        ).interactive()
-        st.altair_chart(grafic_solvabilitate, use_container_width=True)
-    
-    
-    col3, col4 = st.columns(2)
-    with col3:
-         st.json({"Datele din bilant sunt:": data_bilant})
-         st.json({"Datele din contPP sunt:": data_contpp})    
-         st.json({"Datele din analiza sunt:": data_analiza})
-          
-    with col4:
-        st.write("Vizualizare Bilant:")
-        st.dataframe(pd.DataFrame([data_bilant]))
-        st.dataframe(pd.DataFrame([data_contpp])) 
-        st.dataframe(pd.DataFrame([data_analiza])) 
 
 
 
