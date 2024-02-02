@@ -43,19 +43,20 @@ def coreleaza_date_financiar_amortizare_ajustat(date_financiar):
 
 
 
-# Logica de încărcare și prelucrare a fișierului XLSX, și apoi aplicarea funcțiilor definite
 if uploaded_file is not None:
     try:
         df_financiar = pd.read_excel(uploaded_file, sheet_name='P. FINANCIAR')
         date_financiare = extrage_date_financiar(df_financiar)
-        rezultate_corelate = coreleaza_date_financiar_amortizare_ajustat(date_financiare)
-        
-        # Calculăm numărul total de utilaje sumând cantitățile
-        numar_total_utilaje = sum(cantitate for _, cantitate in date_financiare)
-        
-        # Crează un DataFrame pentru a afișa rezultatele corelate
-        df_rezultate = pd.DataFrame(rezultate_corelate, columns=['Nume', 'Cantitate', 'Rezultat'])
-        st.write(df_rezultate)
-        st.write(f"Număr total de utilaje: {numar_total_utilaje}")
+        if date_financiare:  # Verifică dacă lista nu este goală
+            # Calculăm numărul total de utilaje sumând cantitățile
+            numar_total_utilaje = sum(cantitate for _, cantitate in date_financiare if isinstance(cantitate, (int, float)))
+
+            rezultate_corelate = coreleaza_date_financiar_amortizare_ajustat(date_financiare)
+            # Crează un DataFrame pentru a afișa rezultatele corelate
+            df_rezultate = pd.DataFrame(rezultate_corelate, columns=['Nume', 'Cantitate', 'Rezultat'])
+            st.write(df_rezultate)
+            st.write(f"Număr total de utilaje: {numar_total_utilaje}")
+        else:
+            st.error("Nu s-au găsit date valide în foaia 'P. FINANCIAR' pentru calculul numărului de utilaje.")
     except ValueError:
-        st.error('Foaia "P.FINANCIAR" nu există în fișierul încărcat. Te rog să încarci un fișier care conține foaia necesară.')
+        st.error('Foaia "P. FINANCIAR" nu există în fișierul încărcat. Te rog să încarci un fișier care conține foaia necesară.')
