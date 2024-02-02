@@ -49,7 +49,7 @@ if uploaded_file is not None:
         date_financiare = extrage_date_financiar(df_financiar)
         if date_financiare:  # Verifică dacă lista nu este goală
             # Calculăm numărul total de utilaje sumând cantitățile
-            numar_total_utilaje = sum(cantitate for _, cantitate in date_financiare)
+            numar_total_utilaje = sum(cantitate if pd.notnull(cantitate) else 0 for _, cantitate in date_financiare)
 
             rezultate_corelate = coreleaza_date_financiar_amortizare_ajustat(date_financiare)
             # Crează un DataFrame pentru a afișa rezultatele corelate
