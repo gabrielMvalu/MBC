@@ -37,11 +37,23 @@ def transforma_date(df):
         else:
             nr_crt.append(counter)
             um_list.append("buc")
-            cantitate_list.append(row[11])
-            pret_unitar_list.append(row[3])
-            valoare_totala_list.append(row[3]*row[11])
+            # Conversie în numerice și verificare NaN
+            try:
+                cantitate = pd.to_numeric(row[11], errors='coerce')
+                pret_unitar = pd.to_numeric(row[3], errors='coerce')
+                if pd.notna(cantitate) and pd.notna(pret_unitar):
+                    valoare_totala = cantitate * pret_unitar
+                else:
+                    valoare_totala = None  # Sau altă valoare implicită, cum ar fi 0
+            except Exception as e:
+                valoare_totala = None  # Sau gestionează eroarea după caz
+                st.error(f"Eroare la convertirea sau calculul valorilor: {e}")
+
+            cantitate_list.append(cantitate)
+            pret_unitar_list.append(pret_unitar)
+            valoare_totala_list.append(valoare_totala)
             linie_bugetara_list.append(row[14])
-            counter += 1 
+            counter += 1
     for index, row in df.iterrows():
         try:
             val_6 = pd.to_numeric(row[6], errors='coerce')
