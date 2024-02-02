@@ -48,8 +48,10 @@ if uploaded_file is not None:
         df_financiar = pd.read_excel(uploaded_file, sheet_name='P. FINANCIAR')
         date_financiare = extrage_date_financiar(df_financiar)
         if date_financiare:  # Verifică dacă lista nu este goală
-            # Calculăm numărul total de utilaje sumând cantitățile
-            numar_total_utilaje = sum(cantitate if pd.notnull(cantitate) else 0 for _, cantitate in date_financiare)
+            # Transformă valorile NaN în 0 în lista date_financiare
+            date_financiare_curate = [(nume, 0 if pd.isna(cantitate) else cantitate) for nume, cantitate in date_financiare] 
+            # Calculează suma cantităților curățate
+            numar_total_utilaje = sum(cantitate for _, cantitate in date_financiare_curate)
 
             rezultate_corelate = coreleaza_date_financiar_amortizare_ajustat(date_financiare)
             # Crează un DataFrame pentru a afișa rezultatele corelate
