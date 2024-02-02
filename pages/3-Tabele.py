@@ -19,25 +19,28 @@ def transforma_date(df):
     counter = 1
 
     for index, row in df.iterrows():
-        item = row.iloc[1].strip().lower()
-        if item in ["total active corporale", "total active necorporale"]:
-            nr_crt += [None]
-            um_list += [None]
-            cantitate_list += [None]
-            pret_unitar_list += [None]
-            valoare_totala_list += [None]
-            linie_bugetara_list += [None]
-        else:
-            nr_crt.append(int(counter))
-            um_list.append("buc")
-            cantitate = int(row.iloc[11]) if pd.notna(row.iloc[11]) else None
-            cantitate_list.append(cantitate)
-            pret_unitar = row.iloc[3]
-            pret_unitar_list.append(pret_unitar)
-            valoare_totala = pret_unitar * cantitate if cantitate is not None else None
-            valoare_totala_list.append(valoare_totala)
-            linie_bugetara_list.append(row.iloc[14])
-            counter += 1
+    item = row[1].strip().lower()
+    if item in ["total active corporale", "total active necorporale"]:
+        nr_crt.append(None)
+        um_list.append(None)
+        cantitate_list.append(None)
+        pret_unitar_list.append(None)
+        valoare_totala_list.append(None)
+        linie_bugetara_list.append(None)
+    else:
+        nr_crt.append(int(counter))  # Asigurăm că 'counter' este întreg, deși este deja de acest tip
+        um_list.append("buc")
+
+        try:
+            cantitate = int(row[11])
+        except ValueError:
+            cantitate = None  # Sau o altă valoare de fallback, dacă este necesar
+        cantitate_list.append(cantitate)
+        
+        pret_unitar_list.append(row[3])
+        valoare_totala_list.append(row[3] * cantitate if cantitate is not None else None)
+        linie_bugetara_list.append(row[14])
+        counter += 1
 
     for index, row in df.iterrows():
         val_6 = pd.to_numeric(row.iloc[6], errors='coerce')
