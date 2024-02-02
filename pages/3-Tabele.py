@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 import io
 from docx import Document
-from docx.shared import Pt
-from io import BytesIO
 
 st.header('Pregătirea datelor din P. FINANCIAR pentru completare tabel subcap 2.4')
 
@@ -71,22 +69,43 @@ def transforma_date(df):
         "Contribuie la criteriile de evaluare a,b,c,d": df.iloc[:, 15]
     })
     return df_nou
+# Funcție pentru adăugarea unui DataFrame într-un document Word
+def df_to_word(document, df, index=False):
+    table = document.add_table(rows=(df.shape[0] + 1), cols=df.shape[1])
 
-if st.sidebar.button("Generează Tabel 1"):
-        if uploaded_file is not None:
-            try:
-                df = pd.read_excel(uploaded_file, sheet_name="P. FINANCIAR")
-                tabel_1 = transforma_date(df)
-                st.dataframe(tabel_1)  # Afișăm tabelul transformat
-                # Conversia DataFrame-ului într-un obiect Excel și crearea unui buton de descărcare
-                towrite = BytesIO()
-                tabel_1.to_excel(towrite, index=False, engine='openpyxl')
-                towrite.seek(0)  # Merem la începutul stream-ului
-                st.download_button(label="Descarcă Tabelul 1 ca Excel",
-                                   data=towrite,
-                                   file_name="tabel_prelucrat.xlsx",
-                                   mime="application/vnd.ms-excel")
-            except ValueError as e:
-               st.error(f"Eroare la procesarea datelor: {e}")
-        else:
-               st.error("Te rog să încarci un fișier.")
+    # Adăugarea antetului tabelului
+    for j in range(df.shape[-1]):
+        table.cell(0,j).text = df.columns[j]
+
+    # Adăugarea rândurilor din DataFrame în tabel
+    for i in range(df.shape[0]):
+        for j in range(df.shape[-1]):
+            table.cell(i+1,j).text = str(df.values[i,j])
+    return document
+
+# Crearea unui nou document Word
+doc = Document()
+
+if st.button("Generează Tabel 1"):
+    if uploaded_file is not None:
+        try:
+            df = pd.read_excel(uploaded_file, sheet_name="P. FINANCIAR")
+            tabel_1 = transforma_date(df)
+
+            # Adăugarea DataFrame-ului în documentul Word
+            doc = df_to_word(doc, tabel_1)
+
+            # Salvarea documentului într-un obiect BytesIO
+            towrite = io.BytesIO()
+            doc.save(towrite)
+            towrite.seek(0)  # Mergem la începutul stream-ului
+
+            # Crearea unui buton de descărcare pentru documentul Word
+            st.download_button(label="Descarcă Tabelul 1 ca Word",
+                               data=towrite,
+                               file_name="tabel_prelucrat.docx",
+                               mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        except ValueError as e:
+            st.error(f"Eroare la procesarea datelor: {e}")
+    else:
+        st.error("Te rog să încarci un fișier.")
