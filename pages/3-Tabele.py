@@ -18,26 +18,24 @@ def transforma_date(df):
     counter = 1
 
     for index, row in df.iterrows():
-    item = row.iloc[1].strip().lower()
-    if item in ["total active corporale", "total active necorporale"]:
-        nr_crt.append(None)
-        um_list.append(None)
-        cantitate_list.append(None)
-        pret_unitar_list.append(None)
-        valoare_totala_list.append(None)
-        linie_bugetara_list.append(None)
-    else:
-        nr_crt.append(counter)
-        um_list.append("buc")
-
-        cantitate = int(row.iloc[11]) if pd.notna(row.iloc[11]) else None
-        cantitate_list.append(cantitate)
-
-        pret_unitar_list.append(row.iloc[3])
-        valoare_totala = row.iloc[3] * cantitate if cantitate is not None else None
-        valoare_totala_list.append(valoare_totala)
-        linie_bugetara_list.append(row.iloc[14])
-        counter += 1
+        item = row.iloc[1].strip().lower()
+        if item in ["total active corporale", "total active necorporale"]:
+            nr_crt.append(None)
+            um_list.append(None)
+            cantitate_list.append(None)
+            pret_unitar_list.append(None)
+            valoare_totala_list.append(None)
+            linie_bugetara_list.append(None)
+        else:
+            nr_crt.append(counter)
+            um_list.append("buc")
+            cantitate = int(row.iloc[11]) if pd.notna(row.iloc[11]) else None
+            cantitate_list.append(cantitate)
+            pret_unitar_list.append(row.iloc[3])
+            valoare_totala = row.iloc[3] * cantitate if cantitate is not None else None
+            valoare_totala_list.append(valoare_totala)
+            linie_bugetara_list.append(row.iloc[14])
+            counter += 1
 
     for index, row in df.iterrows():
         val_6 = pd.to_numeric(row.iloc[6], errors='coerce')
@@ -102,4 +100,3 @@ if st.button("Generează Tabel 1"):
                            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     else:
         st.error("Te rog să încarci un fișier.")
-
