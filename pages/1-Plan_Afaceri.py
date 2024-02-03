@@ -70,7 +70,7 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#utilaj_dizabilitati": str(date_solicitate.get('Utilaj pentru persoane cu dizabilități', 'N/A')),
         "#utilaj_cu_tocator": str(date_solicitate.get('Utilaj cu tocător', 'N/A')),
         "#adresa_loc_implementare": str(date_solicitate.get('Adresa locației de implementare', 'N/A')),
-        "#nr_clasare_notificare": str(date_solicitate.get('Număr clasare notificare', 'N/A')),
+        "#nrClasareNotificare": str(date_solicitate.get('Număr clasare notificare', 'N/A')),
         "#clienti_actuali": str(date_solicitate.get('Clienți actuali', 'N/A')),
         "#furnizori": str(date_solicitate.get('Furnizori', 'N/A')),
         "#tip_activitate": str(date_solicitate.get('Tip activitate', 'N/A')),
