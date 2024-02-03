@@ -59,8 +59,7 @@ def extrage_date_solicitate(df):
         "Caracteristici tehnice relevante": caracteristici_tehnice,
         "Flux tehnologic": flux_tehnologic,
         "Utilaje DNSH": utilajeDNSH,
-        "Descriere utilaj ghidare": utilaj_ghidare_descriere
-        "Descriere utilaj reciclare": utilaj_reciclare_descriere        
+        "Descriere utilaj ghidare": utilaj_ghidare_descriere  
     }
 
     return data
