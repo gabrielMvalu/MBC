@@ -20,7 +20,7 @@ if uploaded_template is not None and uploaded_document is not None:
     adrese_secundare_text = '\n'.join(informatii_firma.get('Adresa sediul secundar', [])) if informatii_firma.get('Adresa sediul secundar', []) else "N/A"
     asociati_text = '\n'.join(asociati_info) if asociati_info else "N/A"
     administratori_text = administratori_info if administratori_info else "N/A"
-    coduri_caen_text = ', '.join([f"{cod} - {descriere}" for cod, descriere in coduri_caen]) if coduri_caen else "N/A"
+    coduri_caen_text = '\n '.join([f"{cod} - {descriere}" for cod, descriere in coduri_caen]) if coduri_caen else "N/A"
 
     
     placeholders = {
