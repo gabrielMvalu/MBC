@@ -5,8 +5,11 @@ from pages.constatator import extrage_informatii_firma, extract_asociati_admini,
 
 st.header(':blue[Completare Document cu Placeholder-uri]', divider='rainbow')
 
-uploaded_template = st.file_uploader("Încărcați macheta Planului de afaceri", type=["docx"], key="template")
-uploaded_document = st.file_uploader("Încărcați documentul Recom constatator.docx", type=["docx"], key="document")
+col1, col2 = st.columns(2)
+with col1:
+    uploaded_template = st.file_uploader("Încărcați macheta Planului de afaceri", type=["docx"], key="template")
+with col2:
+    uploaded_document = st.file_uploader("Încărcați documentul Recom constatator.docx", type=["docx"], key="document")
 
 if uploaded_template is not None and uploaded_document is not None:
     template_doc = Document(uploaded_template)
