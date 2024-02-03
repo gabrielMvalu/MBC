@@ -1,8 +1,9 @@
-# pages/2-Date_SRL.py
+# pages/constatator.py
 from docx import Document
 import re
 
-def extract_data_from_docx(doc):
+
+def extrage_informatii_firma(doc):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
     company_pattern = r"FURNIZARE INFORMAŢII\n\n(.*?)\n"
     firma_match = re.search(company_pattern, full_text, re.DOTALL)
@@ -38,7 +39,7 @@ def extract_data_from_docx(doc):
     }
     return data
 
-def extract_detailed_info_from_docx(doc):
+def extract_asociati_admini(doc):
     text = [p.text for p in doc.paragraphs]
     asociati = {}
     administratori = set()
@@ -93,7 +94,7 @@ def extract_situatie_angajati(doc):
     }
     return data_angajati
 
-def extract_caen_codes(full_text):
+def extrage_coduri_caen(full_text):
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
     end_marker = "CONCORDAT PREVENTIV"
     caen_section_pattern = re.compile(rf"{start_marker}(.*?){end_marker}", re.DOTALL)
