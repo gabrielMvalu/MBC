@@ -60,7 +60,7 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#Administrator": str(administratori_text),
         "#activitatePrincipala": str(informatii_firma.get('Activitate principală', 'N/A')),
         "#CAENautorizate": str(coduri_caen_text),
-        "#categorie_intreprindere": str(date_solicitate.get('Categorie întreprindere', 'N/A')),
+        "#categ_intreprindere": str(date_solicitate.get('Categorie întreprindere', 'N/A')),
         "#Firme_legate": str(date_solicitate.get('Firme legate', 'N/A')),
         "#Tip_investitie": str(date_solicitate.get('Tipul investiției', 'N/A')),
         "#activitate": str(date_solicitate.get('Activitate', 'N/A')),
