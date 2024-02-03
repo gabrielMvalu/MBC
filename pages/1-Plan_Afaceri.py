@@ -97,17 +97,19 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#utilajeDNSH": str(date_solicitate.get('Utilaje DNSH', 'N/A')),
         "#descriere_utilaj_ghidare": str(date_solicitate.get('Descriere utilaj ghidare', 'N/A')),
         "#descriere_utilaj_reciclare": str(date_solicitate.get('Descriere utilaj reciclare', 'N/A')),
+
+        "#NAM20": str(situatie_angajati.get('Numar mediu angajati 2020', 'N/A')),
+        "#NAM20": str(situatie_angajati.get('Numar mediu angajati 2021', 'N/A')),
+        "#NAM20": str(situatie_angajati.get('Numar mediu angajati 2022', 'N/A')),   
         "#CPA20": str(capital_propriu.get('Capitalul propriu al actionarilor 2020', 'N/A')), 
         "#CPA21": str(capital_propriu.get('Capitalul propriu al actionarilor 2021', 'N/A')),
         "#CPA22": str(capital_propriu.get('Capitalul propriu al actionarilor 2022', 'N/A')),
-
         "#CA20": str(cifra_venit_rezultat.get('Cifra de afaceri 2020', 'N/A')),
         "#CA21": str(cifra_venit_rezultat.get('Cifra de afaceri 2021', 'N/A')),
         "#CA22": str(cifra_venit_rezultat.get('Cifra de afaceri 2022', 'N/A')),
         "#VT20": str(cifra_venit_rezultat.get('Venituri totale 2020', 'N/A')),
         "#VT21": str(cifra_venit_rezultat.get('Venituri totale 2021', 'N/A')),
-        "#VT22": str(cifra_venit_rezultat.get('Venituri totale 2022', 'N/A')),
-                     
+        "#VT22": str(cifra_venit_rezultat.get('Venituri totale 2022', 'N/A')),     
         "#REX20": str(cifra_venit_rezultat.get('Rezultat al exercitiului 2020', 'N/A')),
         "#REX21": str(cifra_venit_rezultat.get('Rezultat al exercitiului 2021', 'N/A')), 
         "#REX22": str(cifra_venit_rezultat.get('Rezultat al exercitiului 2022', 'N/A')),
