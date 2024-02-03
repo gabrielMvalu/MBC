@@ -22,13 +22,17 @@ col3, col4 = st.columns(2)
 with col3:
     uploaded_file1 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="excelSolicitate")
 with col4:
-    st.write('Text text')
+    uploaded_file2 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="excelBCAP")
 
-if uploaded_template is not None and uploaded_document is not None and uploaded_file1 is not None:
+if uploaded_template is not None and uploaded_document is not None and uploaded_file1 is not None and uploaded_file2 is not None:
     template_doc = Document(uploaded_template)
     st.toast('Incepem procesarea Planului de afaceri', icon='⭐')     
     constatator_doc = Document(uploaded_document)
     date_solicitate_doc = pd.read_excel(uploaded_file1)
+    df = pd.read_excel(uploaded_file2, sheet_name='1-Bilant')
+    df1 = pd.read_excel(uploaded_file2, sheet_name='2-ContPP')
+    df2 = pd.read_excel(uploaded_file2, sheet_name='1D-Analiza_fin_indicatori')    
+    
      
     informatii_firma = extrage_informatii_firma(constatator_doc)
     asociati_info, administratori_info = extrage_asociati_admini(constatator_doc)
@@ -36,6 +40,9 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
     full_text_constatator = "\n".join([p.text for p in constatator_doc.paragraphs])
     coduri_caen = extrage_coduri_caen(full_text_constatator)
     date_solicitate = extrage_date_solicitate(date_solicitate_doc)
+    capital_propriu = extrage_date_bilant(df)
+    cifra_venit_rezultat = extrage_date_contpp(df1)
+    rata_rent_grad = extrage_indicatori_financiari(df2)
 
     def curata_duplicate_coduri_caen(coduri_caen):
         coduri_unice = {}
@@ -49,6 +56,7 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
     asociati_text = '\n'.join(asociati_info) if asociati_info else "N/A"
     administratori_text = administratori_info if administratori_info else "N/A"
     coduri_caen_text = '\n'.join([f"{cod} - {descriere}" for cod, descriere in coduri_caen_curatate]) if coduri_caen_curatate else "N/A"    
+
     
     placeholders = {
         "#SRL": str(informatii_firma.get('Denumirea firmei', 'N/A')),
