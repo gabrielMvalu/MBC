@@ -1,7 +1,7 @@
 # pages/Plan_faceri.py
 import streamlit as st
 from docx import Document
-from constatator import extrage_informatii_firma, extract_asociati_admini, extract_situatie_angajati, extrage_coduri_caen
+from pages.constatator import extrage_informatii_firma, extract_asociati_admini, extract_situatie_angajati, extrage_coduri_caen
 
 st.header(':blue[Completare Document cu Placeholder-uri]', divider='rainbow')
 
