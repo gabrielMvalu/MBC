@@ -20,7 +20,9 @@ if uploaded_template is not None and uploaded_document is not None:
     adrese_secundare_text = '\n'.join(informatii_firma.get('Adresa sediul secundar', [])) if informatii_firma.get('Adresa sediul secundar', []) else "N/A"
     asociati_text = '\n'.join(asociati_info) if asociati_info else "N/A"
     administratori_text = administratori_info if administratori_info else "N/A"
-  
+    coduri_caen_text = ', '.join([f"{cod} - {descriere}" for cod, descriere in coduri_caen]) if coduri_caen else "N/A"
+
+    
     placeholders = {
         "#SRL": informatii_firma.get('Denumirea firmei', 'N/A'),
         "#CUI": informatii_firma.get('Codul unic de înregistrare (CUI)', 'N/A'),
@@ -31,6 +33,7 @@ if uploaded_template is not None and uploaded_document is not None:
         "#Asociati": asociati_text,
         "#Administrator": administratori_text,
         "#activitatePrincipala": informatii_firma.get('Activitate principală','N/A'),
+        "#CAENautorizate": coduri_caen_text,
     }
 
     def inlocuieste_in_tabele(tabele, placeholders):
