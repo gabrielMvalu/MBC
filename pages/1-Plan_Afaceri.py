@@ -8,16 +8,17 @@ st.header(':blue[Completare Document cu Placeholder-uri]', divider='rainbow')
 col1, col2 = st.columns(2)
 with col1:
     uploaded_template = st.file_uploader("Încărcați macheta Planului de afaceri", type=["docx"], key="template")
+    st.info('Se va adauga doar documente ce urmeaza a fi procesate Plan afacer, Cerere de finantare etc.', icon="ℹ️")
+
 with col2:
     uploaded_document = st.file_uploader("Încărcați documentul Recom constatator.docx", type=["docx"], key="document")
+    st.info('Se vor incarca doar documente docx si doar Raportul interogare', icon="ℹ️")
 
 if uploaded_template is not None and uploaded_document is not None:
     template_doc = Document(uploaded_template)
     st.toast('Incepem procesarea Planului de afaceri', icon='⭐')     
-    
     constatator_doc = Document(uploaded_document)
-    st.toast('Datele din Recom sunt prelucrate', icon='⭐')     
-    
+     
     informatii_firma = extrage_informatii_firma(constatator_doc)
     asociati_info, administratori_info = extract_asociati_admini(constatator_doc)
     situatie_angajati = extract_situatie_angajati(constatator_doc)
@@ -31,8 +32,8 @@ if uploaded_template is not None and uploaded_document is not None:
 
     coduri_caen_curatate = curata_duplicate_coduri_caen(coduri_caen)
     
-    adrese_secundare_text = '- \n'.join(informatii_firma.get('Adresa sediul secundar', [])) if informatii_firma.get('Adresa sediul secundar', []) else "N/A"
-    asociati_text = '- \n'.join(asociati_info) if asociati_info else "N/A"
+    adrese_secundare_text = '\n'.join(informatii_firma.get('Adresa sediul secundar', [])) if informatii_firma.get('Adresa sediul secundar', []) else "N/A"
+    asociati_text = '\n'.join(asociati_info) if asociati_info else "N/A"
     administratori_text = administratori_info if administratori_info else "N/A"
     coduri_caen_text = '\n'.join([f"{cod} - {descriere}" for cod, descriere in coduri_caen_curatate]) if coduri_caen_curatate else "N/A"    
 
