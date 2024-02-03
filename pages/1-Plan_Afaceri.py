@@ -2,7 +2,7 @@
 import streamlit as st
 from docx import Document
 
-st.header(':blue:[Completare Document cu Placeholder-uri]', divider='rainbow')
+st.header(':blue[Completare Document cu Placeholder-uri]', divider='rainbow')
 
 uploaded_template = st.file_uploader("Încărcați documentul cu placeholder-uri", type=["docx"], key="template")
 
