@@ -33,7 +33,6 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
     df1 = pd.read_excel(uploaded_file2, sheet_name='2-ContPP')
     df2 = pd.read_excel(uploaded_file2, sheet_name='1D-Analiza_fin_indicatori')    
     
-     
     informatii_firma = extrage_informatii_firma(constatator_doc)
     asociati_info, administratori_info = extrage_asociati_admini(constatator_doc)
     situatie_angajati = extrage_situatie_angajati(constatator_doc)
@@ -57,7 +56,6 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
     administratori_text = administratori_info if administratori_info else "N/A"
     coduri_caen_text = '\n'.join([f"{cod} - {descriere}" for cod, descriere in coduri_caen_curatate]) if coduri_caen_curatate else "N/A"    
 
-    
     placeholders = {
         "#SRL": str(informatii_firma.get('Denumirea firmei', 'N/A')),
         "#CUI": str(informatii_firma.get('Codul unic de înregistrare (CUI)', 'N/A')),
@@ -97,7 +95,6 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#utilajeDNSH": str(date_solicitate.get('Utilaje DNSH', 'N/A')),
         "#descriere_utilaj_ghidare": str(date_solicitate.get('Descriere utilaj ghidare', 'N/A')),
         "#descriere_utilaj_reciclare": str(date_solicitate.get('Descriere utilaj reciclare', 'N/A')),
-
         "#NAM20": str(situatie_angajati.get('Numar mediu angajati 2020', 'N/A')),
         "#NAM21": str(situatie_angajati.get('Numar mediu angajati 2021', 'N/A')),
         "#NAM22": str(situatie_angajati.get('Numar mediu angajati 2022', 'N/A')),   
@@ -114,22 +111,19 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#REX21": str(cifra_venit_rezultat.get('Rezultat al exercitiului 2021', 'N/A')), 
         "#REX22": str(cifra_venit_rezultat.get('Rezultat al exercitiului 2022', 'N/A')),
         "#MAXCA": str(cifra_venit_rezultat.get('Anul cu cea mai mare cifra de afaceri', 'N/A')),
-
-#        "Rata solvabilitatii generale 2020": rs20, 
- #       "Rata solvabilitatii generale 2021": rs21,
-  #      "Rata solvabilitatii generale 2022": rs22,
-   #     "Gradul de indatorare pe termen scurt 2020": gdi20, 
-    #    "Gradul de indatorare pe termen scurt 2021": gdi21,
-     #   "Gradul de indatorare pe termen scurt 2022": gdi22,
-      #  "Rentabilitatea activelor (ROA) 2020": roa20, 
-       # "Rentabilitatea activelor (ROA) 2021": roa21,
-#        "Rentabilitatea activelor (ROA) 2022": roa22,
- #       "Rentabilitatea capitalului propriu (ROE) 2020": roe20, 
-  #      "Rentabilitatea capitalului propriu (ROE) 2021": roe21,
-   #     "Rentabilitatea capitalului propriu (ROE) 2022": roe22,
-        
-
-        
+        "#RSG20": str(rata_rent_grad.get('Rata solvabilitatii generale 2020', 'N/A')),
+        "#RSG21": str(rata_rent_grad.get('Rata solvabilitatii generale 2021', 'N/A')), 
+        "#RSG22": str(rata_rent_grad.get('Rata solvabilitatii generale 2022', 'N/A')),
+        "#GITS20": str(rata_rent_grad.get('Gradul de indatorare pe termen scurt 2020', 'N/A')),
+        "#GITS21": str(rata_rent_grad.get('Gradul de indatorare pe termen scurt 2021', 'N/A')),
+        "#GITS22": str(rata_rent_grad.get('Gradul de indatorare pe termen scurt 2022', 'N/A')),
+        "#ROA20": str(rata_rent_grad.get('Rentabilitatea activelor (ROA) 2020', 'N/A')),
+        "#ROA21": str(rata_rent_grad.get('Rentabilitatea activelor (ROA) 2021', 'N/A')),
+        "#ROA22": str(rata_rent_grad.get('Rentabilitatea activelor (ROA) 2022', 'N/A')),
+        "#ROE20": str(rata_rent_grad.get('Rentabilitatea capitalului propriu (ROE) 2020', 'N/A')),
+        "#ROE21": str(rata_rent_grad.get('Rentabilitatea capitalului propriu (ROE) 2021', 'N/A')),
+        "#ROE22": str(rata_rent_grad.get('Rentabilitatea capitalului propriu (ROE) 2022', 'N/A')),
+  
     }
 
     def inlocuieste_in_tabele(tabele, placeholders):
