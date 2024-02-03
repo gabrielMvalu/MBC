@@ -10,12 +10,6 @@ from docx import Document
 
 st.set_page_config(layout="wide")
 
-if 'progress' not in st.session_state:
-    st.session_state.progress = 0
-
-st.sidebar.write("Progresul tău:")
-st.sidebar.progress(st.session_state.progress)
-
 
 def extrage_date_bilant(df):
     cpa20 = f"{df.iloc[76, 1]:.2f}"
@@ -159,10 +153,6 @@ if uploaded_file is not None:
                            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
     
-       
-    st.session_state.progress += 25  
-    st.sidebar.progress(st.session_state.progress)
-
    
 
     # Pregătirea datelor pentru grafice
