@@ -34,8 +34,7 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
     situatie_angajati = extrage_situatie_angajati(constatator_doc)
     coduri_caen = extrage_coduri_caen("\n".join([p.text for p in constatator_doc.paragraphs]))
     date_solicitate = extrage_date_solicitate(date_solicitate_doc)
-    
-    
+
     def curata_duplicate_coduri_caen(coduri_caen):
         coduri_unice = {}
         for cod, descriere in coduri_caen:
@@ -60,8 +59,6 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#Administrator": administratori_text,
         "#activitatePrincipala": informatii_firma.get('Activitate principală','N/A'),
         "#CAENautorizate": coduri_caen_text,
-
-
         "#categorie_intreprindere": date_solicitate.get('Categorie întreprindere', 'N/A'), 
         "#Firme_legate": date_solicitate.get('Firme legate', 'N/A'),  
         "#Tip_investitie": date_solicitate.get('Tipul investiției', 'N/A'),  
