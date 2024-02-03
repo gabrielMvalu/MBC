@@ -18,7 +18,7 @@ with col2:
 
 col3, col4 = st.columns(2)
 with col3:
-    uploaded_file1 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="document")
+    uploaded_file1 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="excelSolicitate")
 with col4:
     st.write('Text text')
 
@@ -87,7 +87,7 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#caracteristici_tehnice": date_solicitate.get('Caracteristici tehnice relevante', 'N/A'),
         "#flux_tehnologic": date_solicitate.get('Flux tehnologic', 'N/A'),
         "#utilajeDNSH": date_solicitate.get('Utilaje DNSH', 'N/A'),
-        
+        "#descriere_utilaj_ghidare": date_solicitate.get('Utilaj ghidare', 'N/A'),      
     }
 
     def inlocuieste_in_tabele(tabele, placeholders):
