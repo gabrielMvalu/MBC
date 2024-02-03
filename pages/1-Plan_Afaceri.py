@@ -1,7 +1,7 @@
 # pages/Plan_faceri.py
 import streamlit as st
 from docx import Document
-from pages.constatator import extrage_informatii_firma, extract_asociati_admini, extract_situatie_angajati, extrage_coduri_caen
+from pages.constatator import extrage_informatii_firma, extrage_asociati_admini, extrage_situatie_angajati, extrage_coduri_caen
 from pages.datesolicitate import extrage_date_solicitate
 
 st.set_page_config(layout="wide")
