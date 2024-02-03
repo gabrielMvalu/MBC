@@ -27,7 +27,7 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
     template_doc = Document(uploaded_template)
     st.toast('Incepem procesarea Planului de afaceri', icon='⭐')     
     constatator_doc = Document(uploaded_document)
-    date_solicitate_doc = Document(uploaded_file1)
+    date_solicitate_doc = pd.read_excel(uploaded_file1)
      
     informatii_firma = extrage_informatii_firma(constatator_doc)
     asociati_info, administratori_info = extract_asociati_admini(constatator_doc)
