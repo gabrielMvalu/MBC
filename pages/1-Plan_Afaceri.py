@@ -97,6 +97,38 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#utilajeDNSH": str(date_solicitate.get('Utilaje DNSH', 'N/A')),
         "#descriere_utilaj_ghidare": str(date_solicitate.get('Descriere utilaj ghidare', 'N/A')),
         "#descriere_utilaj_reciclare": str(date_solicitate.get('Descriere utilaj reciclare', 'N/A')),
+
+        "Capitalul propriu al actionarilor 2020": cpa20, 
+        "Capitalul propriu al actionarilor 2021": cpa21,
+        "Capitalul propriu al actionarilor 2022": cpa22
+        
+        "Cifra de afaceri 2020": ca20, 
+        "Cifra de afaceri 2021": ca21,
+        "Cifra de afaceri 2022": ca22,
+        "Venituri totale 2020": vt20, 
+        "Venituri totale 2021": vt21,
+        "Venituri totale 2022": vt22,
+        "Rezultat al exercitiului 2020": re20, 
+        "Rezultat al exercitiului 2021": re21,
+        "Rezultat al exercitiului 2022": re22,  
+        "Anul cu cea mai mare cifra de afaceri": camax, 
+        "Procent crestere": pc,
+
+        "Rata solvabilitatii generale 2020": rs20, 
+        "Rata solvabilitatii generale 2021": rs21,
+        "Rata solvabilitatii generale 2022": rs22,
+        "Gradul de indatorare pe termen scurt 2020": gdi20, 
+        "Gradul de indatorare pe termen scurt 2021": gdi21,
+        "Gradul de indatorare pe termen scurt 2022": gdi22,
+        "Rentabilitatea activelor (ROA) 2020": roa20, 
+        "Rentabilitatea activelor (ROA) 2021": roa21,
+        "Rentabilitatea activelor (ROA) 2022": roa22,
+        "Rentabilitatea capitalului propriu (ROE) 2020": roe20, 
+        "Rentabilitatea capitalului propriu (ROE) 2021": roe21,
+        "Rentabilitatea capitalului propriu (ROE) 2022": roe22,
+        
+
+        
     }
 
     def inlocuieste_in_tabele(tabele, placeholders):
