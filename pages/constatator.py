@@ -100,11 +100,11 @@ def extrage_coduri_caen(full_text):
     caen_section_pattern = re.compile(rf"{start_marker}(.*?){end_marker}", re.DOTALL)
     caen_section_match = re.search(caen_section_pattern, full_text)
     unique_caen_codes = {}
+
     if caen_section_match:
         caen_section_text = caen_section_match.group(1)
         caen_code_pattern = re.compile(r"(\d{4}) - (.*?)\n")
         caen_codes = re.findall(caen_code_pattern, caen_section_text)
         for code, description in caen_codes:
-            description_cleaned = ' '.join(description.split())  
-            unique_caen_codes[code] = description_cleaned
+            unique_caen_codes[code] = ' '.join(description.split())
     return list(unique_caen_codes.items())
