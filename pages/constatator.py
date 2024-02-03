@@ -94,9 +94,7 @@ def extrage_situatie_angajati(doc):
     }
     return data_angajati
 
-def extrage_coduri_caen(doc_path):
-    doc = Document(doc_path)
-    full_text = "\n".join(para.text.strip() for para in doc.paragraphs) 
+def extrage_coduri_caen(full_text):
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
     end_marker = "CONCORDAT PREVENTIV"
     caen_section_pattern = re.compile(rf"{start_marker}(.*?){end_marker}", re.DOTALL)
