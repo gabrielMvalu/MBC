@@ -86,7 +86,8 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#caracteristici_tehnice": str(date_solicitate.get('Caracteristici tehnice relevante', 'N/A')),
         "#flux_tehnologic": str(date_solicitate.get('Flux tehnologic', 'N/A')),
         "#utilajeDNSH": str(date_solicitate.get('Utilaje DNSH', 'N/A')),
-        "#descriere_utilaj_ghidare": str(date_solicitate.get('Descriere Utilaj ghidare', 'N/A')),
+        "#descriere_utilaj_ghidare": str(date_solicitate.get('Descriere utilaj ghidare', 'N/A')),
+        "#descriere_utilaj_reciclare": str(date_solicitate.get('Descriere utilaj reciclare', 'N/A')),
     }
 
     def inlocuieste_in_tabele(tabele, placeholders):
