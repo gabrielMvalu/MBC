@@ -94,7 +94,7 @@ def extract_situatie_angajati(doc):
     }
     return data_angajati
 
-def extract_unique_caen_codes(doc_path):
+def extract_coduri_caen(doc_path):
     doc = Document(doc_path)
     full_text = []
     for para in doc.paragraphs:
