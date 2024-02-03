@@ -99,14 +99,11 @@ def extract_caen_codes(full_text):
     end_marker = "CONCORDAT PREVENTIV"
     caen_section_pattern = re.compile(rf"{start_marker}(.*?){end_marker}", re.DOTALL)
     caen_section_match = re.search(caen_section_pattern, full_text)
+    unique_caen_codes = {}
     if caen_section_match:
         caen_section_text = caen_section_match.group(1)
         caen_code_pattern = re.compile(r"(\d{4}) - (.*?)\n")
-        all_caen_codes = re.findall(caen_code_pattern, caen_section_text)
-        unique_caen_codes = {}
-        for code, description in all_caen_codes:
-            if code not in unique_caen_codes:
-                unique_caen_codes[code] = description
-        return list(unique_caen_codes.items())
-    else:
-        return []
+        caen_codes = re.findall(caen_code_pattern, caen_section_text)
+        for code, description in caen_codes:
+            unique_caen_codes[code] = description
+    return list(unique_caen_codes.items())
