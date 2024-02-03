@@ -3,14 +3,6 @@ from docx import Document
 import re
 import pandas as pd
 
-# Inițializarea progresului dacă nu există
-if 'progress' not in st.session_state:
-    st.session_state.progress = 0
-
-# Afișează progress bar-ul în sidebar
-st.sidebar.write("Progresul tău:")
-st.sidebar.progress(st.session_state.progress)
-
 
 def extract_data_from_docx(doc):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
@@ -175,6 +167,3 @@ if uploaded_file is not None:
     st.session_state['situatie_angajati'] = angajati_data
     st.session_state['coduri_caen'] = caen_codes
 
-
-    st.session_state.progress += 25  # Sau orice altă valoare specifică paginii
-    st.sidebar.progress(st.session_state.progress)
