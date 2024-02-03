@@ -28,7 +28,8 @@ def extrage_date_solicitate(df):
     caracteristici_tehnice = df.iloc[37, 2]
     flux_tehnologic = df.iloc[38, 2]
     utilajeDNSH = df.iloc[39, 2]
-    utilaj_ghidare = df.iloc[40, 2]
+    utilaj_ghidare_descriere = df.iloc[40, 2]
+    utilaj_reciclare_descriere = df.iloc[41, 2]
     
     data = {
         "Denumirea firmei SRL": firma, 
@@ -58,7 +59,8 @@ def extrage_date_solicitate(df):
         "Caracteristici tehnice relevante": caracteristici_tehnice,
         "Flux tehnologic": flux_tehnologic,
         "Utilaje DNSH": utilajeDNSH,
-        "Utilaj ghidare": utilaj_ghidare
+        "Descriere utilaj ghidare": utilaj_ghidare_descriere
+        "Descriere utilaj reciclare": utilaj_reciclare_descriere        
     }
 
     return data
