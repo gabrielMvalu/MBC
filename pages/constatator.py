@@ -39,7 +39,7 @@ def extrage_informatii_firma(doc):
     }
     return data
 
-def extract_asociati_admini(doc):
+def extrage_asociati_admini(doc):
     text = [p.text for p in doc.paragraphs]
     asociati = {}
     administratori = set()
@@ -76,7 +76,7 @@ def extract_asociati_admini(doc):
     nume_administrator = ', '.join(administratori)  
     return output_asociati, nume_administrator
 
-def extract_situatie_angajati(doc):
+def extrage_situatie_angajati(doc):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
     angajati_pattern_2020 = r"SITUAŢIA FINANCIARĂ PE ANUL 2020.*?(?:Numar|Număr) mediu de salari(?:aţi|ati): (\d+)"
     angajati_match_2020 = re.search(angajati_pattern_2020, full_text, re.DOTALL)
