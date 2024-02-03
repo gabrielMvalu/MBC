@@ -99,8 +99,8 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#descriere_utilaj_reciclare": str(date_solicitate.get('Descriere utilaj reciclare', 'N/A')),
 
         "#NAM20": str(situatie_angajati.get('Numar mediu angajati 2020', 'N/A')),
-        "#NAM20": str(situatie_angajati.get('Numar mediu angajati 2021', 'N/A')),
-        "#NAM20": str(situatie_angajati.get('Numar mediu angajati 2022', 'N/A')),   
+        "#NAM21": str(situatie_angajati.get('Numar mediu angajati 2021', 'N/A')),
+        "#NAM22": str(situatie_angajati.get('Numar mediu angajati 2022', 'N/A')),   
         "#CPA20": str(capital_propriu.get('Capitalul propriu al actionarilor 2020', 'N/A')), 
         "#CPA21": str(capital_propriu.get('Capitalul propriu al actionarilor 2021', 'N/A')),
         "#CPA22": str(capital_propriu.get('Capitalul propriu al actionarilor 2022', 'N/A')),
