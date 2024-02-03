@@ -102,6 +102,7 @@ def extract_caen_codes(full_text):
         caen_section_text = caen_section_match.group(1)
         caen_code_pattern = re.compile(r"(\d{4}) - (.*?)\n")
         caen_codes = re.findall(caen_code_pattern, caen_section_text)
-        return caen_codes
+        unique_caen_codes = list(set(caen_codes))  
+        return unique_caen_codes
     else:
         return []
