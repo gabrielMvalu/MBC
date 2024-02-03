@@ -96,10 +96,7 @@ def extract_situatie_angajati(doc):
 
 def extract_coduri_caen(doc_path):
     doc = Document(doc_path)
-    full_text = []
-    for para in doc.paragraphs:
-        full_text.append(para.text)
-    full_text = "\n".join(full_text)
+    full_text = "\n".join(para.text.strip() for para in doc.paragraphs) 
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
     end_marker = "CONCORDAT PREVENTIV"
     caen_section_pattern = re.compile(rf"{start_marker}(.*?){end_marker}", re.DOTALL)
@@ -110,5 +107,6 @@ def extract_coduri_caen(doc_path):
         caen_code_pattern = re.compile(r"(\d{4}) - (.*?)\n")
         caen_codes = re.findall(caen_code_pattern, caen_section_text)
         for code, description in caen_codes:
-            unique_caen_codes[code] = description
+            description_cleaned = ' '.join(description.split())  
+            unique_caen_codes[code] = description_cleaned
     return list(unique_caen_codes.items())
