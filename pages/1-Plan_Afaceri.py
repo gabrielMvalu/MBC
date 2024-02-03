@@ -97,7 +97,6 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#utilajeDNSH": str(date_solicitate.get('Utilaje DNSH', 'N/A')),
         "#descriere_utilaj_ghidare": str(date_solicitate.get('Descriere utilaj ghidare', 'N/A')),
         "#descriere_utilaj_reciclare": str(date_solicitate.get('Descriere utilaj reciclare', 'N/A')),
-        
         "#CPA20": str(capital_propriu.get('Capitalul propriu al actionarilor 2020', 'N/A'), 
         "#CPA21": str(capital_propriu.get('Capitalul propriu al actionarilor 2021', 'N/A'),
         "#CPA22": str(capital_propriu.get('Capitalul propriu al actionarilor 2022', 'N/A'),
