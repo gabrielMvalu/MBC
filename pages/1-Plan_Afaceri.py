@@ -1,35 +1,43 @@
 # pages/Plan_faceri.py
 import streamlit as st
 from docx import Document
+from constatator import extrage_informatii_firma, extract_asociati_admini, extract_situatie_angajati, extrage_coduri_caen
 
 st.header(':blue[Completare Document cu Placeholder-uri]', divider='rainbow')
 
-uploaded_template = st.file_uploader("Încărcați documentul cu placeholder-uri", type=["docx"], key="template")
+uploaded_template = st.file_uploader("Încărcați macheta Planului de afaceri", type=["docx"], key="template")
 
-if uploaded_template is not None:
+uploaded_document = st.file_uploader("Încărcați documentul  Recom constatator.docx'", type=["docx"], key="document")
+
+if uploaded_template is not None and uploaded_document is not None:
     template_doc = Document(uploaded_template)
+    constatator_doc = Document(uploaded_document)
+    
+    # Extrage informațiile folosind funcțiile din modulul constatator
+    informatii_firma = extrage_informatii_firma(constatator_doc)
+    asociati_admini = extract_asociati_admini(constatator_doc)
+    situatie_angajati = extract_situatie_angajati(constatator_doc)
+    coduri_caen = extrage_coduri_caen("\n".join([p.text for p in constatator_doc.paragraphs]))
 
     # Prelucrare specială pentru adrese secundare
-    if 'date_generale' in st.session_state and 'Adresa sediul secundar' in st.session_state['date_generale']:
-        adrese_secundare = st.session_state['date_generale']['Adresa sediul secundar']
-        adrese_secundare_text = '\n'.join(adrese_secundare) if adrese_secundare else ""
+    adrese_secundare_text = '\n'.join(informatii_firma.get('Adresa sediul secundar', [])) if informatii_firma.get('Adresa sediul secundar', []) else "N/A"
 
-    # Dicționar pentru înlocuirile simple
+    # Dicționar pentru înlocuirile simple în template
     placeholders = {
-        "#SRL": st.session_state['date_generale'].get('Denumirea firmei', 'N/A'),
-        "#CUI": st.session_state['date_generale'].get('Codul unic de înregistrare (CUI)', 'N/A'),
-        "#Nr_inmatriculare": st.session_state['date_generale'].get('Numărul de ordine în Registrul Comerțului', 'N/A'),
-        "#data_infiintare": st.session_state['date_generale'].get('Data înființării', 'N/A'),
+        "#SRL": informatii_firma.get('Denumirea firmei', 'N/A'),
+        "#CUI": informatii_firma.get('Codul unic de înregistrare (CUI)', 'N/A'),
+        "#Nr_inmatriculare": informatii_firma.get('Numărul de ordine în Registrul Comerțului', 'N/A'),
+        "#data_infiintare": informatii_firma.get('Data înființării', 'N/A'),
         "#Adresa_pct_lucru": adrese_secundare_text,
     }
 
-    # Înlocuirile în paragrafe
+    # Înlocuirile în paragrafele template-ului
     for paragraph in template_doc.paragraphs:
         for placeholder, value in placeholders.items():
             if placeholder in paragraph.text:
                 paragraph.text = paragraph.text.replace(placeholder, value)
 
-    # Înlocuirile în tabele
+    # Înlocuirile în tabelele template-ului
     for table in template_doc.tables:
         for row in table.rows:
             for cell in row.cells:
@@ -37,15 +45,6 @@ if uploaded_template is not None:
                     for placeholder, value in placeholders.items():
                         if placeholder in paragraph.text:
                             paragraph.text = paragraph.text.replace(placeholder, value)
-
-                # Logica condiționată pentru #Adresa_sediu în celule
-                for paragraph in cell.paragraphs:
-                    if "#Adresa_sediu" in paragraph.text:
-                        if 'numar_total_utilaje' in st.session_state:
-                            adresa_sediu_text = f"Număr total de utilaje din sesiune: {st.session_state['numar_total_utilaje']}"
-                        else:
-                            adresa_sediu_text = st.session_state['date_generale'].get('Adresa sediului social', 'N/A')
-                        paragraph.text = paragraph.text.replace("#Adresa_sediu", adresa_sediu_text)
 
     # Salvarea documentului modificat
     modified_doc_path = "document_modificat.docx"
