@@ -1,5 +1,6 @@
 # pages/Plan_faceri.py
 import streamlit as st
+import pandas as pd
 from docx import Document
 from pages.constatator import extrage_informatii_firma, extrage_asociati_admini, extrage_situatie_angajati, extrage_coduri_caen
 from pages.datesolicitate import extrage_date_solicitate
