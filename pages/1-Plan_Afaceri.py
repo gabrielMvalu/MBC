@@ -17,12 +17,19 @@ if uploaded_template is not None and uploaded_document is not None:
     situatie_angajati = extract_situatie_angajati(constatator_doc)
     coduri_caen = extrage_coduri_caen("\n".join([p.text for p in constatator_doc.paragraphs]))
 
+    def curata_duplicate_coduri_caen(coduri_caen):
+        coduri_unice = {}
+        for cod, descriere in coduri_caen:
+            coduri_unice[cod] = descriere
+        return list(coduri_unice.items())
+
+    coduri_caen_curatate = curata_duplicate_coduri_caen(coduri_caen)
+    
     adrese_secundare_text = '\n'.join(informatii_firma.get('Adresa sediul secundar', [])) if informatii_firma.get('Adresa sediul secundar', []) else "N/A"
     asociati_text = '\n'.join(asociati_info) if asociati_info else "N/A"
     administratori_text = administratori_info if administratori_info else "N/A"
-    coduri_caen_text = '\n '.join([f"{cod} - {descriere}" for cod, descriere in coduri_caen]) if coduri_caen else "N/A"
+    coduri_caen_text = '\n'.join([f"{cod} - {descriere}" for cod, descriere in coduri_caen_curatate]) if coduri_caen_curatate else "N/A"    
 
-    
     placeholders = {
         "#SRL": informatii_firma.get('Denumirea firmei', 'N/A'),
         "#CUI": informatii_firma.get('Codul unic de înregistrare (CUI)', 'N/A'),
