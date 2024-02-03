@@ -3,7 +3,7 @@ import streamlit as st
 from docx import Document
 from pages.constatator import extrage_informatii_firma, extract_asociati_admini, extract_situatie_angajati, extrage_coduri_caen
 
-st.header(':blue_heart: Completare Document cu Placeholder-uri', divider='rainbow')
+st.header(':blue[Completare Document cu Placeholder-uri]', divider='rainbow')
 
 uploaded_template = st.file_uploader("Încărcați macheta Planului de afaceri", type=["docx"], key="template")
 uploaded_document = st.file_uploader("Încărcați documentul Recom constatator.docx", type=["docx"], key="document")
@@ -13,18 +13,23 @@ if uploaded_template is not None and uploaded_document is not None:
     constatator_doc = Document(uploaded_document)
     
     informatii_firma = extrage_informatii_firma(constatator_doc)
-    asociati_admini = extract_asociati_admini(constatator_doc)
+    asociati_info, administratori_info = extract_asociati_admini(constatator_doc)
     situatie_angajati = extract_situatie_angajati(constatator_doc)
     coduri_caen = extrage_coduri_caen("\n".join([p.text for p in constatator_doc.paragraphs]))
 
     adrese_secundare_text = '\n'.join(informatii_firma.get('Adresa sediul secundar', [])) if informatii_firma.get('Adresa sediul secundar', []) else "N/A"
-
+    asociati_text = '\n'.join(asociati_info) if asociati_info else "N/A"
+    administratori_text = administratori_info if administratori_info else "N/A"
+  
     placeholders = {
         "#SRL": informatii_firma.get('Denumirea firmei', 'N/A'),
         "#CUI": informatii_firma.get('Codul unic de înregistrare (CUI)', 'N/A'),
         "#Nr_inmatriculare": informatii_firma.get('Numărul de ordine în Registrul Comerțului', 'N/A'),
         "#data_infiintare": informatii_firma.get('Data înființării', 'N/A'),
+        "#Adresa_sediu": informatii_firma.get('Adresa sediului social','N/A'),
         "#Adresa_pct_lucru": adrese_secundare_text,
+        "#Asociati": asociati_text,
+        "#Administrator": administratori_text,
     }
 
     def inlocuieste_in_tabele(tabele, placeholders):
