@@ -78,7 +78,10 @@ def df_to_word(document, df):
         for j in range(df.shape[1]):
             cell = table.cell(i + 1, j)
             val = df.iloc[i, j]
-            cell.text = "" if pd.isna(val) else str(val)
+            if j in [0, 3]:  # Presupunând că coloanele 0 și 3 sunt 'Nr. crt.' și 'Cantitate'
+                cell.text = str(int(val)) if pd.notna(val) else ""
+            else:
+                cell.text = str(val) if pd.notna(val) else ""
             for paragraph in cell.paragraphs:
                 for run in paragraph.runs:
                     run.font.size = Pt(8)
