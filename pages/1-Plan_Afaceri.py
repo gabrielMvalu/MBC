@@ -30,6 +30,7 @@ if uploaded_template is not None and uploaded_document is not None:
         "#Adresa_pct_lucru": adrese_secundare_text,
         "#Asociati": asociati_text,
         "#Administrator": administratori_text,
+        "#activitatePrincipala": informatii_firma.get('Activitate principală','N/A'),
     }
 
     def inlocuieste_in_tabele(tabele, placeholders):
