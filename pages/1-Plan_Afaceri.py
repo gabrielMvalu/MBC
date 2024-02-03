@@ -32,7 +32,8 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
     informatii_firma = extrage_informatii_firma(constatator_doc)
     asociati_info, administratori_info = extrage_asociati_admini(constatator_doc)
     situatie_angajati = extrage_situatie_angajati(constatator_doc)
-    coduri_caen = extrage_coduri_caen("\n".join([p.text for p in constatator_doc.paragraphs]))
+    full_text_constatator = "\n".join([p.text for p in constatator_doc.paragraphs])
+    coduri_caen = extrage_coduri_caen(full_text_constatator)
     date_solicitate = extrage_date_solicitate(date_solicitate_doc)
 
     def curata_duplicate_coduri_caen(coduri_caen):
