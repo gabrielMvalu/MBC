@@ -94,7 +94,7 @@ def extract_situatie_angajati(doc):
     }
     return data_angajati
 
-def extract_coduri_caen(doc_path):
+def extrage_coduri_caen(doc_path):
     doc = Document(doc_path)
     full_text = "\n".join(para.text.strip() for para in doc.paragraphs) 
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
