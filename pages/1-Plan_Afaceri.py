@@ -30,8 +30,8 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
     date_solicitate_doc = pd.read_excel(uploaded_file1)
      
     informatii_firma = extrage_informatii_firma(constatator_doc)
-    asociati_info, administratori_info = extract_asociati_admini(constatator_doc)
-    situatie_angajati = extract_situatie_angajati(constatator_doc)
+    asociati_info, administratori_info = extrage_asociati_admini(constatator_doc)
+    situatie_angajati = extrage_situatie_angajati(constatator_doc)
     coduri_caen = extrage_coduri_caen("\n".join([p.text for p in constatator_doc.paragraphs]))
     date_solicitate = extrage_date_solicitate(date_solicitate_doc)
     
