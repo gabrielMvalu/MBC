@@ -17,11 +17,11 @@ caen_options = {
     "CAEN 4211": "Lucrări de construcții a drumurilor și autostrăzilor",
     "CAEN 4399": "Alte lucrări speciale de construcții n.c.a.",
     "CAEN 3832": "Recuperarea materialelor reciclabile sortate"
-    }
-    for caen_code, description in caen_options.items():
-        if st.checkbox(f"{caen_code} - {description}"):
-            st.session_state.codCAEN = caen_code.split()[1]
+}
 
+for caen_code, description in caen_options.items():
+    if st.checkbox(f"{caen_code} - {description}"):
+        st.session_state.codCAEN = caen_code.split()[1]
 
 
 col1, col2 = st.columns(2)
