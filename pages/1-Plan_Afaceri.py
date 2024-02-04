@@ -23,7 +23,19 @@ with col2:
 col3, col4 = st.columns(2)
 with col3:
     uploaded_file1 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="excelSolicitate")
+    
 with col4:
+    caen_options = {
+    "CAEN 4312": "Lucrări de pregătire a terenului",
+    "CAEN 4211": "Lucrări de construcții a drumurilor și autostrăzilor",
+    "CAEN 4399": "Alte lucrări speciale de construcții n.c.a.",
+    "CAEN 3832": "Recuperarea materialelor reciclabile sortate"
+    }
+    st.write("Selectează codul CAEN pentru activitatea ta:")
+    for caen_code, description in caen_options.items():
+    if st.checkbox(f"{caen_code} - {description}"):
+        st.session_state.codCAEN = caen_code.split()[1] 
+        
     uploaded_file2 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="excelBCAP")
 
 if uploaded_template is not None and uploaded_document is not None and uploaded_file1 is not None and uploaded_file2 is not None:
@@ -37,13 +49,17 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
     
     df_financiar = pd.read_excel(uploaded_file2, sheet_name='P. FINANCIAR')
     date_financiare = extrage_pozitii(df_financiar)
-    if date_financiare:
+    if 'codCAEN' in st.session_state and date_financiare:
         rezultate_corelate, rezultate_corelate1 = coreleaza_date(date_financiare)
         rezultate_text = '\n'.join([rezultat for _, _, rezultat in rezultate_corelate])
         cheltuieli_text = '\n'.join([rezultat for _, _, rezultat in rezultate_corelate1])
         cantitati_corelate = [pd.to_numeric(item[1], errors='coerce') for item in rezultate_corelate]
         cantitati_corelate = [0 if pd.isna(x) else x for x in cantitati_corelate]
         numar_total_utilaje = sum(cantitati_corelate)
+        rezultate_corelate, rezultate_corelate1, rezultate_corelate2 = coreleaza_date(date_financiare)
+        rezultate2_text = '\n'.join([f"{nume} - {descriere}" for nume, _, descriere in rezultate_corelate2])
+
+
     
     informatii_firma = extrage_informatii_firma(constatator_doc)
     asociati_info, administratori_info = extrage_asociati_admini(constatator_doc)
@@ -89,6 +105,7 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
 
         "#Utilaj": str(rezultate_text),
         "#cheltuieli_proiect_din_buget_excel": str(cheltuieli_text),
+        "#DescriereUtilaje" : str(rezultate2_text),
         "#nr_utilaje": str(numar_total_utilaje),
         
         "#utilaj_dizabilitati": str(date_solicitate.get('Utilaj pentru persoane cu dizabilități', 'N/A')),
