@@ -1,7 +1,9 @@
 # pages/Date_solicitate.py
+
+import streamlit as st
 import pandas as pd
 
-def extrage_date_solicitate(df):
+def extract_date_solicitate(df):
     firma = df.iloc[2, 2]
     categ_intreprindere = df.iloc[3, 2]
     firme_legate = df.iloc[4, 2]
@@ -62,6 +64,22 @@ def extrage_date_solicitate(df):
 
     return data
 
+st.header(':blue[Încărcare Date Solicitate]', divider='rainbow')
+
+uploaded_file = st.file_uploader("Trageți fișierul aici sau faceți clic pentru a încărca", type=["xlsx"])
+
+if uploaded_file is not None:
+    df = pd.read_excel(uploaded_file)
+    solicitate_data = extract_date_solicitate(df)
+
+    st.json({"Date Solicitate": solicitate_data})
+    
+    st.write("Vizualizare Date Solicitate:")
+    st.dataframe(pd.DataFrame([solicitate_data]))
+
+    st.toast('Datele sunt retinute pentru procesare', icon='⭐') 
+    
+    st.session_state['date_solicitate'] = solicitate_data
 
 
     
