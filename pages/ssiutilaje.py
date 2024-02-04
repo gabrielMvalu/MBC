@@ -15,7 +15,7 @@ def extrage_pozitii(df_financiar):
 
 def coreleaza_date(date_financiar):
     df_amortizare = pd.read_excel('./assets/utilaje.xlsx', sheet_name='amortizare')
-    df_utilaje = pd.read_excel('./assets/utilaje.xlsx', sheet_name='utilajeservicii')
+    df_utilaje = pd.read_excel('./assets/utilaje1.xlsx', sheet_name='utilajeservicii')
     amortizare_data = {}
     servicii_data = {}
 
