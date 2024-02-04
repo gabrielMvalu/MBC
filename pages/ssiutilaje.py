@@ -15,7 +15,7 @@ def extrage_pozitii(df_financiar):
 
 def coreleaza_date(date_financiar):
     df_amortizare = pd.read_excel('./assets/utilaje.xlsx', sheet_name='amortizare')
-    df_utilaje = pd.read_excel('./assets/utilaje1.xlsx', sheet_name='utilajeservicii')
+    df_utilaje = pd.read_excel('./assets/utilaje.xlsx', sheet_name='utilajeservicii')
     amortizare_data = {}
     servicii_data = {}
 
@@ -29,7 +29,7 @@ def coreleaza_date(date_financiar):
     for index, row in df_utilaje.iterrows():
         if row.iloc[1]:
             nume = ' '.join(re.sub(r'\d+$', '', str(row.iloc[1])).strip().split()).lower()
-            servicii_data[nume] = nume  # Ajustează această linie dacă este necesar
+            servicii_data[nume] = nume
 
     rezultate_corelate = []
     rezultate_corelate1 = []
@@ -55,13 +55,9 @@ if uploaded_file is not None:
         if date_financiare:
             rezultate_corelate, rezultate_corelate1 = coreleaza_date(date_financiare)
             df_rezultate = pd.DataFrame(rezultate_corelate, columns=['Nume', 'Cantitate', 'Rezultat'])
-            df_rezultate1 = pd.DataFrame(rezultate_corelate1, columns=['Nume', 'Cantitate'])
-            st.write(df_rezultate)
-            st.write(df_rezultate1)
-            rezultate_corelate, rezultate_corelate1 = coreleaza_date(date_financiare)
-            df_rezultate = pd.DataFrame(rezultate_corelate, columns=['Nume', 'Cantitate', 'Rezultat'])
             df_rezultate1 = pd.DataFrame(rezultate_corelate1, columns=['Nume', 'Cantitate', 'Rezultat'])
             st.write(df_rezultate)
+            st.write(df_rezultate1)
 
             cantitati_corelate = [pd.to_numeric(item[1], errors='coerce') for item in rezultate_corelate]
             cantitati_corelate = [0 if pd.isna(x) else x for x in cantitati_corelate]
@@ -71,4 +67,4 @@ if uploaded_file is not None:
         else:
             st.error("Nu s-au găsit date valide în foaia 'P. FINANCIAR' pentru calculul numărului de utilaje.")
     except ValueError as e:
-        st.error(f'Foaia "P. FINANCIAR" nu există în fișierul încărcat. Eroare: {e}')
+        st.error(f'Eroare: {e}')
