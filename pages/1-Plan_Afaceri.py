@@ -35,8 +35,8 @@ with col4:
     }
     st.write("Selectează codul CAEN pentru activitatea ta:")
     for caen_code, description in caen_options.items():
-    if st.checkbox(f"{caen_code} - {description}"):
-        st.session_state.codCAEN = caen_code.split()[1] 
+        if st.checkbox(f"{caen_code} - {description}"):
+            st.session_state.codCAEN = caen_code.split()[1]
         
     
 
