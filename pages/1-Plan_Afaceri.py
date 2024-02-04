@@ -25,18 +25,21 @@ with col3:
     uploaded_file1 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="excelSolicitate")
     
 with col4:
+    uploaded_file2 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="excelBCAP")
+    
     caen_options = {
-    "CAEN 4312": "Lucrări de pregătire a terenului",
-    "CAEN 4211": "Lucrări de construcții a drumurilor și autostrăzilor",
-    "CAEN 4399": "Alte lucrări speciale de construcții n.c.a.",
-    "CAEN 3832": "Recuperarea materialelor reciclabile sortate"
+        "CAEN 4312": "Lucrări de pregătire a terenului",
+        "CAEN 4211": "Lucrări de construcții a drumurilor și autostrăzilor",
+        "CAEN 4399": "Alte lucrări speciale de construcții n.c.a.",
+        "CAEN 3832": "Recuperarea materialelor reciclabile sortate"
     }
     st.write("Selectează codul CAEN pentru activitatea ta:")
+    
     for caen_code, description in caen_options.items():
         if st.checkbox(f"{caen_code} - {description}"):
             st.session_state.codCAEN = caen_code.split()[1] 
         
-    uploaded_file2 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="excelBCAP")
+    
 
 if uploaded_template is not None and uploaded_document is not None and uploaded_file1 is not None and uploaded_file2 is not None:
     template_doc = Document(uploaded_template)
