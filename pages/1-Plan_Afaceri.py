@@ -13,11 +13,11 @@ st.header(':blue[Completare Document cu Placeholder-uri]', divider='rainbow')
 col1, col2 = st.columns(2)
 with col1:
     uploaded_template = st.file_uploader("Încărcați macheta Planului de afaceri", type=["docx"], key="template")
-    st.info('Se va adauga doar documente ce urmeaza a fi procesate Plan afacer, Cerere de finantare etc.', icon="ℹ️")
+    st.info('Se va adauga doar documente ce urmeaza a fi procesate Plan afacer, Cerere de finantare etc.', icon="⬆️")
 
 with col2:
     uploaded_document = st.file_uploader("Încărcați documentul Recom constatator.docx", type=["docx"], key="document")
-    st.info('Se vor incarca doar documente docx si doar Raportul interogare', icon="ℹ️")
+    st.info('Se vor incarca doar documente docx si doar Raportul interogare', icon="⬆️")
 
 col3, col4 = st.columns(2)
 with col3:
