@@ -50,7 +50,7 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
     df_financiar = pd.read_excel(uploaded_file2, sheet_name='P. FINANCIAR')
     date_financiare = extrage_pozitii(df_financiar)
     if 'codCAEN' in st.session_state and date_financiare:
-        rezultate_corelate, rezultate_corelate1 = coreleaza_date(date_financiare)
+        rezultate_corelate, rezultate_corelate1, rezultate_corelate2 = coreleaza_date(date_financiare)
         rezultate_text = '\n'.join([rezultat for _, _, rezultat in rezultate_corelate])
         cheltuieli_text = '\n'.join([rezultat for _, _, rezultat in rezultate_corelate1])
         cantitati_corelate = [pd.to_numeric(item[1], errors='coerce') for item in rezultate_corelate]
