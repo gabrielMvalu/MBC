@@ -8,10 +8,10 @@ st.set_page_config(layout="wide")
 
 # Obținerea utilizării memoriei
 mem = psutil.virtual_memory()
-mem_usage = f"Memorie utilizată: {mem.percent}%"
+mem_usage = f"RAM: {mem.percent}%"
 
 # Obținerea utilizării CPU
-cpu_usage = f"Utilizare CPU: {psutil.cpu_percent()}%"
+cpu_usage = f"CPU: {psutil.cpu_percent()}%"
 
 # Afișarea metricilor în Streamlit
 st.metric(label=":green[Utilizare Memorie]", value=mem_usage)
