@@ -39,17 +39,3 @@ def coreleaza_date(date_financiar):
             rezultat1 = f"{nume}, {cantitate} buc"
             rezultate_corelate1.append((nume, cantitate, rezultat1))
     return rezultate_corelate, rezultate_corelate1
-
-if uploaded_file is not None:
-    try:
-        df_financiar = pd.read_excel(uploaded_file, sheet_name='P. FINANCIAR')
-        date_financiare = extrage_pozitii(df_financiar)
-        if date_financiare:
-            rezultate_corelate, rezultate_corelate1 = coreleaza_date(date_financiare)
-            cantitati_corelate = [pd.to_numeric(item[1], errors='coerce') for item in rezultate_corelate]
-            cantitati_corelate = [0 if pd.isna(x) else x for x in cantitati_corelate]
-            numar_total_utilaje = sum(cantitati_corelate)     
-        else:
-            st.error("Nu s-au găsit date valide în foaia 'P. FINANCIAR' pentru calculul numărului de utilaje.")
-    except ValueError as e:
-        st.error(f'Eroare: {e}')
