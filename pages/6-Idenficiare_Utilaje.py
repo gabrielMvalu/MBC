@@ -60,13 +60,24 @@ def coreleaza_date(date_financiar):
 
     return rezultate_corelate, rezultate_corelate1, rezultate_corelate2
 
-codCAEN = st.checkbox('Selectează codul CAEN pentru activitatea ta (ex: 4312)')
-if codCAEN:
-    st.session_state.codCAEN = st.text_input('Introdu codul CAEN:', '')
 
+# Oferă utilizatorului opțiunea de a alege un cod CAEN
+caen_options = {
+    "CAEN 4312": "Lucrări de pregătire a terenului",
+    "CAEN 4211": "Lucrări de construcții a drumurilor și autostrăzilor",
+    "CAEN 4399": "Alte lucrări speciale de construcții n.c.a.",
+    "CAEN 3832": "Recuperarea materialelor reciclabile sortate"
+}
+
+st.write("Selectează codul CAEN pentru activitatea ta:")
+for caen_code, description in caen_options.items():
+    if st.checkbox(f"{caen_code} - {description}"):
+        st.session_state.codCAEN = caen_code.split()[1]  # Extrage numărul codului CAEN
+
+# Încărcarea fișierului și procesarea datelor
 uploaded_file = st.file_uploader("Încarcă un fișier XLSX", type=['xlsx'])
 
-if uploaded_file is not None:
+if uploaded_file is not None and 'codCAEN' in st.session_state:
     try:
         df_financiar = pd.read_excel(uploaded_file, sheet_name='P. FINANCIAR')
         date_financiare = extrage_pozitii(df_financiar)
@@ -75,6 +86,8 @@ if uploaded_file is not None:
             df_rezultate = pd.DataFrame(rezultate_corelate, columns=['Nume', 'Cantitate', 'Rezultat'])
             df_rezultate1 = pd.DataFrame(rezultate_corelate1, columns=['Nume', 'Cantitate', 'Rezultat'])
             df_rezultate2 = pd.DataFrame(rezultate_corelate2, columns=['Nume', 'Cantitate', 'Descriere'])
+
+            # Afișarea rezultatelor
             st.write(df_rezultate)
             st.write(df_rezultate1)
             st.write(df_rezultate2)
@@ -83,8 +96,11 @@ if uploaded_file is not None:
             cantitati_corelate = [0 if pd.isna(x) else x for x in cantitati_corelate]
             numar_total_utilaje = sum(cantitati_corelate)
             st.write(f"Număr total de utilaje corelate: {numar_total_utilaje}")
-
+      
         else:
             st.error("Nu s-au găsit date valide în foaia 'P. FINANCIAR' pentru calculul numărului de utilaje.")
     except ValueError as e:
         st.error(f'Eroare: {e}')
+else:
+    if 'codCAEN' not in st.session_state:
+        st.error("Selectează un cod CAEN pentru a continua.")
