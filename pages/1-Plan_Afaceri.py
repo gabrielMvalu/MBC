@@ -34,6 +34,16 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
     df1 = pd.read_excel(uploaded_file2, sheet_name='2-ContPP')
     df2 = pd.read_excel(uploaded_file2, sheet_name='1D-Analiza_fin_indicatori')    
     
+    df_financiar = pd.read_excel(uploaded_file2, sheet_name='P. FINANCIAR')
+    date_financiare = extrage_pozitii(df_financiar)
+    if date_financiare:
+        rezultate_corelate, rezultate_corelate1 = coreleaza_date(date_financiare)
+        rezultate_text = '\n'.join([rezultat for _, _, rezultat in rezultate_corelate])
+        cheltuieli_text = '\n'.join([rezultat for _, _, rezultat in rezultate_corelate1])
+        cantitati_corelate = [pd.to_numeric(item[1], errors='coerce') for item in rezultate_corelate]
+        cantitati_corelate = [0 if pd.isna(x) else x for x in cantitati_corelate]
+        numar_total_utilaje = sum(cantitati_corelate)
+    
     informatii_firma = extrage_informatii_firma(constatator_doc)
     asociati_info, administratori_info = extrage_asociati_admini(constatator_doc)
     situatie_angajati = extrage_situatie_angajati(constatator_doc)
@@ -75,6 +85,11 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#CAEN": str(date_solicitate.get('Cod CAEN', 'N/A')),
         "#nr_locuri_munca_noi": str(date_solicitate.get('Număr locuri de muncă noi', 'N/A')),
         "#Judet": str(date_solicitate.get('Județ', 'N/A')),
+
+        "#Utilaj": str(rezultate_text),
+        "#cheltuieli_proiect_din_buget_excel": str(cheltuieli_text),
+        "#nr_utilaje": str(numar_total_utilaje),
+        
         "#utilaj_dizabilitati": str(date_solicitate.get('Utilaj pentru persoane cu dizabilități', 'N/A')),
         "#utilaj_cu_tocator": str(date_solicitate.get('Utilaj cu tocător', 'N/A')),
         "#adresa_loc_implementare": str(date_solicitate.get('Adresa locației de implementare', 'N/A')),
