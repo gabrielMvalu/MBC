@@ -5,6 +5,7 @@ from docx import Document
 from pages.constatator import extrage_informatii_firma, extrage_asociati_admini, extrage_situatie_angajati, extrage_coduri_caen
 from pages.datesolicitate import extrage_date_solicitate
 from pages.bilantsianaliza import extrage_date_bilant, extrage_date_contpp, extrage_indicatori_financiari
+from pages.ssiutilaje import extrage_pozitii, coreleaza_date
 
 st.set_page_config(layout="wide")
 st.header(':blue[Completare Document cu Placeholder-uri]', divider='rainbow')
