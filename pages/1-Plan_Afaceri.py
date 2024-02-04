@@ -11,6 +11,17 @@ st.set_page_config(layout="wide")
 
 st.header(':blue[Completare Document cu Placeholder-uri]', divider='rainbow')
 
+caen_options = {
+    "CAEN 4312": "Lucrări de pregătire a terenului",
+    "CAEN 4211": "Lucrări de construcții a drumurilor și autostrăzilor",
+    "CAEN 4399": "Alte lucrări speciale de construcții n.c.a.",
+    "CAEN 3832": "Recuperarea materialelor reciclabile sortate"
+    }
+    st.write("Selectează codul CAEN pentru activitatea ta:")
+    for caen_code, description in caen_options.items():
+        if st.checkbox(f"{caen_code} - {description}"):
+            st.session_state.codCAEN = caen_code.split()[1]
+
 col1, col2 = st.columns(2)
 with col1:
     uploaded_template = st.file_uploader("Încărcați macheta Planului de afaceri", type=["docx"], key="template")
@@ -27,16 +38,7 @@ with col3:
 with col4:
     uploaded_file2 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="excelBCAP")
     
-    caen_options = {
-        "CAEN 4312": "Lucrări de pregătire a terenului",
-        "CAEN 4211": "Lucrări de construcții a drumurilor și autostrăzilor",
-        "CAEN 4399": "Alte lucrări speciale de construcții n.c.a.",
-        "CAEN 3832": "Recuperarea materialelor reciclabile sortate"
-    }
-    st.write("Selectează codul CAEN pentru activitatea ta:")
-    for caen_code, description in caen_options.items():
-        if st.checkbox(f"{caen_code} - {description}"):
-            st.session_state.codCAEN = caen_code.split()[1]
+
         
     
 
