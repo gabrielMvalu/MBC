@@ -1,6 +1,21 @@
 # app.py
 import streamlit as st
+import psutil
 
+st.set_page_config(layout="wide")
+
+
+
+# Obținerea utilizării memoriei
+mem = psutil.virtual_memory()
+mem_usage = f"Memorie utilizată: {mem.percent}%"
+
+# Obținerea utilizării CPU
+cpu_usage = f"Utilizare CPU: {psutil.cpu_percent()}%"
+
+# Afișarea metricilor în Streamlit
+st.metric(label=":green[Utilizare Memorie]", value=mem_usage)
+st.metric(label=":green[Utilizare CPU]", value=cpu_usage)
 
 st.header(':blue[Pagina Principală]', divider='rainbow')
 st.write(':violet[Bine ați venit la aplicația pentru completarea - Planului de Afaceri! -]')
