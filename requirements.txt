@@ -5,3 +5,4 @@ python-docx
 docx
 altair
 matplotlib
+psutil
