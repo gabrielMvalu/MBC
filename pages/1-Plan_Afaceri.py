@@ -18,7 +18,6 @@ caen_options = {
     "CAEN 4399": "Alte lucrări speciale de construcții n.c.a.",
     "CAEN 3832": "Recuperarea materialelor reciclabile sortate"
     }
-    st.write("Selectează codul CAEN pentru activitatea ta:")
     for caen_code, description in caen_options.items():
         if st.checkbox(f"{caen_code} - {description}"):
             st.session_state.codCAEN = caen_code.split()[1]
