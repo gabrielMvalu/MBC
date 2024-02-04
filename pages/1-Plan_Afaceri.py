@@ -6,23 +6,8 @@ from pages.constatator import extrage_informatii_firma, extrage_asociati_admini,
 from pages.datesolicitate import extrage_date_solicitate
 from pages.bilantsianaliza import extrage_date_bilant, extrage_date_contpp, extrage_indicatori_financiari
 from pages.ssiutilaje import extrage_pozitii, coreleaza_date
-import psutil
 
 st.set_page_config(layout="wide")
-
-
-
-# Obținerea utilizării memoriei
-mem = psutil.virtual_memory()
-mem_usage = f"Memorie utilizată: {mem.percent}%"
-
-# Obținerea utilizării CPU
-cpu_usage = f"Utilizare CPU: {psutil.cpu_percent()}%"
-
-# Afișarea metricilor în Streamlit
-st.metric(label="Utilizare Memorie", value=mem_usage)
-st.metric(label="Utilizare CPU", value=cpu_usage)
-
 
 st.header(':blue[Completare Document cu Placeholder-uri]', divider='rainbow')
 
