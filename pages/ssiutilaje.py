@@ -55,7 +55,7 @@ def coreleaza_date(date_financiar):
             rezultate_corelate1.append((nume, cantitate, rezultat1))
         if nume_curat in descriere_data:
             descriere = descriere_data[nume_curat]
-            rezultat2 = f"{nume} - {descriere}"
+            rezultat2 = f"{descriere}"
             rezultate_corelate2.append((nume, cantitate, rezultat2))
 
     return rezultate_corelate, rezultate_corelate1, rezultate_corelate2
