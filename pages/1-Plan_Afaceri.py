@@ -63,7 +63,7 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         cantitati_corelate = [0 if pd.isna(x) else x for x in cantitati_corelate]
         numar_total_utilaje = sum(cantitati_corelate)
         rezultate_corelate, rezultate_corelate1, rezultate_corelate2 = coreleaza_date(date_financiare)
-        rezultate2_text = '\n'.join([f"{nume} - {descriere}" for nume, _, descriere in rezultate_corelate2])
+        rezultate2_text = '\n'.join([f"{descriere}" for nume, _, descriere in rezultate_corelate2])
 
 
     
