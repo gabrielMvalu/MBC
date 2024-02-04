@@ -11,6 +11,7 @@ st.set_page_config(layout="wide")
 
 st.header(':blue[Completare Document cu Placeholder-uri]', divider='rainbow')
 
+st.write("Selectează codul CAEN pentru activitatea ta:")
 caen_options = {
     "CAEN 4312": "Lucrări de pregătire a terenului",
     "CAEN 4211": "Lucrări de construcții a drumurilor și autostrăzilor",
@@ -21,6 +22,8 @@ caen_options = {
     for caen_code, description in caen_options.items():
         if st.checkbox(f"{caen_code} - {description}"):
             st.session_state.codCAEN = caen_code.split()[1]
+
+
 
 col1, col2 = st.columns(2)
 with col1:
