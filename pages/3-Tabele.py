@@ -4,7 +4,7 @@ import io
 from docx import Document
 from docx.shared import Pt 
 
-st.header('Pregătirea datelor din P. FINANCIAR pentru completare tabel subcap 2.4')
+st.header(':blue[Pregătirea datelor din P. FINANCIAR pentru completare tabel subcap 2.4]', divider='rainbow')
 
 uploaded_file = st.file_uploader("Încarcă documentul '*.xlsx' aici", type="xlsx", accept_multiple_files=False)
 stop_text = "Total proiect"
