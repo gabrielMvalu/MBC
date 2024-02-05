@@ -81,7 +81,7 @@ def extrage_date_solicitate(df):
         "Flux tehnologic": flux_tehnologic,
         "Utilaje DNSH": utilajeDNSH,
         "Descriere utilaj ghidare": utilaj_ghidare_descriere,
-        "Descriere utilaj reciclare": utilaj_reciclare_descriere
+        "Descriere utilaj reciclare": utilaj_reciclare_descriere,
         "Contribuția proiectului la tranziția justă": contributia_proiectului_la_TJ,
         "Strategii materiale": strategii_materiale,
         "Strategii materiale reciclate": strategii_reciclate,
