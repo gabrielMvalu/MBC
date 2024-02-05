@@ -36,11 +36,11 @@ with col2:
 col3, col4 = st.columns(2)
 with col3:
     st.success('Adaugati fisierul excel Date Solicitate', icon="⬇️")
-    uploaded_file1 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="excelSolicitate")
+    uploaded_file1 = st.file_uploader("Încărcați documentul", type=["xlsx"], key="excelSolicitate")
     
 with col4:
     st.success('Adaugati fisierul excel Anexa 3 Macheta financiara', icon="⬇️")
-    uploaded_file2 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="excelBCAP")
+    uploaded_file2 = st.file_uploader("Încărcați documentul", type=["xlsx"], key="excelBCAP")
     
 
         
