@@ -27,21 +27,21 @@ for caen_code, description in caen_options.items():
 col1, col2 = st.columns(2)
 with col1:
     uploaded_template = st.file_uploader("Încărcați documentul", type=["docx"], key="template")
-    st.info('Adaugati macheta Planului de Afaceri sau a Cererii de Finantare', icon="⬆️")
+    st.info('Template Plan Afaceri', icon="⬆️")
 
 with col2:
     uploaded_document = st.file_uploader("Încărcați documentul", type=["docx"], key="document")
-    st.info('Adaugati Raport interogare', icon="⬆️")
+    st.info('Raport interogare', icon="⬆️")
 
 st.divider()
 
 col3, col4 = st.columns(2)
 with col3:
-    st.success('Adaugati fisierul excel Date Solicitate', icon="⬇️")
+    st.success('Date Solicitate', icon="⬇️")
     uploaded_file1 = st.file_uploader("Încărcați documentul", type=["xlsx"], key="excelSolicitate")
     
 with col4:
-    st.success('Adaugati fisierul excel Anexa 3 Macheta financiara', icon="⬇️")
+    st.success('Anexa 3 - Macheta financiara', icon="⬇️")
     uploaded_file2 = st.file_uploader("Încărcați documentul", type=["xlsx"], key="excelBCAP")
     
 
