@@ -156,7 +156,10 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#CrestCreare": str(date_solicitate.get('Creșterea și crearea de noi activități', 'N/A')),
         "#CreareActivVizata": str(date_solicitate.get('Crearea de activități în domeniul vizat', 'N/A')),
         "#DezavantajeConcurentiale": str(date_solicitate.get('Identificarea dezavantajelor concurențiale', 'N/A')),
-
+        "#30nrLocMunca": str(date_solicitate.get('Locuri Noi Create 30%', 'N/A')),
+        "#20NrLocMunca": str(date_solicitate.get('Locuri Noi Create 20%', 'N/A')),
+        "#zoneDN": str(date_solicitate.get('Zone vizate Prioritar', 'N/A')),
+        "#Iso14001": str(date_solicitate.get('Certificat ISO 14001', 'N/A')),
         
         
         "#NAM20": str(situatie_angajati.get('Numar mediu angajati 2020', 'N/A')),
