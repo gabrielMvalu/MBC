@@ -33,6 +33,9 @@ with col2:
     uploaded_document = st.file_uploader("Încărcați documentul", type=["docx"], key="document")
     st.info('Adaugati Raport interogare', icon="⬆️")
 
+st.divider()
+st.divider()
+
 col3, col4 = st.columns(2)
 with col3:
     st.success('Adaugati fisierul excel Date Solicitate', icon="⬇️")
