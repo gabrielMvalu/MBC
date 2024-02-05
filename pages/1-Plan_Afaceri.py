@@ -127,7 +127,7 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
         "#info_ctr_implementare": str(date_solicitate.get('Informații despre contractul de implementare', 'N/A')),
         "#zonele_vizate_prioritar": str(date_solicitate.get('Zonele vizate prioritare', 'N/A')),
         "#utilaj_ghidare": str(date_solicitate.get('Utilaj de ghidare', 'N/A')),
-        "legaturi": str(date_solicitate.get('Legături', 'N/A')),
+        "#legaturi": str(date_solicitate.get('Legături', 'N/A')),
         "#rude": str(date_solicitate.get('Rude în cadrul firmei', 'N/A')),
         "#concluzie_CA": str(date_solicitate.get('Concluzie_CA', 'N/A')),
         "#caracteristici_tehnice": str(date_solicitate.get('Caracteristici tehnice relevante', 'N/A')),
