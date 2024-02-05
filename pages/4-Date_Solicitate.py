@@ -107,7 +107,6 @@ def extrage_date_solicitate(df):
         "Creșterea și crearea de noi activități": crestCreare,
         "Crearea de activități în domeniul vizat": creareActivVizata,
         "Identificarea dezavantajelor concurențiale": dezavantajeConcurentiale
-
     }
 
     return data
