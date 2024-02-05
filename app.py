@@ -22,13 +22,13 @@ st.write(':violet[Bine ați venit la aplicația pentru completarea - Planului de
 
 
 
-user_email = st.text_input('Introduceți adresa de email pentru acces special:')
+user_email = st.text_input('Introduceți adresa de email pentru acces:')
 if user_email:
     ADMIN_EMAIL = st.secrets["ADMIN_EMAIL"]
     if user_email == ADMIN_EMAIL:
-        if st.button('Buton Special pentru Robert'):
+        if st.button('Buton'):
             st.write('Bine ai venit, Robert!')
     else:
         st.write("Nu ai acces la butonul special.")
 else:
-    st.write("Vă rugăm să introduceți adresa de email pentru a verifica accesul special.")
+    st.write("Vă rugăm să introduceți adresa de email pentru a verifica accesul.")
