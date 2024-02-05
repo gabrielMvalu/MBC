@@ -50,7 +50,10 @@ def extrage_date_solicitate(df):
     crestCreare = df.iloc[64, 2]
     creareActivVizata = df.iloc[65, 2]
     dezavantajeConcurentiale = df.iloc[66, 2]
-    
+    locuriMunca30 = df.iloc[67, 2]
+    locuriMunca20 = df.iloc[68, 2]
+    zoneVizatePrioritar = df.iloc[69, 2]
+    iSO14001 = df.iloc[71, 2]
     
     data = {
         "Denumirea firmei SRL": firma, 
@@ -102,7 +105,11 @@ def extrage_date_solicitate(df):
         "Extinderea capacității firmei": extinderea,
         "Creșterea și crearea de noi activități": crestCreare,
         "Crearea de activități în domeniul vizat": creareActivVizata,
-        "Identificarea dezavantajelor concurențiale": dezavantajeConcurentiale
+        "Identificarea dezavantajelor concurențiale": dezavantajeConcurentiale,
+        "Locuri Noi Create 30%": locuriMunca30 ,
+        "Locuri Noi Create 20%": locuriMunca20,
+        "Zone vizate Prioritar": zoneVizatePrioritar,
+        "Certificat ISO 14001 ": iSO14001,                     
 
     }
 
