@@ -117,7 +117,7 @@ uploaded_file = st.file_uploader("Trageți fișierul aici sau faceți clic pentr
 
 if uploaded_file is not None:
     df = pd.read_excel(uploaded_file, sheet_name='date solicitate')
-    solicitate_data = extract_date_solicitate(df)
+    solicitate_data = extrage_date_solicitate(df)
 
     st.json({"Date Solicitate": solicitate_data})
     
