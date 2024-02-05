@@ -29,7 +29,28 @@ def extrage_date_solicitate(df):
     flux_tehnologic = df.iloc[38, 2]
     utilajeDNSH = df.iloc[39, 2]
     utilaj_ghidare_descriere = df.iloc[40, 2]
-    utilaj_reciclare_descriere = df.iloc[41, 2]
+    contributia_proiectului_la_TJ = df.iloc[42, 2]
+    strategii_materiale = df.iloc[43, 2]
+    strategii_reciclate = df.iloc[44, 2]
+    activitate = df.iloc[45, 2]
+    utilaj_reciclare_descriere = df.iloc[46, 2]
+    lucrari_inovatie = df.iloc[47, 2]
+    lucrari_caen = df.iloc[48, 2]
+    DNSHa = df.iloc[49, 2]
+    DNSHc = df.iloc[50, 2]
+    DNSHd = df.iloc[50, 2]
+    materiale_locale = df.iloc[52, 2]
+    PregatireaTeren = df.iloc[53, 2]
+    ReciclareaMaterialelor = df.iloc[54, 2]
+    clientiFirma = df.iloc[55, 2]
+    DacaTipInvest = df.iloc[56, 2]
+    crearea = df.iloc[59, 2]
+    diversificarea = df.iloc[62, 2]
+    extinderea = df.iloc[63, 2]
+    CrestCreare = df.iloc[64, 2]
+    CreareActivVizata = df.iloc[65, 2]
+    DezavantajeConcurentiale = df.iloc[66, 2]
+    
     
     data = {
         "Denumirea firmei SRL": firma, 
@@ -61,6 +82,28 @@ def extrage_date_solicitate(df):
         "Utilaje DNSH": utilajeDNSH,
         "Descriere utilaj ghidare": utilaj_ghidare_descriere,
         "Descriere utilaj reciclare": utilaj_reciclare_descriere
+        "Contribuția proiectului la tranziția justă": contributia_proiectului_la_TJ,
+        "Strategii materiale": strategii_materiale,
+        "Strategii materiale reciclate": strategii_reciclate,
+        "Activitate specifică": activitate,
+        "Descriere utilaj de reciclare": utilaj_reciclare_descriere,
+        "Inovații în lucrări": lucrari_inovatie,
+        "Lucrări conform codurilor CAEN": lucrari_caen,
+        "Detalii DNSH - A": DNSHa,
+        "Detalii DNSH - C": DNSHc,
+        "Detalii DNSH - D": DNSHd,
+        "Utilizarea materialelor locale": materiale_locale,
+        "Pregătirea terenului pentru lucrări": PregatireaTeren,
+        "Procesul de reciclare a materialelor": ReciclareaMaterialelor,
+        "Clienți principali ai firmei": clientiFirma,
+        "Tipul investiției planificate": DacaTipInvest,
+        "Crearea de noi oportunități": crearea,
+        "Diversificarea activităților firmei": diversificarea,
+        "Extinderea capacității firmei": extinderea,
+        "Creșterea și crearea de noi activități": CrestCreare,
+        "Crearea de activități în domeniul vizat": CreareActivVizata,
+        "Identificarea dezavantajelor concurențiale": DezavantajeConcurentiale
+
     }
 
     return data
