@@ -116,7 +116,7 @@ st.header(':blue[Încărcare Date Solicitate]', divider='rainbow')
 uploaded_file = st.file_uploader("Trageți fișierul aici sau faceți clic pentru a încărca", type=["xlsx"])
 
 if uploaded_file is not None:
-    df = pd.read_excel(uploaded_file)
+    df = pd.read_excel(uploaded_file, sheet_name='date solicitate')
     solicitate_data = extract_date_solicitate(df)
 
     st.json({"Date Solicitate": solicitate_data})
