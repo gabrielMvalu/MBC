@@ -26,18 +26,20 @@ for caen_code, description in caen_options.items():
 
 col1, col2 = st.columns(2)
 with col1:
-    uploaded_template = st.file_uploader("Încărcați macheta Planului de afaceri", type=["docx"], key="template")
-    st.info('Se va adauga doar documente ce urmeaza a fi procesate Plan afacer, Cerere de finantare etc.', icon="⬆️")
+    uploaded_template = st.file_uploader("Încărcați documentul", type=["docx"], key="template")
+    st.info('Adaugati macheta Planului de Afaceri sau a Cererii de Finantare', icon="⬆️")
 
 with col2:
-    uploaded_document = st.file_uploader("Încărcați documentul Recom constatator.docx", type=["docx"], key="document")
-    st.info('Se vor incarca doar documente docx si doar Raportul interogare', icon="⬆️")
+    uploaded_document = st.file_uploader("Încărcați documentul", type=["docx"], key="document")
+    st.info('Adaugati Raport interogare', icon="⬆️")
 
 col3, col4 = st.columns(2)
 with col3:
+    st.success('Adaugati fisierul excel Date Solicitate', icon="⬇️")
     uploaded_file1 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="excelSolicitate")
     
 with col4:
+    st.success('Adaugati fisierul excel Anexa 3 Macheta financiara', icon="⬇️")
     uploaded_file2 = st.file_uploader("Încărcați fișierul aici sau faceți clic pentru a încărca", type=["xlsx"], key="excelBCAP")
     
 
