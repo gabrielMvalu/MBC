@@ -48,7 +48,7 @@ if uploaded_template is not None and uploaded_document is not None and uploaded_
     template_doc = Document(uploaded_template)
     st.toast('Incepem procesarea Planului de afaceri', icon='⭐')     
     constatator_doc = Document(uploaded_document)
-    date_solicitate_doc = pd.read_excel(uploaded_file1)
+    date_solicitate_doc = pd.read_excel(uploaded_file1, sheet_name='date solicitate')
     df = pd.read_excel(uploaded_file2, sheet_name='1-Bilant')
     df1 = pd.read_excel(uploaded_file2, sheet_name='2-ContPP')
     df2 = pd.read_excel(uploaded_file2, sheet_name='1D-Analiza_fin_indicatori')    
