@@ -36,20 +36,20 @@ def extrage_date_solicitate(df):
     utilaj_reciclare_descriere = df.iloc[46, 2]
     lucrari_inovatie = df.iloc[47, 2]
     lucrari_caen = df.iloc[48, 2]
-    DNSHa = df.iloc[49, 2]
-    DNSHc = df.iloc[50, 2]
-    DNSHd = df.iloc[50, 2]
+    aDNSH = df.iloc[49, 2]
+    cDNSH = df.iloc[50, 2]
+    dDNSH = df.iloc[50, 2]
     materiale_locale = df.iloc[52, 2]
-    PregatireaTeren = df.iloc[53, 2]
-    ReciclareaMaterialelor = df.iloc[54, 2]
+    pregatireaTeren = df.iloc[53, 2]
+    reciclareaMaterialelor = df.iloc[54, 2]
     clientiFirma = df.iloc[55, 2]
-    DacaTipInvest = df.iloc[56, 2]
+    dacaTipInvest = df.iloc[56, 2]
     crearea = df.iloc[59, 2]
     diversificarea = df.iloc[62, 2]
     extinderea = df.iloc[63, 2]
-    CrestCreare = df.iloc[64, 2]
-    CreareActivVizata = df.iloc[65, 2]
-    DezavantajeConcurentiale = df.iloc[66, 2]
+    crestCreare = df.iloc[64, 2]
+    creareActivVizata = df.iloc[65, 2]
+    dezavantajeConcurentiale = df.iloc[66, 2]
     
     
     data = {
@@ -89,20 +89,20 @@ def extrage_date_solicitate(df):
         "Descriere utilaj de reciclare": utilaj_reciclare_descriere,
         "Inovații în lucrări": lucrari_inovatie,
         "Lucrări conform codurilor CAEN": lucrari_caen,
-        "Detalii DNSH - A": DNSHa,
-        "Detalii DNSH - C": DNSHc,
-        "Detalii DNSH - D": DNSHd,
+        "Detalii DNSH - A": aDNSH,
+        "Detalii DNSH - C": cDNSH,
+        "Detalii DNSH - D": dDNSH,
         "Utilizarea materialelor locale": materiale_locale,
-        "Pregătirea terenului pentru lucrări": PregatireaTeren,
-        "Procesul de reciclare a materialelor": ReciclareaMaterialelor,
+        "Pregătirea terenului pentru lucrări": pregatireaTeren,
+        "Procesul de reciclare a materialelor": reciclareaMaterialelor,
         "Clienți principali ai firmei": clientiFirma,
-        "Tipul investiției planificate": DacaTipInvest,
+        "Tipul investiției planificate": dacaTipInvest,
         "Crearea de noi oportunități": crearea,
         "Diversificarea activităților firmei": diversificarea,
         "Extinderea capacității firmei": extinderea,
-        "Creșterea și crearea de noi activități": CrestCreare,
-        "Crearea de activități în domeniul vizat": CreareActivVizata,
-        "Identificarea dezavantajelor concurențiale": DezavantajeConcurentiale
+        "Creșterea și crearea de noi activități": crestCreare,
+        "Crearea de activități în domeniul vizat": creareActivVizata,
+        "Identificarea dezavantajelor concurențiale": dezavantajeConcurentiale
 
     }
 
