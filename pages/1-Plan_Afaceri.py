@@ -34,7 +34,6 @@ with col2:
     st.info('Adaugati Raport interogare', icon="⬆️")
 
 st.divider()
-st.divider()
 
 col3, col4 = st.columns(2)
 with col3:
