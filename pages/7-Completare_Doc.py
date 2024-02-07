@@ -1,6 +1,7 @@
 # pages/Completare_Doc.py
 import streamlit as st
 import pandas as pd
+import re
 from docx import Document
 from pages.constatator import extrage_informatii_firma, extrage_asociati_admini, extrage_situatie_angajati, extrage_coduri_caen
 from pages.datesolicitate import extrage_date_solicitate
@@ -11,21 +12,30 @@ st.set_page_config(layout="wide")
 
 st.header('Procesul de înlocuire a Placeholder-urilor', divider='rainbow')
 
+caen_nr_extras = None
+document_succes = False   # variabilă pentru a ține evidența succesului procesării primului document
+
 col1, col2 = st.columns(2)
 
 with col1:
     uploaded_template = st.file_uploader("Încărcați fișierul XLSX Date Solicitate", type=["xlsx"], key="dateSolicitate")
-
-    document_succes = False  # variabilă pentru a ține evidența succesului procesării primului document
-
+    
     if uploaded_template is not None:
+        
         datesolicitate_doc = pd.read_excel(uploaded_template)
         date_din_xlsx_date_solicitate = extrage_date_solicitate(datesolicitate_doc)
-
-        CAEN_extras = date_din_xlsx_date_solicitate.get('Cod CAEN', 'Cod CAEN necunoscut')
+        
+        caen_extras = date_din_xlsx_date_solicitate.get('Cod CAEN', 'Cod CAEN necunoscut')
         firma = date_din_xlsx_date_solicitate.get('Denumirea firmei SRL', 'Firmă necunoscută')
-
-        st.success(f"Vom începe prelucrarea firmei: {firma} cu prelucrarea pe codul CAEN: {CAEN_extras}")
+        
+        match = re.search(r'CAEN (\d+)', caen_extras)
+        # Verificăm si extragem numărul CAEN
+        if match:
+            caen_nr_extras = match.group(1)  
+        else:
+            caen_nr_extras = None 
+        
+        st.success(f"Vom începe prelucrarea firmei: {firma} cu prelucrarea pe codul CAEN: {caen_nr_extras} - {caen_extras}")
 
         document_succes = True  # Setăm variabila pe True pentru a indica că primul document a fost procesat cu succes
 
