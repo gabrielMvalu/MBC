@@ -44,4 +44,4 @@ with col2:
     if document_succes:
         uploaded_file2 = st.file_uploader("Încărcați al doilea document", type=["pdf", "docx", "txt"], key="document2")
         # Aici poți adăuga codul pentru procesarea celui de-al doilea document, după ce acesta este încărcat
-st.info(f"{caen_nr_extras} - aflat intrat lucru!")
+        st.info(f"{caen_nr_extras} - aflat intrat lucru!")
