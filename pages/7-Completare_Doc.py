@@ -13,7 +13,7 @@ st.header(':blue[Procesul de inlocuire a Placeholder-uri]', divider='rainbow')
 
 uploaded_template = st.file_uploader("Încărcați fisieru XLSX Date Solicitate", type=["xlsx"], key="dateSolicitate")
 
-if uploaded_template is not None
+if uploaded_template is not None:
   datesolicitate_doc = pd.read_excel(uploaded_file1)
   date_din_xlsx_date_solicitate = extrage_date_solicitate(datesolicitate_doc)
   
