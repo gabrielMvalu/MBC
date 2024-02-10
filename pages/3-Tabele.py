@@ -43,13 +43,13 @@ def transforma_date(df):
         if pd.isna(val_6) or pd.isna(val_4):
             eligibil_neeligibil.append("Data Missing")
         elif val_6 == 0 and val_4 != 0:
-            eligibil_neeligibil.append(f"0 // {round(val_4, 2)}")
+            eligibil_neeligibil.append(f"Eligibil: 0 \n Neeligibil: {round(val_4, 2)}")
         elif val_6 == 0 and val_4 == 0:
-            eligibil_neeligibil.append("0 // 0")
+            eligibil_neeligibil.append("Eligibil: 0 // 0")
         elif val_6 < val_4:
-            eligibil_neeligibil.append(f"{round(val_6, 2)} // {round(val_4 - val_6, 2)}")
+            eligibil_neeligibil.append(f"Eligibil: {round(val_6, 2)}\n Neeligibil: {round(val_4 - val_6, 2)}")
         else:
-            eligibil_neeligibil.append(f"{round(val_6, 2)} // {round(val_6 - val_4, 2)}")
+            eligibil_neeligibil.append(f"Eligibil: {round(val_6, 2)} \n Neeligibil: {round(val_6 - val_4, 2)}")
 
     df_nou = pd.DataFrame({
         "Nr. crt.": nr_crt,
