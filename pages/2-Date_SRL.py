@@ -107,19 +107,48 @@ def extract_situatie_angajati(doc):
     return data_angajati
 
 
-def extract_caen_codes(full_text):
+#def extract_caen_codes(full_text):
+#    start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
+#    end_marker = "CONCORDAT PREVENTIV"
+#    caen_section_pattern = re.compile(rf"{start_marker}(.*?){end_marker}", re.DOTALL)
+#    caen_section_match = re.search(caen_section_pattern, full_text)
+    
+#    if caen_section_match:
+#        caen_section_text = caen_section_match.group(1)
+#        caen_code_pattern = re.compile(r"(\d{4}) - (.*?)\n")
+#        caen_codes = re.findall(caen_code_pattern, caen_section_text)
+#        return caen_codes
+#    else:
+#        return []
+
+#Modicicat in urmatoarea functie conform noilor cerinte de afisare!!! 12 feb 2023
+
+def extrage_coduri_caen(full_text):
+    # Delimitatori pentru începutul și sfârșitul secțiunii de interes
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
     end_marker = "CONCORDAT PREVENTIV"
-    caen_section_pattern = re.compile(rf"{start_marker}(.*?){end_marker}", re.DOTALL)
-    caen_section_match = re.search(caen_section_pattern, full_text)
-    
-    if caen_section_match:
-        caen_section_text = caen_section_match.group(1)
-        caen_code_pattern = re.compile(r"(\d{4}) - (.*?)\n")
-        caen_codes = re.findall(caen_code_pattern, caen_section_text)
-        return caen_codes
-    else:
-        return []
+
+    # Extrage secțiunea de interes din textul complet
+    start_index = full_text.find(start_marker) + len(start_marker)
+    end_index = full_text.find(end_marker)
+    relevant_section = full_text[start_index:end_index]
+
+    # Definește un model de expresie regulată pentru a identifica sediile secundare și activitățile asociate
+    pattern = r"(Sediul secundar din:.+?)(?=Sediul secundar din:|$)"
+
+    # Caută toate potrivirile în secțiunea relevantă
+    matches = re.findall(pattern, relevant_section, re.DOTALL)
+
+    # Curăță și formatează fiecare potrivire
+    results = []
+    for match in matches:
+        # Elimină spațiile albe excesive
+        cleaned_match = re.sub(r'\s+', ' ', match).strip()
+        results.append(cleaned_match)
+
+    return results
+
+
 
 # Încărcarea și procesarea documentului în Streamlit
 st.header(':blue[Încărcare Document Registrul Comerțului]',divider='rainbow')
