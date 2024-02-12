@@ -160,7 +160,8 @@ if uploaded_file is not None:
     general_data = extract_data_from_docx(doc)
     detailed_info, admins = extract_detailed_info_from_docx(doc)
     angajati_data = extract_situatie_angajati(doc)
-    caen_codes = extract_caen_codes("\n".join([p.text for p in doc.paragraphs]))
+    sedii_si_activitati = extrage_coduri_caen(doc)
+    # anulat in urma cerintei din 12 feb 2023  caen_codes = extract_caen_codes("\n".join([p.text for p in doc.paragraphs]))
 
 
 
@@ -169,7 +170,7 @@ if uploaded_file is not None:
         "Date Generale": general_data,
         "Informații Detaliate": {"Asociați": detailed_info, "Administratori": admins},
         "Situație Angajati": angajati_data,
-        "Coduri CAEN": caen_codes
+        "Coduri CAEN": sedii_si_activitati
     })
 
     # Afișarea datelor în DataFrame-uri pentru vizualizare
