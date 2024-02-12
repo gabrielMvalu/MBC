@@ -123,7 +123,7 @@ def extract_situatie_angajati(doc):
 
 #Modicicat in urmatoarea functie conform noilor cerinte de afisare!!! 12 feb 2023
 
-def extrage_coduri_caen(full_text):
+def extrage_coduri_caen(doc):
     # Delimitatori pentru începutul și sfârșitul secțiunii de interes
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
     end_marker = "CONCORDAT PREVENTIV"
