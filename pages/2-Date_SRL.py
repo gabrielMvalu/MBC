@@ -129,12 +129,12 @@ def extrage_coduri_caen(doc):
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
     end_marker = "CONCORDAT PREVENTIV"
 
-    # Extrage secțiunea de interes din textul complet
+    # secțiunea de interes din textul complet
     start_index = full_text.find(start_marker) + len(start_marker)
     end_index = full_text.find(end_marker)
     relevant_section = full_text[start_index:end_index]
 
-    # Definește un model de expresie regulată pentru a identifica sediile secundare și activitățile asociate
+    # model de expresie regulată pentru a identifica sediile secundare și activitățile asociate
     pattern = r"(Sediul secundar din:.+?)(?=Sediul secundar din:|$)"
 
     # Caută toate potrivirile în secțiunea relevantă
@@ -143,8 +143,12 @@ def extrage_coduri_caen(doc):
     # Curăță și formatează fiecare potrivire
     results = []
     for match in matches:
+        # textul final prin concatenarea părților relevante 
+        sediu_info = "Sediul secundar din:" + match[0].strip()
+        activitati_info = "Activităţi la sediu:" + match[1].strip()
+        
         # Elimină spațiile albe excesive
-        cleaned_match = re.sub(r'\s+', ' ', match).strip()
+        cleaned_match = re.sub(r'\s+', ' ', sediu_info + " " + activitati_info).strip()
         results.append(cleaned_match)
 
     return results
