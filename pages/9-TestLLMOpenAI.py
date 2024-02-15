@@ -42,25 +42,26 @@ else:
  
    
 
-    # Câmp pentru introducerea textului
+   st.title('Identificator de Utilaje')
     user_input = st.text_area("Introduceți textul aici:")
 
-    # Buton pentru procesare
     if st.button('Identifică utilaje'):
         # Construirea promptului pentru modelul LLM
         prompt = f"Identifică și listează utilajele menționate în textul: '{user_input}'. Consideră următoarea listă de utilaje: {', '.join(equipment_list)}."
 
-        # Trimiterea promptului către OpenAI
-        response = openai.Completion.create(
-            engine="gpt-4-1106-preview", #  model disponibil
-            prompt=prompt,
-            temperature=0.3,
-            max_tokens=400,
-            top_p=1,
-            frequency_penalty=0,
-            presence_penalty=0
-        )
+        try:
+            # Trimiterea promptului către OpenAI folosind Chat Completions
+            response = openai.ChatCompletion.create(
+                model="gpt-4-1106-preview",
+                messages=[
+                    {"role": "system", "content": "Identifică utilajele din textul următor."},
+                    {"role": "user", "content": prompt}
+                ]
+            )
 
-        # Afișarea răspunsului
-        st.write("Utilaje identificate:")
-        st.write(response.choices[0].text.strip())
+            # Extragerea și afișarea răspunsului
+            st.write("Utilaje identificate:")
+            for choice in response.choices:
+                st.write(choice.message['content'])
+        except Exception as e:
+            st.error(f"A apărut o eroare: {e}")
