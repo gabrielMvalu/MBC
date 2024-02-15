@@ -26,15 +26,14 @@ equipment_keywords = [
     "grupul electrogen", "microexcavator", "miniexcavator"
 ]
 
-# Funcția pentru extragerea denumirilor de utilaje
 def extract_equipment_names(text):
-    doc = nlp(text)
+    text_lower = text.lower()
     equipment_found = set()
-    for token in doc:
-        # Adaptarea condiției pentru a se potrivi mai bine cu structura limbii române
-        if token.pos_ in ["PROPN", "NOUN"] and any(keyword in token.text.lower() for keyword in equipment_keywords):
-            equipment_found.add(token.text)
+    for keyword in equipment_keywords:
+        if keyword in text_lower:
+            equipment_found.add(keyword)
     return equipment_found
+
 
 # Crearea interfeței Streamlit
 st.title('Identificator de Utilaje în Limba Română')
