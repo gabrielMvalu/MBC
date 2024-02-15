@@ -7,16 +7,14 @@ st.set_page_config(layout="wide")
 st.header('Pagina Principală')
 st.write('Bine ați venit la aplicația pentru completarea Planului de Afaceri!')
 
-# Sidebar pentru cheia API OpenAI
 with st.sidebar:
-    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
+    openai_api_key = st.text_input("OpenAI API Key", type="password")
 
-# Verifică dacă cheia API este introdusă
 if not openai_api_key:
     st.info("Vă rugăm să introduceți cheia API OpenAI în bara laterală.")
 else:
     # Inițializarea clientului OpenAI cu cheia API introdusă
-    openai.api_key = openai_api_key
+    client = OpenAI(api_key=openai_api_key)
 
     # Lista predefinită de utilaje
     equipment_list = [
@@ -41,26 +39,22 @@ else:
  
    
 
-    st.title('Identificator de Utilaje')
+    st.title(':rainbow[Identificator de Utilaje]')
     user_input = st.text_area("Introduceți textul aici:")
 
     if st.button('Identifică utilaje'):
-        # Construirea promptului pentru modelul LLM
-        prompt = f"Identifică și listează utilajele menționate în textul: '{user_input}'. Consideră următoarea listă de utilaje: {', '.join(equipment_list)}."
-
         try:
-            # Trimiterea promptului către OpenAI folosind Chat Completions
-            response = openai.chat.completion.create(
-                model="gpt-4-1106-preview",
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "Identifică utilajele din textul următor."},
-                    {"role": "user", "content": prompt}
+                    {"role": "system", "content": "You are a helpful assistant designed to identify equipment from a list."},
+                    {"role": "user", "content": user_input}
                 ]
             )
 
             # Extragerea și afișarea răspunsului
             st.write("Utilaje identificate:")
-            for choice in response.choices:
-                st.write(choice.message['content'])
+            st.write(response.choices[0].message['content'])
+
         except Exception as e:
             st.error(f"A apărut o eroare: {e}")
