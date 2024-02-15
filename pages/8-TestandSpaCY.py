@@ -28,25 +28,27 @@ equipment_keywords = [
 ]
 
 def extract_equipment_names(text, equipment_keywords, threshold):
-    text_lower = text.lower()
     equipment_found = set()
 
-    for word in text_lower.split():
-        # Folosim fuzzy matching pentru a găsi cel mai apropiat cuvânt cheie
-        match, score = process.extractOne(word, equipment_keywords)
+    # Separarea elementelor pe baza virgulei
+    elements = [element.strip().lower() for element in text.split(',')]
+
+    for element in elements:
+        # Folosim fuzzy matching pentru a găsi cea mai apropiată potrivire pentru fiecare element
+        match, score = process.extractOne(element, equipment_keywords)
         if score >= threshold:
             equipment_found.add(match)
 
     return equipment_found
 
 # Crearea interfeței Streamlit
-st.title('Identificator de Utilaje în Limba Română')
+st.title('Identificator de Utilaje')
 
 # Slider pentru setarea threshold-ului
 threshold = st.slider('Selectați valoarea threshold-ului pentru identificarea utilajelor:', min_value=0, max_value=100, value=80)
 
-# Câmp pentru introducerea textului
-user_input = st.text_area("Introduceți textul aici:")
+# Câmp pentru introducerea textului, cu instrucțiuni pentru utilizator
+user_input = st.text_area("Introduceți utilajele separate prin virgulă:")
 
 # Buton pentru procesare
 if st.button('Identifică utilaje'):
