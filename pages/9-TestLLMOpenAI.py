@@ -42,7 +42,7 @@ else:
  
    
 
-   st.title('Identificator de Utilaje')
+    st.title('Identificator de Utilaje')
     user_input = st.text_area("Introduceți textul aici:")
 
     if st.button('Identifică utilaje'):
