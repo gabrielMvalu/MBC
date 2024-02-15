@@ -51,15 +51,16 @@ else:
             # Construirea promptului
             prompt = f"Lista de utilaje: {', '.join(equipment_list)}. Pe baza acestei liste, identifică utilajele menționate în următorul text: {user_input}"
 
-            response = openai.Completion.create(
-                model=st.session_state["openai_model"],
-                prompt=prompt,
-                max_tokens=150  # Ajustează conform necesității
+            completion = client.chat.completions.create(
+              model="gpt-4-1106-preview",
+              messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": f"{prompt}"}
+              ]
             )
-
-            # Extragerea și afișarea răspunsului
+            
             st.write("Utilaje identificate:")
-            st.write(response.choices[0].text)
+            st.write(response.choices[0].message)
 
         except Exception as e:
             st.error(f"A apărut o eroare: {e}")
