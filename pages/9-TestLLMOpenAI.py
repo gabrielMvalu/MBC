@@ -1,5 +1,6 @@
 
 import streamlit as st
+import openai
 from openai import OpenAI
 
 st.set_page_config(layout="wide")
@@ -42,7 +43,7 @@ else:
 
     if st.button('Identifică utilaje'):
         try:
-            response = openai.ChatCompletion.create(
+            response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": f"You are a helpful assistant designed to identify equipment from a list: {', '.join(equipment_list)}."},
@@ -52,7 +53,7 @@ else:
 
             # Extragerea și afișarea răspunsului
             st.write("Utilaje identificate:")
-            st.write(response.choices[0].message['content'])
+            st.write(response)
 
         except Exception as e:
             st.error(f"A apărut o eroare: {e}")
