@@ -42,7 +42,7 @@ else:
 
     if st.button('Identifică utilaje'):
         try:
-            response = openai.Completion.create(
+            response = client.completions.create(
                 model="gpt-3.5-turbo",
                 prompt=f"You are a helpful assistant designed to identify equipment from a list: {', '.join(equipment_list)}. User input: {user_input}",
                 max_tokens=100,
