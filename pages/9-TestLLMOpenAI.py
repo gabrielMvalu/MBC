@@ -46,8 +46,8 @@ else:
             response = client.chat.completions.create(
                 model="gpt-4",
                 messages=[
-                    {"role": "system", "content": f"{equipment_list}"},
-                    {"role": "user", "content": f"Raspunde cu {user_input} daca se gaseste in lista: {equipment_list} , Daca nu este in lista data , Raspunde doar :'Nu stiu'"}
+                    {"role": "system", "content": f"Raspunde cu {user_input} daca se gaseste in lista: {equipment_list} ,Daca nu este in lista data , Raspundzi doar :'Nu stiu'"},
+                    {"role": "user", "content": user_input }
                 ]
             )
 
