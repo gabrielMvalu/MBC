@@ -54,6 +54,8 @@ else:
             # Extragerea și afișarea răspunsului
             st.write("Utilaje identificate:")
             st.write(response)
+            st.write(equipment_list)
+        
 
         except Exception as e:
             st.error(f"A apărut o eroare: {e}")
