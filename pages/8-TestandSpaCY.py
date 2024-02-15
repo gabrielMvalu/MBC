@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import spacy
+from fuzzywuzzy import process
 
 # Încărcarea modelului spaCy pentru limba română
 nlp = spacy.load("ro_core_news_sm")
