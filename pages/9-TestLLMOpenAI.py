@@ -46,8 +46,8 @@ else:
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": f" Eo o sa-ti scriu niste utilaje. tu imi rescrii numele daca este in urmatoarea lista, identic sau asemanator. Daca nu este in lista  asta : {equipment_list} zici doar 'Nu Stiu'"},
-                    {"role": "user", "content": user_input}
+                    {"role": "system", "content": f"{equipment_list}"},
+                    {"role": "user", "content": f"Raspunde cu {user_input} daca se gaseste in lista: {equipment_list} , Daca nu este in lista data , Raspunde doar :'Nu stiu'"}
                 ]
             )
 
