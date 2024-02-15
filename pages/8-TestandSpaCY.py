@@ -34,12 +34,11 @@ def extract_equipment_names(text):
             equipment_found.add(keyword)
     return equipment_found
 
-
 # Crearea interfeței Streamlit
 st.title('Identificator de Utilaje în Limba Română')
 
 # Câmp pentru introducerea textului
-user_input = st.text_area("Introduceți textul aici:", "Excavator pe șenile, miniexcavator CAT 308CR NOU 2023 - Controlul croazieră pentru selectarea vitezei constante de deplasare.")
+user_input = st.text_area("Introduceți textul aici:")
 
 # Buton pentru procesare
 if st.button('Identifică utilaje'):
@@ -48,7 +47,7 @@ if st.button('Identifică utilaje'):
     
     # Crearea unui DataFrame pentru afișare
     if equipment_names:
-        df = pd.DataFrame(equipment_names, columns=['Utilaje Identificate'])
+        df = pd.DataFrame(list(equipment_names), columns=['Utilaje Identificate'])
         st.write(df)
     else:
         st.write("Nu au fost identificate utilaje în textul introdus.")
