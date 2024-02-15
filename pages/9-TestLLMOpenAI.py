@@ -20,12 +20,26 @@ else:
 
     # Lista predefinită de utilaje
     equipment_list = [
-        "tocatorul pentru resturi vegetale",
-        # Adaugă restul utilajelor aici
+        "autogreder", "autogreder cu sistem 3d", "autogudronator", "automacara",
+        "automaturatoare cu apa", "autopompa cu malaxor", "autopompa de beton",
+        "buldoexcavator", "buldoexcavator cu roti egale", "buldoexcavator cu roti inegale",
+        "buldozer", "cilindru compactor terasament", "ciur mobil rotativ", "compactor de sol",
+        "compactor/cilindru vibrator compactor", "concasor cu falci si presortare",
+        "excavator pe pneuri", "excavator pe senile", "finisor beton", "finisor de asfalt pe pneuri",
+        "finisor de asfalt pe senile", "finisorul de asfalt", "foreza", "freza", "freza de asfalt",
+        "greder", "incarcator frontal", "incarcator multifunctional cu brat telescopic",
+        "incarcator pe pneuri", "macara mobila cu brat telescopic",
+        "manipulator telescopic/incarcator multifunctional rotativ", "masina badijonat",
+        "masina de colmatat rosturi", "midiexcavatorele", "minibuldoexcavator", "miniexcavator",
+        "miniincarcator", "motostivuitor", "panouri fotovoltaice mobile", "pompa de beton",
+        "reciclator pentru beton/asfalt", "repartizator mixturi asfaltice", "sistem de ghidare automata",
+        "stabilizator terasament", "statia de betoane", "statie de asfalt", "statie mobila de concasare",
+        "statie mobila de sortare cu spalare", "telehandler", "tocatorul pentru resturi vegetale",
+        "vibroprese fabricare pavele, boltari, borduri", "macara", "masina de repartizat emulsie (autogudronator)",
+        "grupul electrogen", "microexcavator", "miniexcavator"
     ]
-
-    # Crearea interfeței Streamlit pentru identificarea utilajelor
-    st.title('Identificator de Utilaje')
+ 
+   
 
     # Câmp pentru introducerea textului
     user_input = st.text_area("Introduceți textul aici:")
