@@ -26,12 +26,16 @@ equipment_keywords = [
     "grupul electrogen", "microexcavator", "miniexcavator"
 ]
 
-def extract_equipment_names(text):
+def extract_equipment_names(text, equipment_keywords, threshold=80):
     text_lower = text.lower()
     equipment_found = set()
-    for keyword in equipment_keywords:
-        if keyword in text_lower:
-            equipment_found.add(keyword)
+
+    for word in text_lower.split():
+        # Folosim fuzzy matching pentru a găsi cel mai apropiat cuvânt cheie
+        match, score = process.extractOne(word, equipment_keywords)
+        if score >= threshold:
+            equipment_found.add(match)
+
     return equipment_found
 
 # Crearea interfeței Streamlit
