@@ -44,7 +44,7 @@ else:
     if st.button('Identifică utilaje'):
         try:
             response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4",
                 messages=[
                     {"role": "system", "content": f"{equipment_list}"},
                     {"role": "user", "content": f"Raspunde cu {user_input} daca se gaseste in lista: {equipment_list} , Daca nu este in lista data , Raspunde doar :'Nu stiu'"}
