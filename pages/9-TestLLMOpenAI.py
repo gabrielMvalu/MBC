@@ -40,7 +40,7 @@ else:
     st.title(':rainbow[Identificator de Utilaje]')
     user_input = st.text_area("Introduceți textul aici:")
 
-       if st.button('Identifică utilaje'):
+    if st.button('Identifică utilaje'):
         try:
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
