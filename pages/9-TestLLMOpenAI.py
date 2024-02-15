@@ -8,13 +8,13 @@ st.header('Pagina Principală')
 st.write('Bine ați venit la aplicația pentru completarea Planului de Afaceri!')
 
 with st.sidebar:
-    openai_api_key = st.text_input("OpenAI API Key", type="password")
-
+    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
+    
 if not openai_api_key:
     st.info("Vă rugăm să introduceți cheia API OpenAI în bara laterală.")
 else:
     # Inițializarea clientului OpenAI cu cheia API introdusă
-    openai.api_key = openai_api_key
+    client = OpenAI(api_key=openai_api_key)
 
     # Lista predefinită de utilaje
     equipment_list = [
