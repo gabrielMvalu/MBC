@@ -47,8 +47,8 @@ user_input = st.text_area("Introduceți textul aici:")
 
 # Buton pentru procesare
 if st.button('Identifică utilaje'):
-    # Aplicarea funcției de extragere
-    equipment_names = extract_equipment_names(user_input)
+    # Aplicarea funcției de extragere cu toți parametrii necesari
+    equipment_names = extract_equipment_names(user_input, equipment_keywords)
     
     # Crearea unui DataFrame pentru afișare
     if equipment_names:
