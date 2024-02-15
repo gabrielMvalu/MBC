@@ -48,19 +48,18 @@ else:
 
     if st.button('Identifică utilaje'):
         try:
-            response = client.completions.create(
+            # Construirea promptului
+            prompt = f"Lista de utilaje: {', '.join(equipment_list)}. Pe baza acestei liste, identifică utilajele menționate în următorul text: {user_input}"
+
+            response = openai.Completion.create(
                 model=st.session_state["openai_model"],
-                messages=[
-                    {"role": "system", "content": f"You are a helpful assistant designed to identify equipment from a list: {', '.join(equipment_list)}."},
-                    {"role": "user", "content": user_input}
-                ]
+                prompt=prompt,
+                max_tokens=150  # Ajustează conform necesității
             )
 
             # Extragerea și afișarea răspunsului
             st.write("Utilaje identificate:")
-            for choice in response.choices:
-                st.write(choice.message['content'])
+            st.write(response.choices[0].text)
 
         except Exception as e:
             st.error(f"A apărut o eroare: {e}")
-
