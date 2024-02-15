@@ -40,11 +40,16 @@ else:
     st.title(':rainbow[Identificator de Utilaje]')
     user_input = st.text_area("Introduceți textul aici:")
 
+    # Inițializarea stării sesiunii pentru model și mesaje
+    if "openai_model" not in st.session_state:
+        st.session_state["openai_model"] = "gpt-4-1106-preview"
+
+    
 
     if st.button('Identifică utilaje'):
         try:
             response = client.completions.create(
-                model="gpt-4-1106-preview",
+                model=st.session_state["openai_model"],
                 messages=[
                     {"role": "system", "content": f"You are a helpful assistant designed to identify equipment from a list: {', '.join(equipment_list)}."},
                     {"role": "user", "content": user_input}
