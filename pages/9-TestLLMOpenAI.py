@@ -1,4 +1,4 @@
-# mbc_docs.py
+
 import streamlit as st
 import openai
 
@@ -14,7 +14,7 @@ if not openai_api_key:
     st.info("Vă rugăm să introduceți cheia API OpenAI în bara laterală.")
 else:
     # Inițializarea clientului OpenAI cu cheia API introdusă
-    client = OpenAI(api_key=openai_api_key)
+    openai.api_key = openai_api_key
 
     # Lista predefinită de utilaje
     equipment_list = [
@@ -36,25 +36,22 @@ else:
         "vibroprese fabricare pavele, boltari, borduri", "macara", "masina de repartizat emulsie (autogudronator)",
         "grupul electrogen", "microexcavator", "miniexcavator"
     ]
- 
-   
-
+    
     st.title(':rainbow[Identificator de Utilaje]')
     user_input = st.text_area("Introduceți textul aici:")
 
     if st.button('Identifică utilaje'):
         try:
-            response = client.chat.completions.create(
+            response = openai.Completion.create(
                 model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant designed to identify equipment from a list."},
-                    {"role": "user", "content": user_input}
-                ]
+                prompt=f"You are a helpful assistant designed to identify equipment from a list: {', '.join(equipment_list)}. User input: {user_input}",
+                max_tokens=100,
+                temperature=0.7
             )
 
             # Extragerea și afișarea răspunsului
             st.write("Utilaje identificate:")
-            st.write(response.choices[0].message['content'])
+            st.write(response['choices'][0]['text'])
 
         except Exception as e:
             st.error(f"A apărut o eroare: {e}")
