@@ -1,6 +1,7 @@
 # mbc_docs.py
-import openai
 import streamlit as st
+from openai import OpenAI
+client = OpenAI()
 
 st.set_page_config(layout="wide")
 
