@@ -60,7 +60,7 @@ else:
             )
             
             st.write("Utilaje identificate:")
-            st.write(response.choices[0].message)
+            st.write(completition.choices[0].message)
 
         except Exception as e:
             st.error(f"A apărut o eroare: {e}")
