@@ -50,7 +50,7 @@ else:
 
         try:
             # Trimiterea promptului către OpenAI folosind Chat Completions
-            response = openai.ChatCompletion.create(
+            response = openai.chat.completion.create(
                 model="gpt-4-1106-preview",
                 messages=[
                     {"role": "system", "content": "Identifică utilajele din textul următor."},
