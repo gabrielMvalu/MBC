@@ -27,7 +27,7 @@ equipment_keywords = [
     "grupul electrogen", "microexcavator", "miniexcavator"
 ]
 
-def extract_equipment_names(text, equipment_keywords, threshold=80):
+def extract_equipment_names(text, equipment_keywords, threshold):
     text_lower = text.lower()
     equipment_found = set()
 
@@ -42,13 +42,16 @@ def extract_equipment_names(text, equipment_keywords, threshold=80):
 # Crearea interfeței Streamlit
 st.title('Identificator de Utilaje în Limba Română')
 
+# Slider pentru setarea threshold-ului
+threshold = st.slider('Selectați valoarea threshold-ului pentru identificarea utilajelor:', min_value=0, max_value=100, value=80)
+
 # Câmp pentru introducerea textului
 user_input = st.text_area("Introduceți textul aici:")
 
 # Buton pentru procesare
 if st.button('Identifică utilaje'):
-    # Aplicarea funcției de extragere cu toți parametrii necesari
-    equipment_names = extract_equipment_names(user_input, equipment_keywords)
+    # Aplicarea funcției de extragere cu toți parametrii necesari, inclusiv threshold-ul setat de utilizator
+    equipment_names = extract_equipment_names(user_input, equipment_keywords, threshold)
     
     # Crearea unui DataFrame pentru afișare
     if equipment_names:
