@@ -40,27 +40,19 @@ else:
     st.title(':rainbow[Identificator de Utilaje]')
     user_input = st.text_area("Introduceți textul aici:")
 
-    # Inițializarea stării sesiunii pentru model și mesaje
-    if "openai_model" not in st.session_state:
-        st.session_state["openai_model"] = "gpt-4-1106-preview"
-
-    
-
-    if st.button('Identifică utilaje'):
+       if st.button('Identifică utilaje'):
         try:
-            # Construirea promptului
-            prompt = f"Lista de utilaje: {', '.join(equipment_list)}. Pe baza acestei liste, identifică utilajele menționate în următorul text: {user_input}"
-
-            completion = client.chat.completions.create(
-              model="gpt-4-1106-preview",
-              messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": f"{prompt}"}
-              ]
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": f"You are a helpful assistant designed to identify equipment from a list: {', '.join(equipment_list)}."},
+                    {"role": "user", "content": user_input}
+                ]
             )
-            
-        st.write("Utilaje identificate:")
-        st.write(completition.choices[0].message)
+
+            # Extragerea și afișarea răspunsului
+            st.write("Utilaje identificate:")
+            st.write(response.choices[0].message['content'])
 
         except Exception as e:
             st.error(f"A apărut o eroare: {e}")
