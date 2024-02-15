@@ -40,18 +40,22 @@ else:
     st.title(':rainbow[Identificator de Utilaje]')
     user_input = st.text_area("Introduceți textul aici:")
 
+
     if st.button('Identifică utilaje'):
         try:
             response = client.completions.create(
-                model="gpt-3.5-turbo",
-                prompt=f"You are a helpful assistant designed to identify equipment from a list: {', '.join(equipment_list)}. User input: {user_input}",
-                max_tokens=100,
-                temperature=0.7
+                model="gpt-4-1106-preview",
+                messages=[
+                    {"role": "system", "content": f"You are a helpful assistant designed to identify equipment from a list: {', '.join(equipment_list)}."},
+                    {"role": "user", "content": user_input}
+                ]
             )
 
             # Extragerea și afișarea răspunsului
             st.write("Utilaje identificate:")
-            st.write(response['choices'][0]['text'])
+            for choice in response.choices:
+                st.write(choice.message['content'])
 
         except Exception as e:
             st.error(f"A apărut o eroare: {e}")
+
