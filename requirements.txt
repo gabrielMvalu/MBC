@@ -10,3 +10,4 @@ spacy>=3.7.0
 https://github.com/explosion/spacy-models/releases/download/ro_core_news_sm-3.7.0/ro_core_news_sm-3.7.0.tar.gz
 fuzzywuzzy
 python-Levenshtein
+openai
