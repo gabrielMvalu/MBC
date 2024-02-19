@@ -126,8 +126,7 @@ def extract_situatie_angajati(doc):
 
 
 
-def extrage_coduri_caen(doc):
-    full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
+def extrage_coduri_caen(full_text):
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
     end_marker = "Denumire: Punct de lucru"
     pattern = fr"(?s){start_marker}(.*?){end_marker}"
@@ -142,19 +141,25 @@ def extrage_coduri_caen(doc):
             activitate = activitate.strip()
             caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", activitate)
             if caen_codes:
-                activitate_result = "*** Tip activitate autorizată: terţi\n" + "\n".join(caen_codes) + " ***"
+                activitate_result = "Tip activitate autorizată: terţi\n" + "\n".join(caen_codes) "
                 results.append(activitate_result)
 
-        # Extragerea și adăugarea informațiilor despre sediul social, dacă nu conține fraza specifică
+        # Extragerea și adăugarea informațiilor despre sediul social
         sediu_pattern = r"Sediul social din:(.+?)(?=Tip sediu:)"
         sediu_matches = re.findall(sediu_pattern, match, re.DOTALL)
         for sediu in sediu_matches:
             sediu = sediu.strip()
-            if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in sediu:
-                caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", sediu)
-                if caen_codes:
-                    sediu_result = "*** " + sediu.split("\n")[0] + "\n" + "\n".join(caen_codes) + " ***"
-                    results.append(sediu_result)
+            # Verificăm dacă fraza specifică este prezentă
+            if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" in sediu:
+                continue  # Nu adăugăm această secțiune la rezultate
+            
+            # Extragerea activităților la sediu și codurile CAEN
+            activitati_pattern = r"Activităţi la sediu:\s*((?:\d{4} - .+?(?:\n|$))+)"
+            activitati_matches = re.findall(activitati_pattern, sediu, re.DOTALL)
+            for activitati in activitati_matches:
+                activitati = activitati.strip()
+                sediu_result = f"Sediul social din:{sediu.split('Activităţi la sediu:')[0].strip()}\nActivităţi la sediu:\n{activitati}"
+                results.append(sediu_result)
 
     return results
 
