@@ -161,12 +161,16 @@ def extrage_coduri_caen(doc):
                 combined_info = f"{sediu_info}\n{activitati_info}"
                 results.append(combined_info)
         else:
-            tip_activitate_pattern = r"Tip activitate autorizată: terţi\n(.*?)\n(?=Sediul|Tip sediu:)"
+            tip_activitate_pattern = r"Tip activitate autorizată: terţi\n(?:Conform declaraţiei.*?\n)?(?:Activităţi desfăşurate în afara sediului social şi a sediilor secundare \(CAEN REV\. 2\):\s*)?((?:\d{4} - .+?(?:\n|$))+)"
             tip_activitate_match = re.search(tip_activitate_pattern, match, re.DOTALL)
             if tip_activitate_match:
                 tip_activitate_info = tip_activitate_match.group(1).strip()
-                # Adăugăm informațiile despre tipul de activitate și codurile CAEN la rezultate
-                results.append(f"Tip activitate autorizată: terţi\n{tip_activitate_info}")
+                # Eliminăm tot ce urmează după ultimul cod CAEN, inclusiv "Data certificatului constatator"
+                tip_activitate_info = re.sub(r"\nData certificatului.*$", "", tip_activitate_info, flags=re.MULTILINE).strip()
+                # Combinăm informațiile despre tipul de activitate autorizată cu codurile CAEN
+                combined_info = f"Tip activitate autorizată: terţi\nActivitati in afara sediului:\n{tip_activitate_info}"
+                results.append(combined_info)
+
 
     return results
 
