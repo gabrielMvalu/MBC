@@ -130,10 +130,14 @@ def extrage_coduri_caen(full_text):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
     end_marker = "Denumire: Punct de lucru"
-    pattern = fr"{start_marker}(.+?){end_marker}"
+    start_index = full_text.find(start_marker) + len(start_marker)
+    end_index = full_text.find(end_marker)
+    relevant_section = full_text[start_index:end_index]
+    
+    pattern = fr"(?s){start_marker}(.*?){end_marker}"    
+    matches = re.findall(pattern, relevant_section, re.DOTALL)
 
     results = []
-    matches = re.findall(pattern, full_text, re.DOTALL)
     for match in matches:
         # Extragem tipul activitatii autorizate si codurile CAEN
         tip_activitate_matches = re.findall(r"Tip activitate autorizată: terţi\n(.*?)(?=\n\n|\Z)", match, re.DOTALL)
