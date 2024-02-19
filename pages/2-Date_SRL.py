@@ -147,10 +147,15 @@ def extrage_coduri_caen(full_text):
         sediu_matches = re.findall(r"(Sediul social din:.+?)(?=Tip sediu:)", match, re.DOTALL)
         for sediu in sediu_matches:
             sediu = sediu.strip()
-            if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in sediu:
+            if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" in sediu:
                 caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", sediu)
                 sediu_result = sediu.split("\n")[0] + "\n" + "\n".join(caen_codes)
                 results.append(sediu_result)
+
+
+        
+
+    
 
     return results
 
