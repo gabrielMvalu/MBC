@@ -140,16 +140,19 @@ def extrage_coduri_caen(doc):
 
     results = []
     
-    for match in matches:
-        if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" in match:
+     for match in matches:
+        # Verificăm dacă secțiunea conține fraza nedorită și continuăm dacă nu este prezentă
+        if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in match:
+            # Extragem tipul activitatii autorizate si codurile CAEN
             tip_activitate_pattern = r"Tip activitate autorizată: terţi\n(.*?)(?=\n\n|\Z)"
             tip_activitate_matches = re.findall(tip_activitate_pattern, match, re.DOTALL)
             for activitate in tip_activitate_matches:
                 activitate = activitate.strip()
                 caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", activitate)
-                activitate_result = "Tip activitate autorizată: terţi\n" + "\n".join(caen_codes)
+                activitate_result = "*** Tip activitate autorizată: terţi\n" + "\n".join(caen_codes) + " ***"
                 results.append(activitate_result)
 
+                
                 # Extragem informațiile despre sediul social
                 sediu_info = re.search(r"(Sediul social din:.+?)(?=Tip sediu:)", match, re.DOTALL)
                 if sediu_info:
@@ -175,6 +178,29 @@ def extrage_coduri_caen(doc):
                 results.append(activitate_result)
             
     return results
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
