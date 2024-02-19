@@ -141,7 +141,7 @@ def extrage_coduri_caen(doc):
             for activitate in tip_activitate_matches:
                 activitate = activitate.strip()
                 caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", activitate)
-                activitate_result = "*** Tip activitate autorizată: terţi\n" + "\n".join(caen_codes) + " ***"
+                activitate_result = "Tip activitate autorizată: terţi\n" + "\n".join(caen_codes)
                 results.append(activitate_result)
 
             sediu_pattern = r"Sediul social din:(.+?)(?=Tip sediu:)"
@@ -150,7 +150,7 @@ def extrage_coduri_caen(doc):
                 sediu = sediu.strip()
                 caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", sediu)
                 if caen_codes:
-                    sediu_result = "*** " + sediu.split("\n")[0] + "\n" + "\n".join(caen_codes) + " ***"
+                    sediu_result = sediu.split("\n")[0] + "\n" + "\n".join(caen_codes)
                     results.append(sediu_result)
         else:
             tip_activitate_pattern = r"Tip activitate autorizată: terţi\n(.*?)(?=\n\n|\Z)"
@@ -158,7 +158,7 @@ def extrage_coduri_caen(doc):
             for activitate in tip_activitate_matches:
                 activitate = activitate.strip()
                 caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", activitate)
-                activitate_result = "*** Tip activitate autorizată: terţi\n" + "\n".join(caen_codes) + " ***"
+                activitate_result = "Tip activitate autorizată: terţi\n" + "\n".join(caen_codes)
                 results.append(activitate_result)
             
     return results
