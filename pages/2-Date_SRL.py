@@ -130,29 +130,33 @@ def extrage_coduri_caen(full_text):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
     end_marker = "Denumire: Punct de lucru"
-    sections = re.split(end_marker, text)
+    pattern = fr"{start_marker}(.+?){end_marker}"
 
-    extracted_info = []
+    results = []
+    matches = re.findall(pattern, full_text, re.DOTALL)
+    for match in matches:
+        # Extragem tipul activitatii autorizate si codurile CAEN
+        tip_activitate_matches = re.findall(r"Tip activitate autorizată: terţi\n(.*?)(?=\n\n|\Z)", match, re.DOTALL)
+        for activitate in tip_activitate_matches:
+            activitate = activitate.strip()
+            caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", activitate)
+            activitate_result = "Tip activitate autorizată: terţi\n" + "\n".join(caen_codes)
+            results.append(activitate_result)
+        
+        # Extragem informatii despre sediu
+        sediu_matches = re.findall(r"(Sediul social din:.+?)(?=Tip sediu:)", match, re.DOTALL)
+        for sediu in sediu_matches:
+            sediu = sediu.strip()
+            if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in sediu:
+                caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", sediu)
+                sediu_result = sediu.split("\n")[0] + "\n" + "\n".join(caen_codes)
+                results.append(sediu_result)
 
-    for section in sections:
-        if start_marker in section:
-            activitate_pattern = r"Tip activitate autorizată: terţi([\s\S]*?)(?=Sediul social din:|$)"
-            activitate_match = re.search(activitate_pattern, section)
-            if activitate_match:
-                activitate_info = activitate_match.group(1).strip()
-                caen_activitate = re.findall(r"(\d{4} - .+?(?=\n|$))", activitate_info)
-                extracted_info.append("*** " + "Tip activitate autorizată: terţi\n" + "\n".join(caen_activitate))
-            
-            sediu_pattern = r"Sediul social din:([\s\S]*?)(?=Sediul social din:|$)"
-            sediu_matches = re.findall(sediu_pattern, section)
-            for sediu in sediu_matches:
-                if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in sediu:
-                    sediu_info = sediu.strip().split("\nActivităţi la sediu:")[0].strip()
-                    caen_sediu = re.findall(r"(\d{4} - .+?(?=\n|$))", sediu)
-                    if caen_sediu:
-                        extracted_info.append("*** " + sediu_info + "\nActivităţi la sediu:\n" + "\n".join(caen_sediu))
-    
-    return "\n\n".join(extrage_coduri_caen)
+    return results
+
+
+
+
 
 
 # Încărcarea și procesarea documentului în Streamlit
