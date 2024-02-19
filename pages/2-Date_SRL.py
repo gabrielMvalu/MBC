@@ -130,39 +130,10 @@ def extrage_coduri_caen(doc):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
     end_marker = "Denumire: Punct de lucru"
-    start_index = full_text.find(start_marker) + len(start_marker)
-    end_index = full_text.find(end_marker, start_index)
-    relevant_section = full_text[start_index:end_index]
-
-    # Definim pattern-ul pentru extragerea informațiilor despre sediul social și activitățile la sediu
-    pattern = r"(Sediul social din:.+?)(?=Sediul social din:|Denumire: Punct de lucru|$)"
-    matches = re.findall(pattern, relevant_section, re.DOTALL)    
+    pattern = fr"(?s){start_marker}(.*?){end_marker}"
 
     results = []
-
-
-
-
-
-
-
-def extrage_coduri_caen(full_text):
-    full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
-   
-    # Definirea markerilor pentru începutul și sfârșitul secțiunii relevante
-    start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
-    end_marker = "CONCORDAT PREVENTIV"
-    
-    # Identificarea secțiunii de interes
-    start_index = full_text.find(start_marker) + len(start_marker)
-    end_index = full_text.find(end_marker, start_index)
-    relevant_section = full_text[start_index:end_index]
-
-    # Definirea pattern-ului pentru extragerea secțiunilor de sedii
-    pattern = r"(Sediul (social|secundar|terţ) din:.+?)(?=Sediul (social|secundar|terţ) din:|$)"
-    matches = re.findall(pattern, relevant_section, re.DOTALL)
-
-    results = []
+    matches = re.findall(pattern, full_text)
     for match in matches:
         # Verificăm dacă secțiunea conține textul specificat pentru activitățile neautorizate
         if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in match:
@@ -188,16 +159,6 @@ def extrage_coduri_caen(full_text):
                 results.append(combined_info)
 
     return results
-
-
-
-
-
-
-
-
-
-
 
 
 
