@@ -178,19 +178,6 @@ def extrage_coduri_caen(doc):
 
 
 
-def extrage_informatii_sediu(doc):
-    
-
-   
-
-   
-    for match in matches:
-       
-
-    return results
-
-
-
 
 # Încărcarea și procesarea documentului în Streamlit
 st.header(':blue[Încărcare Document Registrul Comerțului]',divider='rainbow')
