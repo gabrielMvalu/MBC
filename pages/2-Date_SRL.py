@@ -197,7 +197,7 @@ if uploaded_file is not None:
     st.dataframe(pd.DataFrame([angajati_data]))
 
     st.write("Coduri CAEN:")
-    st.dataframe(pd.DataFrame(caen_codes, columns=["Cod CAEN", "Descriere"]))
+    st.dataframe(pd.DataFrame(caen_codes)
 
     # După extragere, salvează datele în session_state
     st.session_state['date_generale'] = general_data
