@@ -127,6 +127,7 @@ def extract_situatie_angajati(doc):
 
 
 def extrage_coduri_caen(full_text):
+    full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
     end_marker = "Denumire: Punct de lucru"
     pattern = fr"(?s){start_marker}(.*?){end_marker}"
