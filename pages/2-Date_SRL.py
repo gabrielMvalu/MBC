@@ -200,7 +200,7 @@ if uploaded_file is not None:
     st.dataframe(pd.DataFrame(sedii_si_activitati)
 
     # După extragere, salvează datele în session_state
-    st.session_state['date_generale'] = general_data
-    st.session_state['date_detaliat'] = {"Asociați": detailed_info, "Administratori": admins}
-    st.session_state['situatie_angajati'] = angajati_data
-    st.session_state['coduri_caen'] = sedii_si_activitati
+  #  st.session_state['date_generale'] = general_data
+  #  st.session_state['date_detaliat'] = {"Asociați": detailed_info, "Administratori": admins}
+  #  st.session_state['situatie_angajati'] = angajati_data
+  #  st.session_state['coduri_caen'] = sedii_si_activitati
