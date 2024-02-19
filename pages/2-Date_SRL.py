@@ -144,7 +144,7 @@ def extrage_coduri_caen(doc):
                 tip_activitate_info = tip_activitate_match.group(1).strip()
     
                 # Eliminăm părțile nedorite din text
-                tip_activitate_info = re.split(r"Conform declaraţiei |Activităţi desfăşurate în afara sediului social", tip_activitate_info)[0].strip()
+                tip_activitate_info = re.split(r"Conform declaraţiei", tip_activitate_info)[0].strip()
     
                 # Adăugăm informațiile despre tipul de activitate și codurile CAEN la rezultate, excluzând părțile nedorite
                 results.append(f"Tip activitate autorizată: terţi \n Activitati : {tip_activitate_info}")
