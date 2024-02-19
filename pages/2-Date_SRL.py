@@ -146,45 +146,36 @@ def extrage_coduri_caen(doc):
 
 
 
-
-
 def extrage_coduri_caen(doc):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
+    # Definirea delimitatorilor pentru secțiunea de interes
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
-    end_marker = "Denumire: Punct de lucru"
-    pattern = fr"(?s){start_marker}(.*?){end_marker}"
+    end_marker = "CONCORDAT PREVENTIV"
+
+    # Extrage secțiunea de interes
+    start_index = full_text.find(start_marker) + len(start_marker)
+    end_index = full_text.find(end_marker)
+    relevant_section = full_text[start_index:end_index]
+
+    # Definirea modelului de expresie regulată pentru a extrage informațiile dorite
+    pattern = r"Sediul secundar din:(.+?)(?=Sediul secundar din:|$)"
+
+    # Căutarea tuturor potrivirilor în secțiunea relevantă
+    matches = re.findall(pattern, relevant_section, re.DOTALL)
 
     results = []
-    matches = re.findall(pattern, full_text)
     for match in matches:
-        tip_activitate_pattern = r"Tip activitate autorizată: terţi\n(.*?)(?=\n\n|\Z)"
-        tip_activitate_matches = re.findall(tip_activitate_pattern, match, re.DOTALL)
-        for activitate in tip_activitate_matches:
-            activitate = activitate.strip()
-            caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", activitate)
-            activitate_result = "Tip activitate autorizată: terţi\n" + "\n".join(caen_codes) 
-            results.append(activitate_result)
-        sediu_pattern = r"Sediul social din:(.+?)(?=Tip sediu:)"
-        sediu_matches = re.findall(sediu_pattern, match, re.DOTALL)
-        for sediu in sediu_matches:
-            sediu = sediu.strip()
-            caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", sediu)
-            if caen_codes:  # Verificăm dacă există coduri CAEN pentru a le include
-                sediu_result = sediu.split("\n")[0] + "\n" + "\n".join(caen_codes) 
-                results.append(sediu_result)
+        # Curățarea fiecărei potriviri pentru a elimina informațiile nedorite
+        sediu_info = re.sub(r"Tip sediu:.+?(?=Activităţi la sediu:)", "", match, flags=re.DOTALL).strip()
+        activitati_info = re.search(r"Activităţi la sediu:(.+)", sediu_info, re.DOTALL)
+        if activitati_info:
+            activitati_info = activitati_info.group(1).strip()
+            # Formatarea informațiilor despre activități pe linii separate
+            activitati_info = re.sub(r"\n+", "\n", activitati_info)
+            cleaned_match = f"Sediul secundar din:{sediu_info[:sediu_info.find('Activităţi la sediu:')]}\nActivităţi la sediu:\n{activitati_info}"
+            results.append(cleaned_match)
 
     return results
-
-
-
-
-
-
-
-
-
-
-
 
 
 
