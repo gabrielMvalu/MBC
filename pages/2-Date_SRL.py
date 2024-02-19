@@ -138,16 +138,15 @@ def extrage_coduri_caen(doc):
         # Verificăm dacă secțiunea conține textul specificat pentru activitățile neautorizate
         if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in match:
             # Extragem informațiile despre tipul de activitate autorizată și codurile CAEN
-            tip_activitate_pattern = r"Tip activitate autorizată: terţi\n(.*?)\n(?=Sediul|Tip sediu:)"
+            tip_activitate_pattern = r"Tip activitate autorizată: terţi\n(?:Conform declaraţiei.*?\n)?(?:Activităţi desfăşurate în afara sediului social şi a sediilor secundare \(CAEN REV\. 2\):\s*)?((?:\d{4} - .+?(?:\n|$))+)"
             tip_activitate_match = re.search(tip_activitate_pattern, match, re.DOTALL)
             if tip_activitate_match:
                 tip_activitate_info = tip_activitate_match.group(1).strip()
-    
-                # Eliminăm părțile nedorite din text
-                tip_activitate_info = re.split(r"Conform declaraţiei", tip_activitate_info)[0].strip()
-    
-                # Adăugăm informațiile despre tipul de activitate și codurile CAEN la rezultate, excluzând părțile nedorite
-                results.append(f"Tip activitate autorizată: terţi \n Activitati : {tip_activitate_info}")
+                # Eliminăm tot ce urmează după ultimul cod CAEN, inclusiv "Data certificatului constatator"
+                tip_activitate_info = re.sub(r"\nData certificatului.*$", "", tip_activitate_info, flags=re.MULTILINE).strip()
+                # Combinăm informațiile despre tipul de activitate autorizată cu codurile CAEN
+                combined_info = f"Tip activitate autorizată: terţi\nActivitati:\n{tip_activitate_info}"
+                results.append(combined_info)
 
             # Extragem întreaga adresă a sediului și activitățile la sediu
             sediu_info_match = re.search(r"(Sediul (social|secundar|terţ) din:.+?)(?=Tip sediu:)", match, re.DOTALL)
