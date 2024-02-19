@@ -140,7 +140,7 @@ def extrage_coduri_caen(doc):
 
     results = []
     
-     for match in matches:
+    for match in matches:
         # Verificăm dacă secțiunea conține fraza nedorită și continuăm dacă nu este prezentă
         if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in match:
             # Extragem tipul activitatii autorizate si codurile CAEN
