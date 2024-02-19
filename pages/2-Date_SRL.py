@@ -141,7 +141,7 @@ def extrage_coduri_caen(doc):
     results = []
     
     for match in matches:
-        if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in match:
+        if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" in match:
             tip_activitate_pattern = r"Tip activitate autorizată: terţi\n(.*?)(?=\n\n|\Z)"
             tip_activitate_matches = re.findall(tip_activitate_pattern, match, re.DOTALL)
             for activitate in tip_activitate_matches:
