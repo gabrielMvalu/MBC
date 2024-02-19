@@ -143,7 +143,7 @@ def extrage_coduri_caen(doc):
             if tip_activitate_match:
                 tip_activitate_info = tip_activitate_match.group(1).strip()
                 # Adăugăm informațiile despre tipul de activitate și codurile CAEN la rezultate
-                results.append(f"*** Tip activitate autorizată: terţi\n{tip_activitate_info}")
+                results.append(f"Tip activitate autorizată: terţi\n{tip_activitate_info}")
 
             # Extragem întreaga adresă a sediului și activitățile la sediu
             sediu_info_match = re.search(r"(Sediul (social|secundar|terţ) din:.+?)(?=Tip sediu:)", match, re.DOTALL)
@@ -155,8 +155,15 @@ def extrage_coduri_caen(doc):
                 activitati_info = activitati_match.group(1).strip()
                 activitati_info = re.sub(r"\nData certificatului.*$", "", activitati_info, flags=re.MULTILINE).strip()
                 # Combinăm informațiile despre sediu cu activitățile la sediu
-                combined_info = f"*** {sediu_info}\n{activitati_info}"
+                combined_info = f"{sediu_info}\n{activitati_info}"
                 results.append(combined_info)
+        else:
+            tip_activitate_pattern = r"Tip activitate autorizată: terţi\n(.*?)\n(?=Sediul|Tip sediu:)"
+            tip_activitate_match = re.search(tip_activitate_pattern, match, re.DOTALL)
+            if tip_activitate_match:
+                tip_activitate_info = tip_activitate_match.group(1).strip()
+                # Adăugăm informațiile despre tipul de activitate și codurile CAEN la rezultate
+                results.append(f"Tip activitate autorizată: terţi\n{tip_activitate_info}")
 
     return results
 
