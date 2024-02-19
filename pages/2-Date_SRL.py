@@ -142,7 +142,7 @@ def extrage_coduri_caen(doc):
             activitate = activitate.strip()
             caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", activitate)
             activitate_result = "Tip activitate autorizată: terţi\n" + "\n".join(caen_codes)
-            results.append("*** " + activitate_result + " ***")
+            results.append(activitate_result)
         
         # Extragem informatii despre sediu
         sediu_pattern = r"(Sediul social din:.+?)(?=Tip sediu:)"
@@ -152,7 +152,7 @@ def extrage_coduri_caen(doc):
             if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in sediu:
                 caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", sediu)
                 sediu_result = sediu.split("\n")[0] + "\n" + "\n".join(caen_codes)
-                results.append("*** " + sediu_result + " ***")
+                results.append(sediu_result)
 
     return results
 
