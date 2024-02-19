@@ -196,11 +196,11 @@ if uploaded_file is not None:
     st.write("Situație Financiară:")
     st.dataframe(pd.DataFrame([angajati_data]))
 
-    st.write("Coduri CAEN:")
-    st.dataframe(pd.DataFrame(caen_codes)
+    st.write("Sedii si activititati plus CAEN:")
+    st.dataframe(pd.DataFrame(sedii_si_activitati)
 
     # După extragere, salvează datele în session_state
-   # st.session_state['date_generale'] = general_data
-   # st.session_state['date_detaliat'] = {"Asociați": detailed_info, "Administratori": admins}
-   # st.session_state['situatie_angajati'] = angajati_data
-   # st.session_state['coduri_caen'] = caen_codes
+    st.session_state['date_generale'] = general_data
+    st.session_state['date_detaliat'] = {"Asociați": detailed_info, "Administratori": admins}
+    st.session_state['situatie_angajati'] = angajati_data
+    st.session_state['coduri_caen'] = sedii_si_activitati
