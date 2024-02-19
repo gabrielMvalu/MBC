@@ -135,29 +135,29 @@ def extrage_coduri_caen(doc):
     results = []
     matches = re.findall(pattern, full_text)
     for match in matches:
-        # Verificăm dacă secțiunea conține fraza nedorită și continuăm dacă nu este prezentă
-        if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in match:
-            # Extragem tipul activitatii autorizate si codurile CAEN
-            tip_activitate_pattern = r"Tip activitate autorizată: terţi\n(.*?)(?=\n\n|\Z)"
-            tip_activitate_matches = re.findall(tip_activitate_pattern, match, re.DOTALL)
-            for activitate in tip_activitate_matches:
-                activitate = activitate.strip()
-                caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", activitate)
-                activitate_result = "*** Tip activitate autorizată: terţi\n" + "\n".join(caen_codes) + " ***"
-                results.append(activitate_result)
+        # Extragem tipul activitatii autorizate si codurile CAEN
+        tip_activitate_pattern = r"Tip activitate autorizată: terţi\n(.*?)(?=\n\n|\Z)"
+        tip_activitate_matches = re.findall(tip_activitate_pattern, match, re.DOTALL)
+        for activitate in tip_activitate_matches:
+            activitate = activitate.strip()
+            caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", activitate)
+            activitate_result = "*** Tip activitate autorizată: terţi\n" + "\n".join(caen_codes) + " ***"
+            results.append(activitate_result)
         
-            # Extragem informatii despre sediul social
-            sediu_pattern = r"Sediul social din:(.+?)(?=Tip sediu:)"
-            sediu_matches = re.findall(sediu_pattern, match, re.DOTALL)
-            for sediu in sediu_matches:
-                sediu = sediu.strip()
+        # Extragem informatii despre sediul social, dar doar daca nu contine fraza specifica
+        sediu_pattern = r"Sediul social din:(.+?)(?=Tip sediu:)"
+        sediu_matches = re.findall(sediu_pattern, match, re.DOTALL)
+        for sediu in sediu_matches:
+            sediu = sediu.strip()
+            # Excludem sediul daca contine fraza specifica
+            if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in sediu:
                 caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", sediu)
-                if caen_codes:  # Verificăm dacă există coduri CAEN pentru a le include
+                # Daca sunt coduri CAEN, le adaugam la rezultate
+                if caen_codes:
                     sediu_result = "*** " + sediu.split("\n")[0] + "\n" + "\n".join(caen_codes) + " ***"
                     results.append(sediu_result)
 
     return results
-
 
 # Încărcarea și procesarea documentului în Streamlit
 st.header(':blue[Încărcare Document Registrul Comerțului]',divider='rainbow')
