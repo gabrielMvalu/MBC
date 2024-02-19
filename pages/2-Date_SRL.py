@@ -145,7 +145,7 @@ def extrage_coduri_caen(doc):
                 # Eliminăm tot ce urmează după ultimul cod CAEN, inclusiv "Data certificatului constatator"
                 tip_activitate_info = re.sub(r"\nData certificatului.*$", "", tip_activitate_info, flags=re.MULTILINE).strip()
                 # Combinăm informațiile despre tipul de activitate autorizată cu codurile CAEN
-                combined_info = f"Tip activitate autorizată: terţi\nActivitati:\n{tip_activitate_info}"
+                combined_info = f"Tip activitate autorizată: terţi\nActivităţi desfăşurate în afara sediului social şi a sediilor secundare:\n{tip_activitate_info}"
                 results.append(combined_info)
 
             # Extragem întreaga adresă a sediului și activitățile la sediu
@@ -158,7 +158,7 @@ def extrage_coduri_caen(doc):
                 activitati_info = activitati_match.group(1).strip()
                 activitati_info = re.sub(r"\nData certificatului.*$", "", activitati_info, flags=re.MULTILINE).strip()
                 # Combinăm informațiile despre sediu cu activitățile la sediu
-                combined_info = f"{sediu_info}\n{activitati_info}"
+                combined_info = f"{sediu_info}\nActivităţi la sediu:{activitati_info}"
                 results.append(combined_info)
         else:
             tip_activitate_pattern = r"Tip activitate autorizată: terţi\n(?:Conform declaraţiei.*?\n)?(?:Activităţi desfăşurate în afara sediului social şi a sediilor secundare \(CAEN REV\. 2\):\s*)?((?:\d{4} - .+?(?:\n|$))+)"
@@ -168,7 +168,7 @@ def extrage_coduri_caen(doc):
                 # Eliminăm tot ce urmează după ultimul cod CAEN, inclusiv "Data certificatului constatator"
                 tip_activitate_info = re.sub(r"\nData certificatului.*$", "", tip_activitate_info, flags=re.MULTILINE).strip()
                 # Combinăm informațiile despre tipul de activitate autorizată cu codurile CAEN
-                combined_info = f"Tip activitate autorizată: terţi\nActivitati in afara sediului:\n{tip_activitate_info}"
+                combined_info = f"Tip activitate autorizată: terţi\nActivităţi desfăşurate în afara sediului social şi a sediilor secundare:\n{tip_activitate_info}"
                 results.append(combined_info)
 
 
