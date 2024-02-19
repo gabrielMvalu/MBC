@@ -181,23 +181,23 @@ if uploaded_file is not None:
     })
 
     # Afișarea datelor în DataFrame-uri pentru vizualizare
-    st.write("Date Generale:")
-    st.dataframe(pd.DataFrame([general_data]))
+ #   st.write("Date Generale:")
+ #   st.dataframe(pd.DataFrame([general_data]))
 
     # Convertirea listei de administratori într-o listă de dicționare
-    admins_dict = [{"Administratori": admin} for admin in admins]
-    # Crearea DataFrame-ului din lista de dicționare
-    admins_df = pd.DataFrame(admins_dict)
+  #  admins_dict = [{"Administratori": admin} for admin in admins]
+  #  # Crearea DataFrame-ului din lista de dicționare
+  #  admins_df = pd.DataFrame(admins_dict)
     # Afișarea DataFrame-ului în Streamlit
-    st.write("Administratori:")
-    st.dataframe(admins_df)
+  #  st.write("Administratori:")
+  #  st.dataframe(admins_df)
 
 
-    st.write("Situație Financiară:")
-    st.dataframe(pd.DataFrame([angajati_data]))
+  #  st.write("Situație Financiară:")
+  #  st.dataframe(pd.DataFrame([angajati_data]))
 
-    st.write("Sedii si activititati plus CAEN:")
-    st.dataframe(pd.DataFrame(sedii_si_activitati)
+  #  st.write("Sedii si activititati plus CAEN:")
+  #  st.dataframe(pd.DataFrame(sedii_si_activitati)
 
     # După extragere, salvează datele în session_state
   #  st.session_state['date_generale'] = general_data
