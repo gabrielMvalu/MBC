@@ -127,46 +127,29 @@ def extract_situatie_angajati(doc):
 
 
 def extrage_coduri_caen(doc):
-    # Conversia documentului în text complet
-    full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
-    
-    # Definirea markerilor pentru începutul și sfârșitul secțiunii relevante
     start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
-    end_marker = "CONCORDAT PREVENTIV"
-    
-    # Identificarea secțiunii de interes
-    start_index = full_text.find(start_marker) + len(start_marker)
-    end_index = full_text.find(end_marker, start_index)
-    relevant_section = full_text[start_index:end_index]
-
-    # Definirea pattern-ului pentru extragerea secțiunilor de sedii
-    pattern = r"(Sediul (social|secundar|terţ) din:.+?)(?=Sediul (social|secundar|terţ) din:|$)"
-    matches = re.findall(pattern, relevant_section, re.DOTALL)
+    end_marker = "Denumire: Punct de lucru"
+    pattern = fr"{start_marker}(.+?){end_marker}"
 
     results = []
+    matches = re.findall(pattern, full_text, re.DOTALL)
     for match in matches:
-        # Verificăm dacă secțiunea conține textul specificat pentru activitățile neautorizate
-        if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in match:
-            # Extragem informațiile despre tipul de activitate autorizată și codurile CAEN
-            tip_activitate_pattern = r"Tip activitate autorizată: terţi\n(.*?)\n(?=Sediul|Tip sediu:)"
-            tip_activitate_match = re.search(tip_activitate_pattern, match, re.DOTALL)
-            if tip_activitate_match:
-                tip_activitate_info = tip_activitate_match.group(1).strip()
-                # Adăugăm informațiile despre tipul de activitate și codurile CAEN la rezultate
-                results.append(f"*** Tip activitate autorizată: terţi\n{tip_activitate_info}")
-
-            # Extragem întreaga adresă a sediului și activitățile la sediu
-            sediu_info_match = re.search(r"(Sediul (social|secundar|terţ) din:.+?)(?=Tip sediu:)", match, re.DOTALL)
-            sediu_info = sediu_info_match.group(1).strip() if sediu_info_match else ""
-
-            activitati_pattern = r"Activităţi la sediu:\s*((?:\d{4} - .+?(?:\n|$))+)"
-            activitati_match = re.search(activitati_pattern, match, re.DOTALL)
-            if activitati_match:
-                activitati_info = activitati_match.group(1).strip()
-                activitati_info = re.sub(r"\nData certificatului.*$", "", activitati_info, flags=re.MULTILINE).strip()
-                # Combinăm informațiile despre sediu cu activitățile la sediu
-                combined_info = f"*** {sediu_info}\n{activitati_info}"
-                results.append(combined_info)
+        # Extragem tipul activitatii autorizate si codurile CAEN
+        tip_activitate_matches = re.findall(r"Tip activitate autorizată: terţi\n(.*?)(?=\n\n|\Z)", match, re.DOTALL)
+        for activitate in tip_activitate_matches:
+            activitate = activitate.strip()
+            caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", activitate)
+            activitate_result = "Tip activitate autorizată: terţi\n" + "\n".join(caen_codes)
+            results.append("*** " + activitate_result + " ***")
+        
+        # Extragem informatii despre sediu
+        sediu_matches = re.findall(r"(Sediul social din:.+?)(?=Tip sediu:)", match, re.DOTALL)
+        for sediu in sediu_matches:
+            sediu = sediu.strip()
+            if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" not in sediu:
+                caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", sediu)
+                sediu_result = sediu.split("\n")[0] + "\n" + "\n".join(caen_codes)
+                results.append("*** " + sediu_result + " ***")
 
     return results
 
