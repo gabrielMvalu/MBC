@@ -123,36 +123,46 @@ def extract_situatie_angajati(doc):
 
 #Modicicat in urmatoarea functie conform noilor cerinte de afisare!!! 12 feb 2023
 
-def extrage_coduri_caen(doc):
-    full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
-    # Definirea delimitatorilor pentru secțiunea de interes
-    start_marker = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
-    end_marker = "CONCORDAT PREVENTIV"
 
-    # Extrage secțiunea de interes
-    start_index = full_text.find(start_marker) + len(start_marker)
-    end_index = full_text.find(end_marker)
-    relevant_section = full_text[start_index:end_index]
 
-    # Definirea modelului de expresie regulată pentru a extrage informațiile dorite
-    pattern = r"Sediul secundar din:(.+?)(?=Sediul secundar din:|$)"
 
-    # Căutarea tuturor potrivirilor în secțiunea relevantă
-    matches = re.findall(pattern, relevant_section, re.DOTALL)
+def extrage_informatii(doc_text):
+    # Definirea pattern-urilor pentru începutul și sfârșitul secțiunii dorite
+    start_pattern = "SEDII SI/SAU ACTIVITATI AUTORIZATE"
+    end_pattern = "Denumire: Punct de lucru"
+    
+    # Căutarea secțiunilor dorite în document
+    sections = re.split(end_pattern, doc_text)
+    extracted_info = []
+    
+    for section in sections:
+        if start_pattern in section:
+            # Extragerea textului dintre markerii specificați
+            relevant_text = section.split(start_pattern)[1]
+            
+            # Verificarea și extragerea informațiilor specificate
+            if "Nu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator" in relevant_text:
+                # Extragerea tipului de activitate autorizată și codurilor CAEN când activitățile nu se desfășoară
+                activity_info = re.findall(r"Tip activitate autorizată: terţi\n(.*?)(?=Sediul social|Denumire: Punct de lucru)", relevant_text, re.DOTALL)
+                extracted_info.append("*** " + "\n".join(activity_info).strip())
+                
+                # Extragerea informațiilor sediului social fără activități
+                office_info = re.findall(r"(Sediul social din:.*?)(?=Tip sediu|Denumire: Punct de lucru)", relevant_text, re.DOTALL)
+                if office_info:
+                    extracted_info.append("*** " + office_info[0].strip() + "\nNu se desfăşoară activităţile prevăzute în actul constitutiv sau modificator")
+            else:
+                # Extragerea tipului de activitate autorizată și codurilor CAEN
+                activity_info = re.findall(r"Tip activitate autorizată: terţi\n(.*?)(?=Sediul social|Denumire: Punct de lucru)", relevant_text, re.DOTALL)
+                extracted_info.append("*** " + "\n".join(activity_info).strip())
+                
+                # Extragerea informațiilor sediului social și codurilor CAEN
+                office_info = re.findall(r"(Sediul social din:.*?)(?=Tip sediu|Denumire: Punct de lucru)", relevant_text, re.DOTALL)
+                if office_info:
+                    caen_codes = re.findall(r"\b\d{4}\b - .*", office_info[0])
+                    extracted_info.append("*** " + office_info[0].split("\n")[0].strip() + "\n" + "\n".join(caen_codes))
+    
+    return "\n\n".join(extracted_info)
 
-    results = []
-    for match in matches:
-        # Curățarea fiecărei potriviri pentru a elimina informațiile nedorite
-        sediu_info = re.sub(r"Tip sediu:.+?(?=Activităţi la sediu:)", "", match, flags=re.DOTALL).strip()
-        activitati_info = re.search(r"Activităţi la sediu:(.+)", sediu_info, re.DOTALL)
-        if activitati_info:
-            activitati_info = activitati_info.group(1).strip()
-            # Formatarea informațiilor despre activități pe linii separate
-            activitati_info = re.sub(r"\n+", "\n", activitati_info)
-            cleaned_match = f"Sediul secundar din:{sediu_info[:sediu_info.find('Activităţi la sediu:')]}\nActivităţi la sediu:\n{activitati_info}"
-            results.append(cleaned_match)
-
-    return results
 
 
 # Încărcarea și procesarea documentului în Streamlit
@@ -165,7 +175,7 @@ if uploaded_file is not None:
     general_data = extract_data_from_docx(doc)
     detailed_info, admins = extract_detailed_info_from_docx(doc)
     angajati_data = extract_situatie_angajati(doc)
-    sedii_si_activitati = extrage_coduri_caen(doc)
+    sedii_si_activitati = extrage_informatii(doc)
     # anulat in urma cerintei din 12 feb 2023  caen_codes = extract_caen_codes("\n".join([p.text for p in doc.paragraphs]))
 
 
@@ -175,7 +185,7 @@ if uploaded_file is not None:
         "Date Generale": general_data,
         "Informații Detaliate": {"Asociați": detailed_info, "Administratori": admins},
         "Situație Angajati": angajati_data,
-        "Coduri CAEN": sedii_si_activitati
+        "Sedii si activititati plus CAEN": sedii_si_activitati
     })
 
     # Afișarea datelor în DataFrame-uri pentru vizualizare
