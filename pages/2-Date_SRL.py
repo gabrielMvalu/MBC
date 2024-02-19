@@ -141,7 +141,7 @@ def extrage_coduri_caen(full_text):
             activitate = activitate.strip()
             caen_codes = re.findall(r"(\d{4} - .+?)(?=\n|$)", activitate)
             if caen_codes:
-                activitate_result = "Tip activitate autorizată: terţi\n" + "\n".join(caen_codes) "
+                activitate_result = "Tip activitate autorizată: terţi\n" + "\n".join(caen_codes)
                 results.append(activitate_result)
 
         # Extragerea și adăugarea informațiilor despre sediul social
