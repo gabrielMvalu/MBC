@@ -5,12 +5,18 @@ import re
 import pandas as pd
 
 
-def extract_data_from_docx(doc):
+def extrage_informatii_firma(doc):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
-    company_pattern = r"FURNIZARE INFORMAŢII\n\n(.*?)\n"
-    firma_match = re.search(company_pattern, full_text, re.DOTALL)
-    firma = firma_match.group(1) if firma_match else "N/A"
-    nr_ordine_match = re.search(r"Număr de ordine în Registrul Comerţului: (\w+/\d+/\d+)", full_text)
+    company_pattern1 = r"informațiile referitoare la\s*(.*?)\s*INFORMAȚII DE IDENTIFICARE"
+    company_pattern2 = r"FURNIZARE INFORMAŢII\n\n(.*?)\n"
+    firma_match = re.search(company_pattern1, full_text, re.IGNORECASE | re.DOTALL)
+    if firma_match:
+        firma = firma_match.group(1).strip()
+    else:
+        firma_match = re.search(company_pattern2, full_text, re.DOTALL)
+        firma = firma_match.group(1).strip() if firma_match else "N/A"
+  
+    nr_ordine_match = re.search(r"Număr de ordine în Registrul Comerțului:\s*([\w/]+)", full_text)
     nr_ordine = nr_ordine_match.group(1) if nr_ordine_match else "N/A"
     cui_match = re.search(r"Cod unic de înregistrare: (\d+)", full_text)
     cui = cui_match.group(1) if cui_match else "N/A"
@@ -26,12 +32,10 @@ def extract_data_from_docx(doc):
     section_match = re.search(section_pattern, full_text)
     if section_match:
         section_text = section_match.group(1)
-        # Extragerea tuturor adreselor din secțiune
         secondary_address_pattern = re.compile(r"Adresă: (.*?)(?=\n)", re.DOTALL)
         adrese_secundare = re.findall(secondary_address_pattern, section_text)
     else:
         adrese_secundare = ["N/A"]
-    
     data = {
         "Denumirea firmei": firma,
         "Numărul de ordine în Registrul Comerțului": nr_ordine,
@@ -41,7 +45,6 @@ def extract_data_from_docx(doc):
         "Activitate principală": main_activity,
         "Adresa sediul secundar": adrese_secundare
     }
-
     return data
 
 def extract_detailed_info_from_docx(doc):
