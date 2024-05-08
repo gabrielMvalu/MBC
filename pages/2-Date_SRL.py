@@ -187,7 +187,7 @@ uploaded_file = st.file_uploader("Trageți fișierul aici sau faceți clic pentr
 
 if uploaded_file is not None:
     doc = Document(uploaded_file)
-    general_data = extract_data_from_docx(doc)
+    general_data = extrage_informatii_firma(doc)
     detailed_info, admins = extract_detailed_info_from_docx(doc)
     angajati_data = extract_situatie_angajati(doc)
     sedii_si_activitati = extrage_coduri_caen(doc)
