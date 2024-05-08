@@ -3,11 +3,16 @@ import streamlit as st
 from docx import Document
 import re
 
-def extract_data_from_docx(doc):
+def extrage_informatii_firma(doc):
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
     company_pattern1 = r"informațiile referitoare la\s*(.*?)\s*INFORMAȚII DE IDENTIFICARE"
+    company_pattern2 = r"FURNIZARE INFORMAŢII\n\n(.*?)\n"
     firma_match = re.search(company_pattern1, full_text, re.IGNORECASE | re.DOTALL)
-    firma = firma_match.group(1).strip() if firma_match else "N/A"
+    if firma_match:
+        firma = firma_match.group(1).strip()
+    else:
+        firma_match = re.search(company_pattern2, full_text, re.DOTALL)
+        firma = firma_match.group(1).strip() if firma_match else "N/A"
   
     nr_ordine_match = re.search(r"Număr de ordine în Registrul Comerțului:\s*([\w/]+)", full_text)
     nr_ordine = nr_ordine_match.group(1) if nr_ordine_match else "N/A"
@@ -29,7 +34,6 @@ def extract_data_from_docx(doc):
         adrese_secundare = re.findall(secondary_address_pattern, section_text)
     else:
         adrese_secundare = ["N/A"]
-    
     data = {
         "Denumirea firmei": firma,
         "Numărul de ordine în Registrul Comerțului": nr_ordine,
