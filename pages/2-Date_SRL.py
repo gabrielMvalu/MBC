@@ -14,15 +14,19 @@ def extrage_informatii_firma(doc):
         firma_match = re.search(company_pattern2, full_text, re.DOTALL)
         firma = firma_match.group(1).strip() if firma_match else "N/A"
   
-    nr_ordine_match = re.search(r"Număr de ordine în Registrul Comerțului:\s*([\w/]+)", full_text)
-    nr_ordine = nr_ordine_match.group(1) if nr_ordine_match else None
-
-    # If not found, try to extract from the EUID
-    if not nr_ordine:
-        euid_match = re.search(r"EUID:\s*ROONRC\.([\w/]+)", full_text)
-        nr_ordine = euid_match.group(1) if euid_match else "N/A"
-    else:
-        nr_ordine = nr_ordine if nr_ordine else "N/A"
+       # Attempt to extract the registration number in its standard location or from the EUID line
+    nr_ordine_patterns = [
+        r"Număr de ordine în Registrul Comerțului:\s*([\w/]+)",
+        r"EUID:\s*ROONRC\.([\w/]+)"
+    ]
+    
+    # Check each pattern and break once a match is found
+    nr_ordine = "N/A"
+    for pattern in nr_ordine_patterns:
+        nr_ordine_match = re.search(pattern, full_text)
+        if nr_ordine_match:
+            nr_ordine = nr_ordine_match.group(1)
+            break
 
     
     cui_match = re.search(r"Cod unic de înregistrare: (\d+)", full_text)
