@@ -12,9 +12,9 @@ st.set_page_config(layout="wide")
 
 
 def extrage_date_bilant(df):
-    cpa20 = f"{df.iloc[76, 1]:.2f}"
-    cpa21 = f"{df.iloc[76, 2]:.2f}"
-    cpa22 = f"{df.iloc[76, 3]:.2f}"
+    cpa20 = f"{df.iloc[99, 1]:.2f}"
+    cpa21 = f"{df.iloc[99, 2]:.2f}"
+    cpa22 = f"{df.iloc[99, 3]:.2f}"
     
     data = {
         "Capitalul propriu al actionarilor 2020": cpa20, 
