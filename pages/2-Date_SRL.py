@@ -9,18 +9,20 @@ def normalize_text(input_text):
     """Normalize text by removing diacritics and formatting variations."""
     return unicodedata.normalize('NFKD', input_text).encode('ASCII', 'ignore').decode('ASCII')
 
-def extrage_informatii_firma(doc_path):
-    """Extract firm information from a DOCX file."""
-    # Load the DOCX file and read paragraphs
-    doc = Document(doc_path)
+def extrage_informatii_firma(doc):
+    """Extract firm information from a DOCX document."""
     full_text = "\n".join(paragraph.text for paragraph in doc.paragraphs)
-    normalized_text = normalize_text(full_text)  # Normalize the text
+    normalized_text = normalize_text(full_text)
     
     # Regex patterns for extracting different information
     company_pattern1 = r"informații referitoare la\s*(.*?)\s*INFORMAȚII DE IDENTIFICARE"
-    company_pattern2 = r"FURNIZARE INFORMAȚII\n\n(.*?)\n"
+    company_pattern2 = r"FURNIZARE INFORMAŢII\n\n(.*?)\n"
     firma_match = re.search(company_pattern1, normalized_text, re.IGNORECASE | re.DOTALL)
-    firma = firma_match.group(1).strip() if firma_match else re.search(company_pattern2, normalized_text, re.DOTALL).group(1).strip() if re.search(company_pattern2, normalized_text, re.DOTALL) else "N/A"
+    if firma_match:
+        firma = firma_match.group(1).strip()
+    else:
+        firma_match = re.search(company_pattern2, normalized_text, re.DOTALL)
+        firma = firma_match.group(1).strip() if firma_match else "N/A"
   
     nr_ordine_match = re.search(r"Număr de ordine în Registrul Comer[ţt]ului:\s*([\w/]+),?", normalized_text)
     nr_ordine = nr_ordine_match.group(1) if nr_ordine_match else "N/A"
@@ -35,7 +37,6 @@ def extrage_informatii_firma(doc_path):
     main_activity_match = re.search(main_activity_pattern, normalized_text, re.DOTALL)
     main_activity = main_activity_match.group(1).strip() if main_activity_match else "N/A"
     
-    # Organize extracted data into a dictionary
     data = {
         "Denumirea firmei": firma,
         "Numărul de ordine în Registrul Comerțului": nr_ordine,
@@ -46,7 +47,6 @@ def extrage_informatii_firma(doc_path):
     }
     
     return data
-
 
 def extract_detailed_info_from_docx(doc):
     text = [p.text for p in doc.paragraphs]
