@@ -15,7 +15,16 @@ def extrage_informatii_firma(doc):
         firma = firma_match.group(1).strip() if firma_match else "N/A"
   
     nr_ordine_match = re.search(r"Număr de ordine în Registrul Comerțului:\s*([\w/]+)", full_text)
-    nr_ordine = nr_ordine_match.group(1) if nr_ordine_match else "N/A"
+    nr_ordine = nr_ordine_match.group(1) if nr_ordine_match else None
+
+    # If not found, try to extract from the EUID
+    if not nr_ordine:
+        euid_match = re.search(r"EUID:\s*ROONRC\.([\w/]+)", full_text)
+        nr_ordine = euid_match.group(1) if euid_match else "N/A"
+    else:
+        nr_ordine = nr_ordine if nr_ordine else "N/A"
+
+    
     cui_match = re.search(r"Cod unic de înregistrare: (\d+)", full_text)
     cui = cui_match.group(1) if cui_match else "N/A"
     data_infiintarii_match = re.search(r"atribuit în data de (\d+\.\d+\.\d+)", full_text)
